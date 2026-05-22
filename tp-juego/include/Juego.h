@@ -5,9 +5,12 @@ class Juego {
     private:
         sf::RenderWindow ventana;
 
+        sf::Clock relojDelta;
+        float deltaTime;
+
         void procesarEventos();
         void actualizar();
-        void renderizar();
+        void renderizar(sf::RectangleShape rect);
 
     public:
         Juego();
