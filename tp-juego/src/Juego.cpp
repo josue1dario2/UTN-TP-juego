@@ -1,9 +1,21 @@
 #include "../include/Juego.h"
 
 
-Juego::Juego() : ventana(sf::VideoMode(800,600), "Mi Juego") {
+Juego::Juego() {
     deltaTime = 0.f;
+
+    sf::VideoMode modoEscritorio = sf::VideoMode::getDesktopMode();
+
+    ventana.create(modoEscritorio, "Mi Juego", sf::Style::Fullscreen);
+
     ventana.setFramerateLimit(60);
+
+    vista.setSize(1280.f, 720.f);
+    vista.setCenter(640.f, 360.f);
+    ventana.setView(vista);
+    
+
+
 }
 
 // Ejecuta el bucle principal del juego
@@ -25,6 +37,9 @@ void Juego::procesarEventos() {
     sf::Event evento;
     while (ventana.pollEvent(evento)){
         if(evento.type == sf::Event::Closed){
+            ventana.close();
+        }
+        if(evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::Escape){
             ventana.close();
         }
     }

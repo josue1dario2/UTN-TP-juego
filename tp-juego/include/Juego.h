@@ -5,6 +5,8 @@
 class Juego {
     private:
         sf::RenderWindow ventana;
+        sf::View vista;
+
         Personaje jugador; 
 
         sf::Clock relojDelta;
