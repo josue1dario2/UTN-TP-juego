@@ -1,6 +1,6 @@
 CMakeFiles/ZWave.dir/src/main.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/main.cpp \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Game.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Juego.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Window.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/System.hpp \
@@ -910,12 +910,12 @@ CMakeFiles/ZWave.dir/src/main.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Audio/SoundFileFactory.inl \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Audio/SoundFileReader.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Audio/SoundFileWriter.hpp \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Wave.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Oleada.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Zombie.h \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entity.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entidad.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/HUD.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Menu.h \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/FileManager.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorDeArchivos.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/fstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip \
@@ -939,4 +939,5 @@ CMakeFiles/ZWave.dir/src/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/sstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ResourceManager.h
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorRecursos.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Mapa.h

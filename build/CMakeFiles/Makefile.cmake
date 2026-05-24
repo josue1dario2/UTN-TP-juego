@@ -102,6 +102,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/ZWave.dir/DependInfo.cmake"
+  "CMakeFiles/gen_assets_tools.dir/DependInfo.cmake"
+  "CMakeFiles/audio_generator.dir/DependInfo.cmake"
   "_deps/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/DependInfo.cmake"
   "_deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/DependInfo.cmake"
   "_deps/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/DependInfo.cmake"

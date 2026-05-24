@@ -195,6 +195,32 @@ ZWave/fast:
 .PHONY : ZWave/fast
 
 #=============================================================================
+# Target rules for targets named gen_assets_tools
+
+# Build rule for target.
+gen_assets_tools: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gen_assets_tools
+.PHONY : gen_assets_tools
+
+# fast build rule for target.
+gen_assets_tools/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gen_assets_tools.dir/build.make CMakeFiles/gen_assets_tools.dir/build
+.PHONY : gen_assets_tools/fast
+
+#=============================================================================
+# Target rules for targets named audio_generator
+
+# Build rule for target.
+audio_generator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 audio_generator
+.PHONY : audio_generator
+
+# fast build rule for target.
+audio_generator/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_generator.dir/build.make CMakeFiles/audio_generator.dir/build
+.PHONY : audio_generator/fast
+
+#=============================================================================
 # Target rules for targets named sfml-system
 
 # Build rule for target.
@@ -259,101 +285,173 @@ sfml-audio/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make _deps/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build
 .PHONY : sfml-audio/fast
 
-src/Bullet.o: src/Bullet.cpp.o
-.PHONY : src/Bullet.o
+gen_assets.o: gen_assets.cpp.o
+.PHONY : gen_assets.o
 
 # target to build an object file
-src/Bullet.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Bullet.cpp.o
-.PHONY : src/Bullet.cpp.o
+gen_assets.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gen_assets_tools.dir/build.make CMakeFiles/gen_assets_tools.dir/gen_assets.cpp.o
+.PHONY : gen_assets.cpp.o
 
-src/Bullet.i: src/Bullet.cpp.i
-.PHONY : src/Bullet.i
+gen_assets.i: gen_assets.cpp.i
+.PHONY : gen_assets.i
 
 # target to preprocess a source file
-src/Bullet.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Bullet.cpp.i
-.PHONY : src/Bullet.cpp.i
+gen_assets.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gen_assets_tools.dir/build.make CMakeFiles/gen_assets_tools.dir/gen_assets.cpp.i
+.PHONY : gen_assets.cpp.i
 
-src/Bullet.s: src/Bullet.cpp.s
-.PHONY : src/Bullet.s
+gen_assets.s: gen_assets.cpp.s
+.PHONY : gen_assets.s
 
 # target to generate assembly for a file
-src/Bullet.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Bullet.cpp.s
-.PHONY : src/Bullet.cpp.s
+gen_assets.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gen_assets_tools.dir/build.make CMakeFiles/gen_assets_tools.dir/gen_assets.cpp.s
+.PHONY : gen_assets.cpp.s
 
-src/Entity.o: src/Entity.cpp.o
-.PHONY : src/Entity.o
+generador_audio.o: generador_audio.cpp.o
+.PHONY : generador_audio.o
 
 # target to build an object file
-src/Entity.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Entity.cpp.o
-.PHONY : src/Entity.cpp.o
+generador_audio.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_generator.dir/build.make CMakeFiles/audio_generator.dir/generador_audio.cpp.o
+.PHONY : generador_audio.cpp.o
 
-src/Entity.i: src/Entity.cpp.i
-.PHONY : src/Entity.i
+generador_audio.i: generador_audio.cpp.i
+.PHONY : generador_audio.i
 
 # target to preprocess a source file
-src/Entity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Entity.cpp.i
-.PHONY : src/Entity.cpp.i
+generador_audio.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_generator.dir/build.make CMakeFiles/audio_generator.dir/generador_audio.cpp.i
+.PHONY : generador_audio.cpp.i
 
-src/Entity.s: src/Entity.cpp.s
-.PHONY : src/Entity.s
+generador_audio.s: generador_audio.cpp.s
+.PHONY : generador_audio.s
 
 # target to generate assembly for a file
-src/Entity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Entity.cpp.s
-.PHONY : src/Entity.cpp.s
+generador_audio.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_generator.dir/build.make CMakeFiles/audio_generator.dir/generador_audio.cpp.s
+.PHONY : generador_audio.cpp.s
 
-src/FileManager.o: src/FileManager.cpp.o
-.PHONY : src/FileManager.o
+src/Arma.o: src/Arma.cpp.o
+.PHONY : src/Arma.o
 
 # target to build an object file
-src/FileManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/FileManager.cpp.o
-.PHONY : src/FileManager.cpp.o
+src/Arma.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Arma.cpp.o
+.PHONY : src/Arma.cpp.o
 
-src/FileManager.i: src/FileManager.cpp.i
-.PHONY : src/FileManager.i
+src/Arma.i: src/Arma.cpp.i
+.PHONY : src/Arma.i
 
 # target to preprocess a source file
-src/FileManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/FileManager.cpp.i
-.PHONY : src/FileManager.cpp.i
+src/Arma.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Arma.cpp.i
+.PHONY : src/Arma.cpp.i
 
-src/FileManager.s: src/FileManager.cpp.s
-.PHONY : src/FileManager.s
+src/Arma.s: src/Arma.cpp.s
+.PHONY : src/Arma.s
 
 # target to generate assembly for a file
-src/FileManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/FileManager.cpp.s
-.PHONY : src/FileManager.cpp.s
+src/Arma.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Arma.cpp.s
+.PHONY : src/Arma.cpp.s
 
-src/Game.o: src/Game.cpp.o
-.PHONY : src/Game.o
+src/Bala.o: src/Bala.cpp.o
+.PHONY : src/Bala.o
 
 # target to build an object file
-src/Game.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Game.cpp.o
-.PHONY : src/Game.cpp.o
+src/Bala.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Bala.cpp.o
+.PHONY : src/Bala.cpp.o
 
-src/Game.i: src/Game.cpp.i
-.PHONY : src/Game.i
+src/Bala.i: src/Bala.cpp.i
+.PHONY : src/Bala.i
 
 # target to preprocess a source file
-src/Game.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Game.cpp.i
-.PHONY : src/Game.cpp.i
+src/Bala.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Bala.cpp.i
+.PHONY : src/Bala.cpp.i
 
-src/Game.s: src/Game.cpp.s
-.PHONY : src/Game.s
+src/Bala.s: src/Bala.cpp.s
+.PHONY : src/Bala.s
 
 # target to generate assembly for a file
-src/Game.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Game.cpp.s
-.PHONY : src/Game.cpp.s
+src/Bala.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Bala.cpp.s
+.PHONY : src/Bala.cpp.s
+
+src/Entidad.o: src/Entidad.cpp.o
+.PHONY : src/Entidad.o
+
+# target to build an object file
+src/Entidad.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Entidad.cpp.o
+.PHONY : src/Entidad.cpp.o
+
+src/Entidad.i: src/Entidad.cpp.i
+.PHONY : src/Entidad.i
+
+# target to preprocess a source file
+src/Entidad.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Entidad.cpp.i
+.PHONY : src/Entidad.cpp.i
+
+src/Entidad.s: src/Entidad.cpp.s
+.PHONY : src/Entidad.s
+
+# target to generate assembly for a file
+src/Entidad.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Entidad.cpp.s
+.PHONY : src/Entidad.cpp.s
+
+src/GestorDeArchivos.o: src/GestorDeArchivos.cpp.o
+.PHONY : src/GestorDeArchivos.o
+
+# target to build an object file
+src/GestorDeArchivos.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o
+.PHONY : src/GestorDeArchivos.cpp.o
+
+src/GestorDeArchivos.i: src/GestorDeArchivos.cpp.i
+.PHONY : src/GestorDeArchivos.i
+
+# target to preprocess a source file
+src/GestorDeArchivos.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.i
+.PHONY : src/GestorDeArchivos.cpp.i
+
+src/GestorDeArchivos.s: src/GestorDeArchivos.cpp.s
+.PHONY : src/GestorDeArchivos.s
+
+# target to generate assembly for a file
+src/GestorDeArchivos.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.s
+.PHONY : src/GestorDeArchivos.cpp.s
+
+src/GestorRecursos.o: src/GestorRecursos.cpp.o
+.PHONY : src/GestorRecursos.o
+
+# target to build an object file
+src/GestorRecursos.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o
+.PHONY : src/GestorRecursos.cpp.o
+
+src/GestorRecursos.i: src/GestorRecursos.cpp.i
+.PHONY : src/GestorRecursos.i
+
+# target to preprocess a source file
+src/GestorRecursos.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.i
+.PHONY : src/GestorRecursos.cpp.i
+
+src/GestorRecursos.s: src/GestorRecursos.cpp.s
+.PHONY : src/GestorRecursos.s
+
+# target to generate assembly for a file
+src/GestorRecursos.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.s
+.PHONY : src/GestorRecursos.cpp.s
 
 src/HUD.o: src/HUD.cpp.o
 .PHONY : src/HUD.o
@@ -379,6 +477,78 @@ src/HUD.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/HUD.cpp.s
 .PHONY : src/HUD.cpp.s
 
+src/Juego.o: src/Juego.cpp.o
+.PHONY : src/Juego.o
+
+# target to build an object file
+src/Juego.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Juego.cpp.o
+.PHONY : src/Juego.cpp.o
+
+src/Juego.i: src/Juego.cpp.i
+.PHONY : src/Juego.i
+
+# target to preprocess a source file
+src/Juego.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Juego.cpp.i
+.PHONY : src/Juego.cpp.i
+
+src/Juego.s: src/Juego.cpp.s
+.PHONY : src/Juego.s
+
+# target to generate assembly for a file
+src/Juego.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Juego.cpp.s
+.PHONY : src/Juego.cpp.s
+
+src/Jugador.o: src/Jugador.cpp.o
+.PHONY : src/Jugador.o
+
+# target to build an object file
+src/Jugador.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Jugador.cpp.o
+.PHONY : src/Jugador.cpp.o
+
+src/Jugador.i: src/Jugador.cpp.i
+.PHONY : src/Jugador.i
+
+# target to preprocess a source file
+src/Jugador.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Jugador.cpp.i
+.PHONY : src/Jugador.cpp.i
+
+src/Jugador.s: src/Jugador.cpp.s
+.PHONY : src/Jugador.s
+
+# target to generate assembly for a file
+src/Jugador.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Jugador.cpp.s
+.PHONY : src/Jugador.cpp.s
+
+src/Mapa.o: src/Mapa.cpp.o
+.PHONY : src/Mapa.o
+
+# target to build an object file
+src/Mapa.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Mapa.cpp.o
+.PHONY : src/Mapa.cpp.o
+
+src/Mapa.i: src/Mapa.cpp.i
+.PHONY : src/Mapa.i
+
+# target to preprocess a source file
+src/Mapa.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Mapa.cpp.i
+.PHONY : src/Mapa.cpp.i
+
+src/Mapa.s: src/Mapa.cpp.s
+.PHONY : src/Mapa.s
+
+# target to generate assembly for a file
+src/Mapa.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Mapa.cpp.s
+.PHONY : src/Mapa.cpp.s
+
 src/Menu.o: src/Menu.cpp.o
 .PHONY : src/Menu.o
 
@@ -403,101 +573,29 @@ src/Menu.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Menu.cpp.s
 .PHONY : src/Menu.cpp.s
 
-src/Player.o: src/Player.cpp.o
-.PHONY : src/Player.o
+src/Oleada.o: src/Oleada.cpp.o
+.PHONY : src/Oleada.o
 
 # target to build an object file
-src/Player.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Player.cpp.o
-.PHONY : src/Player.cpp.o
+src/Oleada.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Oleada.cpp.o
+.PHONY : src/Oleada.cpp.o
 
-src/Player.i: src/Player.cpp.i
-.PHONY : src/Player.i
-
-# target to preprocess a source file
-src/Player.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Player.cpp.i
-.PHONY : src/Player.cpp.i
-
-src/Player.s: src/Player.cpp.s
-.PHONY : src/Player.s
-
-# target to generate assembly for a file
-src/Player.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Player.cpp.s
-.PHONY : src/Player.cpp.s
-
-src/ResourceManager.o: src/ResourceManager.cpp.o
-.PHONY : src/ResourceManager.o
-
-# target to build an object file
-src/ResourceManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/ResourceManager.cpp.o
-.PHONY : src/ResourceManager.cpp.o
-
-src/ResourceManager.i: src/ResourceManager.cpp.i
-.PHONY : src/ResourceManager.i
+src/Oleada.i: src/Oleada.cpp.i
+.PHONY : src/Oleada.i
 
 # target to preprocess a source file
-src/ResourceManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/ResourceManager.cpp.i
-.PHONY : src/ResourceManager.cpp.i
+src/Oleada.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Oleada.cpp.i
+.PHONY : src/Oleada.cpp.i
 
-src/ResourceManager.s: src/ResourceManager.cpp.s
-.PHONY : src/ResourceManager.s
-
-# target to generate assembly for a file
-src/ResourceManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/ResourceManager.cpp.s
-.PHONY : src/ResourceManager.cpp.s
-
-src/Wave.o: src/Wave.cpp.o
-.PHONY : src/Wave.o
-
-# target to build an object file
-src/Wave.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Wave.cpp.o
-.PHONY : src/Wave.cpp.o
-
-src/Wave.i: src/Wave.cpp.i
-.PHONY : src/Wave.i
-
-# target to preprocess a source file
-src/Wave.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Wave.cpp.i
-.PHONY : src/Wave.cpp.i
-
-src/Wave.s: src/Wave.cpp.s
-.PHONY : src/Wave.s
+src/Oleada.s: src/Oleada.cpp.s
+.PHONY : src/Oleada.s
 
 # target to generate assembly for a file
-src/Wave.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Wave.cpp.s
-.PHONY : src/Wave.cpp.s
-
-src/Weapon.o: src/Weapon.cpp.o
-.PHONY : src/Weapon.o
-
-# target to build an object file
-src/Weapon.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Weapon.cpp.o
-.PHONY : src/Weapon.cpp.o
-
-src/Weapon.i: src/Weapon.cpp.i
-.PHONY : src/Weapon.i
-
-# target to preprocess a source file
-src/Weapon.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Weapon.cpp.i
-.PHONY : src/Weapon.cpp.i
-
-src/Weapon.s: src/Weapon.cpp.s
-.PHONY : src/Weapon.s
-
-# target to generate assembly for a file
-src/Weapon.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Weapon.cpp.s
-.PHONY : src/Weapon.cpp.s
+src/Oleada.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Oleada.cpp.s
+.PHONY : src/Oleada.cpp.s
 
 src/Zombie.o: src/Zombie.cpp.o
 .PHONY : src/Zombie.o
@@ -562,41 +660,52 @@ help:
 	@echo "... package_source"
 	@echo "... rebuild_cache"
 	@echo "... ZWave"
+	@echo "... audio_generator"
+	@echo "... gen_assets_tools"
 	@echo "... sfml-audio"
 	@echo "... sfml-graphics"
 	@echo "... sfml-network"
 	@echo "... sfml-system"
 	@echo "... sfml-window"
-	@echo "... src/Bullet.o"
-	@echo "... src/Bullet.i"
-	@echo "... src/Bullet.s"
-	@echo "... src/Entity.o"
-	@echo "... src/Entity.i"
-	@echo "... src/Entity.s"
-	@echo "... src/FileManager.o"
-	@echo "... src/FileManager.i"
-	@echo "... src/FileManager.s"
-	@echo "... src/Game.o"
-	@echo "... src/Game.i"
-	@echo "... src/Game.s"
+	@echo "... gen_assets.o"
+	@echo "... gen_assets.i"
+	@echo "... gen_assets.s"
+	@echo "... generador_audio.o"
+	@echo "... generador_audio.i"
+	@echo "... generador_audio.s"
+	@echo "... src/Arma.o"
+	@echo "... src/Arma.i"
+	@echo "... src/Arma.s"
+	@echo "... src/Bala.o"
+	@echo "... src/Bala.i"
+	@echo "... src/Bala.s"
+	@echo "... src/Entidad.o"
+	@echo "... src/Entidad.i"
+	@echo "... src/Entidad.s"
+	@echo "... src/GestorDeArchivos.o"
+	@echo "... src/GestorDeArchivos.i"
+	@echo "... src/GestorDeArchivos.s"
+	@echo "... src/GestorRecursos.o"
+	@echo "... src/GestorRecursos.i"
+	@echo "... src/GestorRecursos.s"
 	@echo "... src/HUD.o"
 	@echo "... src/HUD.i"
 	@echo "... src/HUD.s"
+	@echo "... src/Juego.o"
+	@echo "... src/Juego.i"
+	@echo "... src/Juego.s"
+	@echo "... src/Jugador.o"
+	@echo "... src/Jugador.i"
+	@echo "... src/Jugador.s"
+	@echo "... src/Mapa.o"
+	@echo "... src/Mapa.i"
+	@echo "... src/Mapa.s"
 	@echo "... src/Menu.o"
 	@echo "... src/Menu.i"
 	@echo "... src/Menu.s"
-	@echo "... src/Player.o"
-	@echo "... src/Player.i"
-	@echo "... src/Player.s"
-	@echo "... src/ResourceManager.o"
-	@echo "... src/ResourceManager.i"
-	@echo "... src/ResourceManager.s"
-	@echo "... src/Wave.o"
-	@echo "... src/Wave.i"
-	@echo "... src/Wave.s"
-	@echo "... src/Weapon.o"
-	@echo "... src/Weapon.i"
-	@echo "... src/Weapon.s"
+	@echo "... src/Oleada.o"
+	@echo "... src/Oleada.i"
+	@echo "... src/Oleada.s"
 	@echo "... src/Zombie.o"
 	@echo "... src/Zombie.i"
 	@echo "... src/Zombie.s"

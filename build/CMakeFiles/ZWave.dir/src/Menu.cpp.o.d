@@ -892,7 +892,7 @@ CMakeFiles/ZWave.dir/src/Menu.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/Sprite.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/Text.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/VertexBuffer.hpp \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/FileManager.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorDeArchivos.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/fstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip \

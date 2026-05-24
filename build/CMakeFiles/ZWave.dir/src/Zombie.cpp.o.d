@@ -1,7 +1,7 @@
 CMakeFiles/ZWave.dir/src/Zombie.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Zombie.cpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Zombie.h \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entity.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entidad.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Window.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/System.hpp \
@@ -892,4 +892,5 @@ CMakeFiles/ZWave.dir/src/Zombie.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/Glsl.inl \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/Sprite.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/Text.hpp \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/VertexBuffer.hpp
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/VertexBuffer.hpp \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Mapa.h

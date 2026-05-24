@@ -1,7 +1,7 @@
 CMakeFiles/ZWave.dir/src/Player.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Player.cpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Player.h \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entity.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entidad.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Window.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/System.hpp \
@@ -893,7 +893,7 @@ CMakeFiles/ZWave.dir/src/Player.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/Sprite.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/Text.hpp \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-src/include/SFML/Graphics/VertexBuffer.hpp \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/FileManager.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorDeArchivos.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/fstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip \
@@ -917,5 +917,5 @@ CMakeFiles/ZWave.dir/src/Player.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/sstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Weapon.h \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Bullet.h
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Arma.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Bala.h

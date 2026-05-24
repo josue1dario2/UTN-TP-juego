@@ -1,4 +1,6 @@
 /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles/ZWave.dir
+/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles/gen_assets_tools.dir
+/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles/audio_generator.dir
 /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles/package.dir
 /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles/package_source.dir
 /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles/edit_cache.dir
