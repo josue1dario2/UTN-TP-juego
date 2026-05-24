@@ -13,22 +13,9 @@ void Juego::iniciar(){
         //obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
         deltaTime = relojDelta.restart().asSeconds();
 
-
-        
-        sf::RectangleShape rect;
-        sf::Vector2f posicion(400,300);
-
-        rect.setPosition(posicion);
-        rect.setSize(sf::Vector2f(100,100));
-
-
-
-
-
-
         procesarEventos();
         actualizar();
-        renderizar(rect);
+        renderizar();
     }
 
 }
@@ -45,16 +32,17 @@ void Juego::procesarEventos() {
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
-
+    jugador.controlar();
 }
 
 // Dibuja todos los elementos en pantalla
-void Juego::renderizar(sf::RectangleShape rect) {
+void Juego::renderizar() {
     ventana.clear();
 
     // aca se dibujan las cosas
 
-    ventana.draw(rect);
+    jugador.dibujar(ventana);
+    // ventana.draw(a);
 
     ventana.display();
 }

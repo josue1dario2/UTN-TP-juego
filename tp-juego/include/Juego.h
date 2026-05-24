@@ -12,7 +12,7 @@ class Juego {
 
         void procesarEventos();
         void actualizar();
-        void renderizar(sf::RectangleShape rect);
+        void renderizar();
 
     public:
         Juego();

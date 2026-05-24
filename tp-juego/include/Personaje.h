@@ -15,6 +15,12 @@ private:
 
     sf::RectangleShape cuerpo;
 
+    sf::Texture textJug;
+    sf::Sprite spriteJug;
+
+    int posX;
+    int posY;
+
 public:
 
     Personaje();
