@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Personaje.h"
 #include "ObjetoMapa.h"
+#include <vector>
 
 class Juego {
     private:
@@ -14,8 +15,11 @@ class Juego {
         float deltaTime;
 
         // INCIALIZACION DE ELEMENTOS DEL JUEGO
-        Personaje jugador; 
-        ObjetoMapa casa;
+        Personaje jugador;
+
+        std::vector<ObjetoMapa> obstaculos; // Vector para almacenar múltiples elementos del mapa/paredes/obstaculos
+
+
 
 
         sf::Texture texturaMapa;

@@ -9,8 +9,6 @@ protected:
     float vidaActual;
     float velocidad;
 
-    sf::RectangleShape cuerpo;
-
 public:
 
     Entidad();

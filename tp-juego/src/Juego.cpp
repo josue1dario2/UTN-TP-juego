@@ -16,12 +16,12 @@ Juego::Juego() {
 
 
     // Inicialización de elementos del terreno
-    casa.cargarTextura("assets/casa.png");
-    casa.centrarOrigen();
-    casa.escalarSprite(3.f, 3.f);
-    casa.setHitbox(64.f * 3.f, 54.f * 3.f);
-
-    casa.setPosicion(1920.f, 1080.f);
+    obstaculos.emplace_back();
+    obstaculos.back().cargarTextura("assets/casa.png");
+    obstaculos.back().centrarOrigen();
+    obstaculos.back().escalarSprite(3.f, 3.f);
+    obstaculos.back().setHitbox(64.f * 3.f, 54.f * 3.f);
+    obstaculos.back().setPosicion(1920.f, 1080.f);
 
 
 }
@@ -61,21 +61,23 @@ void Juego::procesarEventos() {
 void Juego::actualizar() {
     jugador.actualizar(deltaTime);
 
-    //movimiento horizontal jugador
+    //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
     jugador.guardarPosicionAnterior();
     jugador.mover(jugador.getMovimientoX(), 0.f);
-    if (jugador.getHitbox().intersects(casa.getHitbox())) {
-        jugador.volverPosicionAnteriorX();
+    for(auto& obstaculo : obstaculos) {
+        if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
+            jugador.volverPosicionAnteriorX();
+        }
     }
 
     //movimiento vertical jugador
     jugador.guardarPosicionAnterior();
     jugador.mover(0.f, jugador.getMovimientoY());
-    if (jugador.getHitbox().intersects(casa.getHitbox())) {
-        jugador.volverPosicionAnteriorY();
+    for(auto& obstaculo : obstaculos) {
+        if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
+            jugador.volverPosicionAnteriorY();
+        }
     }
-    //despues hay que hacer un vector que guarde todas las colisiones posibles y hacer un loop
-    //para revisar cada una, pero por ahora con la casa alcanza para probar
 
 
     // Seguir al jugador con la cámara
@@ -88,9 +90,13 @@ void Juego::renderizar() {
     ventana.clear();
 
     // aca se dibujan las cosas
-
     ventana.draw(spriteMapa);
-    casa.dibujar(ventana);
+
+    // Dibuja los obstáculos con un bucle
+    for(auto& obstaculo : obstaculos) {
+        obstaculo.dibujar(ventana);
+    }
+
     jugador.dibujar(ventana);
 
     ventana.display();
