@@ -20,3 +20,14 @@ Abrir la terminal `MSYS2 UCRT64` y ejecutar:
 ```bash
 pacman -S mingw-w64-ucrt-x86_64-sfml
 ```
+
+Las estructura de la herencia es la siguiente
+ObjetoGrafico
+│
+├── Entidad
+│   ├── Jugador
+│   └── Enemigo (FALTA)
+│
+├── ObjetoMapa (FALTA)
+│
+└── Proyectil  (FALTA)
