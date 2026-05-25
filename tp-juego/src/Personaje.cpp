@@ -21,6 +21,9 @@ Personaje::Personaje() {
     setHitbox(13.f * 2.f, 16.f * 2.1f); // Ajustar el tamaño del hitbox según el sprite escalado
 
     setPosicion(1720.f, 1080.f);
+
+    movimientoX = 0.f;
+    movimientoY = 0.f;
 }
 
 void Personaje::cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab) {
@@ -34,6 +37,7 @@ void Personaje::cargarAtributos(int id, std::string nom, float vida, float armad
     habilidad = hab;
 }
 
+/*
 void Personaje::controlar(float movimiento) {
     // Movimiento personaje
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
@@ -49,21 +53,56 @@ void Personaje::controlar(float movimiento) {
         mover(movimiento, 0.f);
     }
 }
+*/
 
-void Personaje::guardarPosicionAnterior()
-{
+void Personaje::guardarPosicionAnterior() {
     posicionAnterior = getPosicion();
 }
-void Personaje::volverPosicionAnterior()
-{
-    setPosicion(posicionAnterior.x, posicionAnterior.y);
+
+void Personaje::volverPosicionAnteriorX() {
+    setPosicion(posicionAnterior.x, getPosicion().y);
+}
+
+void Personaje::volverPosicionAnteriorY() {
+    setPosicion(getPosicion().x, posicionAnterior.y);
 }
 
 
 void Personaje::actualizar(float deltaTime) {
     // lógica adicional para el personaje, como animaciones o habilidades
-    posicionAnterior = getPosicion();
-    float movimiento = velocidad * deltaTime;
-    controlar(movimiento);
 
+    movimientoX = 0.f;
+    movimientoY = 0.f;
+
+    float movimiento = velocidad * deltaTime;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        movimientoX -= movimiento;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        movimientoX += movimiento;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        movimientoY -= movimiento;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        movimientoY += movimiento;
+    }
+}
+
+float Personaje::getMovimientoX() const
+{
+    return movimientoX;
+}
+
+float Personaje::getMovimientoY() const
+{
+    return movimientoY;
 }

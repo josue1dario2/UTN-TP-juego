@@ -60,10 +60,22 @@ void Juego::procesarEventos() {
 // Actualiza la logica del juego
 void Juego::actualizar() {
     jugador.actualizar(deltaTime);
-    
+
+    //movimiento horizontal jugador
+    jugador.guardarPosicionAnterior();
+    jugador.mover(jugador.getMovimientoX(), 0.f);
     if (jugador.getHitbox().intersects(casa.getHitbox())) {
-        jugador.volverPosicionAnterior();
+        jugador.volverPosicionAnteriorX();
     }
+
+    //movimiento vertical jugador
+    jugador.guardarPosicionAnterior();
+    jugador.mover(0.f, jugador.getMovimientoY());
+    if (jugador.getHitbox().intersects(casa.getHitbox())) {
+        jugador.volverPosicionAnteriorY();
+    }
+    //despues hay que hacer un vector que guarde todas las colisiones posibles y hacer un loop
+    //para revisar cada una, pero por ahora con la casa alcanza para probar
 
 
     // Seguir al jugador con la cámara

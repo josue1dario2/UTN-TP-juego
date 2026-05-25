@@ -14,6 +14,8 @@ private:
     std::string habilidad;
 
     sf::Vector2f posicionAnterior;
+    float movimientoX;
+    float movimientoY;
 
 public:
 
@@ -23,9 +25,15 @@ public:
 
     void actualizar(float deltaTime) override;
 
-    void controlar(float movimiento);   // Movimiento con W, A, S, D
+    //void controlar(float movimiento);   // Movimiento con W, A, S, D
 
     void guardarPosicionAnterior();
 
-    void volverPosicionAnterior();
+    void volverPosicionAnteriorX();
+
+    void volverPosicionAnteriorY();
+
+    float getMovimientoX() const;
+
+    float getMovimientoY() const;
 };
