@@ -2,6 +2,11 @@
 
 ObjetoGrafico::ObjetoGrafico()
 {
+    //------------HITBOX------------
+    mostrarHitbox = true;
+    hitboxDebug.setFillColor(sf::Color::Transparent);
+    hitboxDebug.setOutlineColor(sf::Color::Red);
+    hitboxDebug.setOutlineThickness(2.f);
 
 }
 
@@ -20,11 +25,21 @@ bool ObjetoGrafico::cargarTextura(const std::string& ruta)
 void ObjetoGrafico::setPosicion(float x, float y)
 {
     sprite.setPosition(x, y);
+
+    hitbox.left = x - hitbox.width / 2.f;
+    hitbox.top = y - hitbox.height / 2.f;
+
+    hitboxDebug.setPosition(hitbox.left, hitbox.top);
 }
 
 void ObjetoGrafico::mover(float offsetX, float offsetY)
 {
     sprite.move(offsetX, offsetY);
+
+    hitbox.left += offsetX;
+    hitbox.top += offsetY;
+
+    hitboxDebug.move(offsetX, offsetY);
 }
 
 void ObjetoGrafico::centrarOrigen()
@@ -49,9 +64,26 @@ void ObjetoGrafico::actualizar(float deltaTime)
 void ObjetoGrafico::dibujar(sf::RenderWindow& ventana)
 {
     ventana.draw(sprite);
+
+    if (mostrarHitbox)
+    {
+        ventana.draw(hitboxDebug);
+    }
 }
 
 sf::Vector2f ObjetoGrafico::getPosicion() const
 {
     return sprite.getPosition();
+}
+
+void ObjetoGrafico::setHitbox(float ancho, float alto)
+{
+    hitbox.width = ancho;
+    hitbox.height = alto;
+
+    hitboxDebug.setSize(sf::Vector2f(ancho, alto));
+}
+
+sf::FloatRect ObjetoGrafico::getHitbox() const {
+    return hitbox;
 }

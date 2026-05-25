@@ -10,6 +10,13 @@ protected:
     sf::Texture textura;
     sf::Sprite sprite;
 
+    //------------HITBOX------------
+    sf::FloatRect hitbox;
+
+    sf::RectangleShape hitboxDebug;
+
+    bool mostrarHitbox;
+
 public:
 
     ObjetoGrafico();
@@ -29,5 +36,9 @@ public:
 
     //------------GETTERS------------
     sf::Vector2f getPosicion() const;
+
+    //------------HITBOX------------
+    void setHitbox(float ancho, float alto);
+    sf::FloatRect getHitbox() const;
 
 };

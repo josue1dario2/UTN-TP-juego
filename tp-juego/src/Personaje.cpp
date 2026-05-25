@@ -11,13 +11,16 @@ Personaje::Personaje() {
     velocidad = 200.f;
     habilidad = "Ninguna";
 
+
     cargarTextura("assets/jugador2.png");
 
     setearTamanioSprite(13, 16);
-    centrarOrigen();
-
+    centrarOrigen(); //centrar el origen del sprite para facilitar el posicionamiento
     sprite.setScale(3.f,3.f);
-    sprite.setPosition(1920.f, 1080.f);
+
+    setHitbox(13.f * 2.f, 16.f * 2.1f); // Ajustar el tamaño del hitbox según el sprite escalado
+
+    setPosicion(1920.f, 1080.f);
 }
 
 void Personaje::cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab) {
@@ -34,20 +37,16 @@ void Personaje::cargarAtributos(int id, std::string nom, float vida, float armad
 void Personaje::controlar(float movimiento) {
     // Movimiento personaje
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        //cuerpo.move(0.f, -velocidad);
-        sprite.move(0.f, -movimiento);
+        mover(0.f, -movimiento);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        //cuerpo.move(0.f, velocidad);
-        sprite.move(0.f, movimiento);
+        mover(0.f, movimiento);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        //cuerpo.move(-velocidad, 0.f);
-        sprite.move(-movimiento, 0.f);
+        mover(-movimiento, 0.f);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        //cuerpo.move(velocidad, 0.f);
-        sprite.move(movimiento, 0.f);
+        mover(movimiento, 0.f);
     }
 }
 
