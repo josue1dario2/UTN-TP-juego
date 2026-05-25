@@ -56,6 +56,10 @@ void ObjetoGrafico::setearTamanioSprite(int ancho, int alto) {
     sprite.setTextureRect(sf::IntRect(0, 0, ancho, alto));
 }
 
+void ObjetoGrafico::escalarSprite(float factorX, float factorY){
+    sprite.setScale(factorX, factorY);
+}
+
 void ObjetoGrafico::actualizar(float deltaTime)
 {
 

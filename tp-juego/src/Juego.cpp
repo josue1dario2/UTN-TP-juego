@@ -13,7 +13,15 @@ Juego::Juego() {
     vista.setSize(1280.f, 720.f);
     vista.setCenter(640.f, 360.f);
     ventana.setView(vista);
-    
+
+
+    // Inicialización de elementos del terreno
+    casa.cargarTextura("assets/casa.png");
+    casa.centrarOrigen();
+    casa.escalarSprite(3.f, 3.f);
+    casa.setHitbox(64.f * 3.f, 54.f * 3.f);
+
+    casa.setPosicion(1920.f, 1080.f);
 
 
 }
@@ -52,6 +60,10 @@ void Juego::procesarEventos() {
 // Actualiza la logica del juego
 void Juego::actualizar() {
     jugador.actualizar(deltaTime);
+    
+    if (jugador.getHitbox().intersects(casa.getHitbox())) {
+        jugador.volverPosicionAnterior();
+    }
 
 
     // Seguir al jugador con la cámara
@@ -66,6 +78,7 @@ void Juego::renderizar() {
     // aca se dibujan las cosas
 
     ventana.draw(spriteMapa);
+    casa.dibujar(ventana);
     jugador.dibujar(ventana);
 
     ventana.display();

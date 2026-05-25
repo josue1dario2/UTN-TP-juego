@@ -13,6 +13,8 @@ private:
     
     std::string habilidad;
 
+    sf::Vector2f posicionAnterior;
+
 public:
 
     Personaje();
@@ -22,4 +24,8 @@ public:
     void actualizar(float deltaTime) override;
 
     void controlar(float movimiento);   // Movimiento con W, A, S, D
+
+    void guardarPosicionAnterior();
+
+    void volverPosicionAnterior();
 };

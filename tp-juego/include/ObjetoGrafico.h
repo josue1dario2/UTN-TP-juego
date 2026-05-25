@@ -24,7 +24,8 @@ public:
     //------------CONFIGURACION DE SPRITE------------
     bool cargarTextura(const std::string& ruta);
     void centrarOrigen();
-    void setearTamanioSprite(int ancho, int alto);
+    void setearTamanioSprite(int ancho, int alto); //ajusta cuantos pixeles de la textura se muestran en el sprite
+    void escalarSprite(float factorX, float factorY); //multiplica el tamaño del sprite por los factores dados
 
     //------------POSICIONAMIENTO------------
     void setPosicion(float x, float y);

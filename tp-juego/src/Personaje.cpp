@@ -16,11 +16,11 @@ Personaje::Personaje() {
 
     setearTamanioSprite(13, 16);
     centrarOrigen(); //centrar el origen del sprite para facilitar el posicionamiento
-    sprite.setScale(3.f,3.f);
+    escalarSprite(3.f, 3.f);
 
     setHitbox(13.f * 2.f, 16.f * 2.1f); // Ajustar el tamaño del hitbox según el sprite escalado
 
-    setPosicion(1920.f, 1080.f);
+    setPosicion(1720.f, 1080.f);
 }
 
 void Personaje::cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab) {
@@ -50,8 +50,19 @@ void Personaje::controlar(float movimiento) {
     }
 }
 
+void Personaje::guardarPosicionAnterior()
+{
+    posicionAnterior = getPosicion();
+}
+void Personaje::volverPosicionAnterior()
+{
+    setPosicion(posicionAnterior.x, posicionAnterior.y);
+}
+
+
 void Personaje::actualizar(float deltaTime) {
     // lógica adicional para el personaje, como animaciones o habilidades
+    posicionAnterior = getPosicion();
     float movimiento = velocidad * deltaTime;
     controlar(movimiento);
 
