@@ -51,8 +51,11 @@ void Juego::procesarEventos() {
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
-    jugador.controlar();
-    vista.setCenter(jugador.getPosition());
+    jugador.actualizar(deltaTime);
+
+
+    // Seguir al jugador con la cámara
+    vista.setCenter(jugador.getPosicion());
     ventana.setView(vista);
 }
 
