@@ -31,3 +31,6 @@ ObjetoGrafico
 ├── ObjetoMapa (FALTA)
 │
 └── Proyectil  (FALTA)
+
+<img width="185" height="195" alt="image" src="https://github.com/user-attachments/assets/fbd6c543-6dae-4d0d-8443-bf9800e315be" />
+
