@@ -12,6 +12,9 @@ class Juego {
         sf::Clock relojDelta;
         float deltaTime;
 
+        sf::Texture texturaMapa;
+        sf::Sprite spriteMapa;
+
         void procesarEventos();
         void actualizar();
         void renderizar();

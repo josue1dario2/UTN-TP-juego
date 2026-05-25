@@ -20,6 +20,10 @@ Juego::Juego() {
 
 // Ejecuta el bucle principal del juego
 void Juego::iniciar(){
+
+    texturaMapa.loadFromFile("assets/mapa.png");
+    spriteMapa.setTexture(texturaMapa);
+
     while (ventana.isOpen()){
 
         //obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
@@ -48,6 +52,8 @@ void Juego::procesarEventos() {
 // Actualiza la logica del juego
 void Juego::actualizar() {
     jugador.controlar();
+    vista.setCenter(jugador.getPosition());
+    ventana.setView(vista);
 }
 
 // Dibuja todos los elementos en pantalla
@@ -56,8 +62,8 @@ void Juego::renderizar() {
 
     // aca se dibujan las cosas
 
+    ventana.draw(spriteMapa);
     jugador.dibujar(ventana);
-    // ventana.draw(a);
 
     ventana.display();
 }
