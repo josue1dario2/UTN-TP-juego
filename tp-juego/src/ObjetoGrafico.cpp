@@ -22,12 +22,22 @@ bool ObjetoGrafico::cargarTextura(const std::string& ruta)
     return true;
 }
 
-void ObjetoGrafico::setPosicion(float x, float y)
+void ObjetoGrafico::setPosicionCentrado(float x, float y)
 {
     sprite.setPosition(x, y);
 
     hitbox.left = x - hitbox.width / 2.f;
     hitbox.top = y - hitbox.height / 2.f;
+
+    hitboxDebug.setPosition(hitbox.left, hitbox.top);
+}
+
+void ObjetoGrafico::setPosicion(float x, float y)
+{
+    sprite.setPosition(x, y);
+
+    hitbox.left = x;
+    hitbox.top = y;
 
     hitboxDebug.setPosition(hitbox.left, hitbox.top);
 }

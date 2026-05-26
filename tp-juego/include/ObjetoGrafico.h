@@ -28,6 +28,7 @@ public:
     void escalarSprite(float factorX, float factorY); //multiplica el tamaño del sprite por los factores dados
 
     //------------POSICIONAMIENTO------------
+    void setPosicionCentrado(float x, float y); //tiene en cuenta el origen centrado del sprite para posicionar
     void setPosicion(float x, float y);
     void mover(float offsetX, float offsetY);
 

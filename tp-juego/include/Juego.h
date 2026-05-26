@@ -29,6 +29,8 @@ class Juego {
         void actualizar();
         void renderizar();
 
+        void inicializarObstaculos(std::vector<ObjetoMapa>& obstaculos);
+
     public:
         Juego();
         void iniciar();       

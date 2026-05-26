@@ -20,7 +20,7 @@ Personaje::Personaje() {
 
     setHitbox(13.f * 2.f, 16.f * 2.1f); // Ajustar el tamaño del hitbox según el sprite escalado
 
-    setPosicion(1720.f, 1080.f);
+    setPosicionCentrado(1720.f, 1080.f);
 
     movimientoX = 0.f;
     movimientoY = 0.f;
@@ -60,11 +60,11 @@ void Personaje::guardarPosicionAnterior() {
 }
 
 void Personaje::volverPosicionAnteriorX() {
-    setPosicion(posicionAnterior.x, getPosicion().y);
+    setPosicionCentrado(posicionAnterior.x, getPosicion().y);
 }
 
 void Personaje::volverPosicionAnteriorY() {
-    setPosicion(getPosicion().x, posicionAnterior.y);
+    setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
 
@@ -76,33 +76,27 @@ void Personaje::actualizar(float deltaTime) {
 
     float movimiento = velocidad * deltaTime;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         movimientoX -= movimiento;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         movimientoX += movimiento;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         movimientoY -= movimiento;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         movimientoY += movimiento;
     }
 }
 
-float Personaje::getMovimientoX() const
-{
+float Personaje::getMovimientoX() const {
     return movimientoX;
 }
 
-float Personaje::getMovimientoY() const
-{
+float Personaje::getMovimientoY() const {
     return movimientoY;
 }
