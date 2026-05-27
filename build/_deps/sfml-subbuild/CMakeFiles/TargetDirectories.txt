@@ -1,0 +1,3 @@
+/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-subbuild/CMakeFiles/sfml-populate.dir
+/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-subbuild/CMakeFiles/edit_cache.dir
+/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/_deps/sfml-subbuild/CMakeFiles/rebuild_cache.dir
