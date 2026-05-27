@@ -14,6 +14,7 @@ class Juego {
 
         sf::Texture texturaMapa;
         sf::Sprite spriteMapa;
+        sf::Image imagenMapaColision;
 
         void procesarEventos();
         void actualizar();

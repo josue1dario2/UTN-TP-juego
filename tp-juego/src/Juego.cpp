@@ -24,6 +24,10 @@ void Juego::iniciar(){
     texturaMapa.loadFromFile("assets/mapa.png");
     spriteMapa.setTexture(texturaMapa);
 
+    // Cargar la imagen en memoria para el sistema de colisiones por color
+    imagenMapaColision.loadFromFile("assets/mapa.png");
+    jugador.setMapaColision(&imagenMapaColision);
+
     while (ventana.isOpen()){
 
         //obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
@@ -54,8 +58,21 @@ void Juego::actualizar() {
     jugador.actualizar(deltaTime);
 
 
-    // Seguir al jugador con la cámara
-    vista.setCenter(jugador.getPosicion());
+    sf::Vector2f posJugador = jugador.getPosicion();
+    sf::Vector2u tamanoMapa = texturaMapa.getSize();
+    sf::Vector2f tamanoVista = vista.getSize();
+
+    float cx = posJugador.x;
+    float cy = posJugador.y;
+
+    // Limitar el centro de la cámara para que nunca muestre el exterior (el vacío negro)
+    if (cx < tamanoVista.x / 2.f) cx = tamanoVista.x / 2.f;
+    if (cx > tamanoMapa.x - tamanoVista.x / 2.f) cx = tamanoMapa.x - tamanoVista.x / 2.f;
+
+    if (cy < tamanoVista.y / 2.f) cy = tamanoVista.y / 2.f;
+    if (cy > tamanoMapa.y - tamanoVista.y / 2.f) cy = tamanoMapa.y - tamanoVista.y / 2.f;
+
+    vista.setCenter(cx, cy);
     ventana.setView(vista);
 }
 
