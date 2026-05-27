@@ -357,6 +357,30 @@ src/Arma.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Arma.cpp.s
 .PHONY : src/Arma.cpp.s
 
+src/ArmaDatos.o: src/ArmaDatos.cpp.o
+.PHONY : src/ArmaDatos.o
+
+# target to build an object file
+src/ArmaDatos.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o
+.PHONY : src/ArmaDatos.cpp.o
+
+src/ArmaDatos.i: src/ArmaDatos.cpp.i
+.PHONY : src/ArmaDatos.i
+
+# target to preprocess a source file
+src/ArmaDatos.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.i
+.PHONY : src/ArmaDatos.cpp.i
+
+src/ArmaDatos.s: src/ArmaDatos.cpp.s
+.PHONY : src/ArmaDatos.s
+
+# target to generate assembly for a file
+src/ArmaDatos.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.s
+.PHONY : src/ArmaDatos.cpp.s
+
 src/Bala.o: src/Bala.cpp.o
 .PHONY : src/Bala.o
 
@@ -404,6 +428,30 @@ src/Entidad.s: src/Entidad.cpp.s
 src/Entidad.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Entidad.cpp.s
 .PHONY : src/Entidad.cpp.s
+
+src/Estadistica.o: src/Estadistica.cpp.o
+.PHONY : src/Estadistica.o
+
+# target to build an object file
+src/Estadistica.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Estadistica.cpp.o
+.PHONY : src/Estadistica.cpp.o
+
+src/Estadistica.i: src/Estadistica.cpp.i
+.PHONY : src/Estadistica.i
+
+# target to preprocess a source file
+src/Estadistica.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Estadistica.cpp.i
+.PHONY : src/Estadistica.cpp.i
+
+src/Estadistica.s: src/Estadistica.cpp.s
+.PHONY : src/Estadistica.s
+
+# target to generate assembly for a file
+src/Estadistica.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Estadistica.cpp.s
+.PHONY : src/Estadistica.cpp.s
 
 src/GestorDeArchivos.o: src/GestorDeArchivos.cpp.o
 .PHONY : src/GestorDeArchivos.o
@@ -597,6 +645,54 @@ src/Oleada.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Oleada.cpp.s
 .PHONY : src/Oleada.cpp.s
 
+src/Partida.o: src/Partida.cpp.o
+.PHONY : src/Partida.o
+
+# target to build an object file
+src/Partida.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Partida.cpp.o
+.PHONY : src/Partida.cpp.o
+
+src/Partida.i: src/Partida.cpp.i
+.PHONY : src/Partida.i
+
+# target to preprocess a source file
+src/Partida.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Partida.cpp.i
+.PHONY : src/Partida.cpp.i
+
+src/Partida.s: src/Partida.cpp.s
+.PHONY : src/Partida.s
+
+# target to generate assembly for a file
+src/Partida.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Partida.cpp.s
+.PHONY : src/Partida.cpp.s
+
+src/Personaje.o: src/Personaje.cpp.o
+.PHONY : src/Personaje.o
+
+# target to build an object file
+src/Personaje.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Personaje.cpp.o
+.PHONY : src/Personaje.cpp.o
+
+src/Personaje.i: src/Personaje.cpp.i
+.PHONY : src/Personaje.i
+
+# target to preprocess a source file
+src/Personaje.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Personaje.cpp.i
+.PHONY : src/Personaje.cpp.i
+
+src/Personaje.s: src/Personaje.cpp.s
+.PHONY : src/Personaje.s
+
+# target to generate assembly for a file
+src/Personaje.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ZWave.dir/build.make CMakeFiles/ZWave.dir/src/Personaje.cpp.s
+.PHONY : src/Personaje.cpp.s
+
 src/Zombie.o: src/Zombie.cpp.o
 .PHONY : src/Zombie.o
 
@@ -676,12 +772,18 @@ help:
 	@echo "... src/Arma.o"
 	@echo "... src/Arma.i"
 	@echo "... src/Arma.s"
+	@echo "... src/ArmaDatos.o"
+	@echo "... src/ArmaDatos.i"
+	@echo "... src/ArmaDatos.s"
 	@echo "... src/Bala.o"
 	@echo "... src/Bala.i"
 	@echo "... src/Bala.s"
 	@echo "... src/Entidad.o"
 	@echo "... src/Entidad.i"
 	@echo "... src/Entidad.s"
+	@echo "... src/Estadistica.o"
+	@echo "... src/Estadistica.i"
+	@echo "... src/Estadistica.s"
 	@echo "... src/GestorDeArchivos.o"
 	@echo "... src/GestorDeArchivos.i"
 	@echo "... src/GestorDeArchivos.s"
@@ -706,6 +808,12 @@ help:
 	@echo "... src/Oleada.o"
 	@echo "... src/Oleada.i"
 	@echo "... src/Oleada.s"
+	@echo "... src/Partida.o"
+	@echo "... src/Partida.i"
+	@echo "... src/Partida.s"
+	@echo "... src/Personaje.o"
+	@echo "... src/Personaje.i"
+	@echo "... src/Personaje.s"
 	@echo "... src/Zombie.o"
 	@echo "... src/Zombie.i"
 	@echo "... src/Zombie.s"

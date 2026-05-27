@@ -915,11 +915,15 @@ CMakeFiles/ZWave.dir/src/Juego.cpp.o: \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entidad.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/HUD.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Menu.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Personaje.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Estadistica.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorRecursos.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/istream \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorDeArchivos.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/fstream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iomanip \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/istream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/filesystem \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/copy_options.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/directory_entry.h \
@@ -938,8 +942,8 @@ CMakeFiles/ZWave.dir/src/Juego.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/sstream \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
-  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorRecursos.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ArmaDatos.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Partida.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Mapa.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Jugador.h \
   /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Arma.h \

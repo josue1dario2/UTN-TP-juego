@@ -156,10 +156,24 @@ CMakeFiles/ZWave.dir/src/Arma.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ZWave.dir/src/Arma.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Arma.cpp -o CMakeFiles/ZWave.dir/src/Arma.cpp.s
 
+CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o: CMakeFiles/ZWave.dir/flags.make
+CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ArmaDatos.cpp
+CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o -MF CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o.d -o CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ArmaDatos.cpp
+
+CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ArmaDatos.cpp > CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.i
+
+CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ArmaDatos.cpp -o CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.s
+
 CMakeFiles/ZWave.dir/src/Bala.cpp.o: CMakeFiles/ZWave.dir/flags.make
 CMakeFiles/ZWave.dir/src/Bala.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Bala.cpp
 CMakeFiles/ZWave.dir/src/Bala.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ZWave.dir/src/Bala.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ZWave.dir/src/Bala.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/Bala.cpp.o -MF CMakeFiles/ZWave.dir/src/Bala.cpp.o.d -o CMakeFiles/ZWave.dir/src/Bala.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Bala.cpp
 
 CMakeFiles/ZWave.dir/src/Bala.cpp.i: cmake_force
@@ -173,7 +187,7 @@ CMakeFiles/ZWave.dir/src/Bala.cpp.s: cmake_force
 CMakeFiles/ZWave.dir/src/Oleada.cpp.o: CMakeFiles/ZWave.dir/flags.make
 CMakeFiles/ZWave.dir/src/Oleada.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Oleada.cpp
 CMakeFiles/ZWave.dir/src/Oleada.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ZWave.dir/src/Oleada.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ZWave.dir/src/Oleada.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/Oleada.cpp.o -MF CMakeFiles/ZWave.dir/src/Oleada.cpp.o.d -o CMakeFiles/ZWave.dir/src/Oleada.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Oleada.cpp
 
 CMakeFiles/ZWave.dir/src/Oleada.cpp.i: cmake_force
@@ -187,7 +201,7 @@ CMakeFiles/ZWave.dir/src/Oleada.cpp.s: cmake_force
 CMakeFiles/ZWave.dir/src/HUD.cpp.o: CMakeFiles/ZWave.dir/flags.make
 CMakeFiles/ZWave.dir/src/HUD.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/HUD.cpp
 CMakeFiles/ZWave.dir/src/HUD.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ZWave.dir/src/HUD.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ZWave.dir/src/HUD.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/HUD.cpp.o -MF CMakeFiles/ZWave.dir/src/HUD.cpp.o.d -o CMakeFiles/ZWave.dir/src/HUD.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/HUD.cpp
 
 CMakeFiles/ZWave.dir/src/HUD.cpp.i: cmake_force
@@ -201,7 +215,7 @@ CMakeFiles/ZWave.dir/src/HUD.cpp.s: cmake_force
 CMakeFiles/ZWave.dir/src/Menu.cpp.o: CMakeFiles/ZWave.dir/flags.make
 CMakeFiles/ZWave.dir/src/Menu.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Menu.cpp
 CMakeFiles/ZWave.dir/src/Menu.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ZWave.dir/src/Menu.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ZWave.dir/src/Menu.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/Menu.cpp.o -MF CMakeFiles/ZWave.dir/src/Menu.cpp.o.d -o CMakeFiles/ZWave.dir/src/Menu.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Menu.cpp
 
 CMakeFiles/ZWave.dir/src/Menu.cpp.i: cmake_force
@@ -215,7 +229,7 @@ CMakeFiles/ZWave.dir/src/Menu.cpp.s: cmake_force
 CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o: CMakeFiles/ZWave.dir/flags.make
 CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorDeArchivos.cpp
 CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o -MF CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o.d -o CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorDeArchivos.cpp
 
 CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.i: cmake_force
@@ -229,7 +243,7 @@ CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.s: cmake_force
 CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o: CMakeFiles/ZWave.dir/flags.make
 CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorRecursos.cpp
 CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o -MF CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o.d -o CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorRecursos.cpp
 
 CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.i: cmake_force
@@ -243,7 +257,7 @@ CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.s: cmake_force
 CMakeFiles/ZWave.dir/src/Mapa.cpp.o: CMakeFiles/ZWave.dir/flags.make
 CMakeFiles/ZWave.dir/src/Mapa.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Mapa.cpp
 CMakeFiles/ZWave.dir/src/Mapa.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/ZWave.dir/src/Mapa.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/ZWave.dir/src/Mapa.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/Mapa.cpp.o -MF CMakeFiles/ZWave.dir/src/Mapa.cpp.o.d -o CMakeFiles/ZWave.dir/src/Mapa.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Mapa.cpp
 
 CMakeFiles/ZWave.dir/src/Mapa.cpp.i: cmake_force
@@ -254,6 +268,48 @@ CMakeFiles/ZWave.dir/src/Mapa.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ZWave.dir/src/Mapa.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Mapa.cpp -o CMakeFiles/ZWave.dir/src/Mapa.cpp.s
 
+CMakeFiles/ZWave.dir/src/Personaje.cpp.o: CMakeFiles/ZWave.dir/flags.make
+CMakeFiles/ZWave.dir/src/Personaje.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Personaje.cpp
+CMakeFiles/ZWave.dir/src/Personaje.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/ZWave.dir/src/Personaje.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/Personaje.cpp.o -MF CMakeFiles/ZWave.dir/src/Personaje.cpp.o.d -o CMakeFiles/ZWave.dir/src/Personaje.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Personaje.cpp
+
+CMakeFiles/ZWave.dir/src/Personaje.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ZWave.dir/src/Personaje.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Personaje.cpp > CMakeFiles/ZWave.dir/src/Personaje.cpp.i
+
+CMakeFiles/ZWave.dir/src/Personaje.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ZWave.dir/src/Personaje.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Personaje.cpp -o CMakeFiles/ZWave.dir/src/Personaje.cpp.s
+
+CMakeFiles/ZWave.dir/src/Estadistica.cpp.o: CMakeFiles/ZWave.dir/flags.make
+CMakeFiles/ZWave.dir/src/Estadistica.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Estadistica.cpp
+CMakeFiles/ZWave.dir/src/Estadistica.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/ZWave.dir/src/Estadistica.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/Estadistica.cpp.o -MF CMakeFiles/ZWave.dir/src/Estadistica.cpp.o.d -o CMakeFiles/ZWave.dir/src/Estadistica.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Estadistica.cpp
+
+CMakeFiles/ZWave.dir/src/Estadistica.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ZWave.dir/src/Estadistica.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Estadistica.cpp > CMakeFiles/ZWave.dir/src/Estadistica.cpp.i
+
+CMakeFiles/ZWave.dir/src/Estadistica.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ZWave.dir/src/Estadistica.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Estadistica.cpp -o CMakeFiles/ZWave.dir/src/Estadistica.cpp.s
+
+CMakeFiles/ZWave.dir/src/Partida.cpp.o: CMakeFiles/ZWave.dir/flags.make
+CMakeFiles/ZWave.dir/src/Partida.cpp.o: /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Partida.cpp
+CMakeFiles/ZWave.dir/src/Partida.cpp.o: CMakeFiles/ZWave.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/ZWave.dir/src/Partida.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ZWave.dir/src/Partida.cpp.o -MF CMakeFiles/ZWave.dir/src/Partida.cpp.o.d -o CMakeFiles/ZWave.dir/src/Partida.cpp.o -c /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Partida.cpp
+
+CMakeFiles/ZWave.dir/src/Partida.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ZWave.dir/src/Partida.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Partida.cpp > CMakeFiles/ZWave.dir/src/Partida.cpp.i
+
+CMakeFiles/ZWave.dir/src/Partida.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ZWave.dir/src/Partida.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Partida.cpp -o CMakeFiles/ZWave.dir/src/Partida.cpp.s
+
 # Object files for target ZWave
 ZWave_OBJECTS = \
 "CMakeFiles/ZWave.dir/src/main.cpp.o" \
@@ -262,13 +318,17 @@ ZWave_OBJECTS = \
 "CMakeFiles/ZWave.dir/src/Jugador.cpp.o" \
 "CMakeFiles/ZWave.dir/src/Zombie.cpp.o" \
 "CMakeFiles/ZWave.dir/src/Arma.cpp.o" \
+"CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o" \
 "CMakeFiles/ZWave.dir/src/Bala.cpp.o" \
 "CMakeFiles/ZWave.dir/src/Oleada.cpp.o" \
 "CMakeFiles/ZWave.dir/src/HUD.cpp.o" \
 "CMakeFiles/ZWave.dir/src/Menu.cpp.o" \
 "CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o" \
 "CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o" \
-"CMakeFiles/ZWave.dir/src/Mapa.cpp.o"
+"CMakeFiles/ZWave.dir/src/Mapa.cpp.o" \
+"CMakeFiles/ZWave.dir/src/Personaje.cpp.o" \
+"CMakeFiles/ZWave.dir/src/Estadistica.cpp.o" \
+"CMakeFiles/ZWave.dir/src/Partida.cpp.o"
 
 # External object files for target ZWave
 ZWave_EXTERNAL_OBJECTS =
@@ -279,6 +339,7 @@ ZWave: CMakeFiles/ZWave.dir/src/Entidad.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/Jugador.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/Zombie.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/Arma.cpp.o
+ZWave: CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/Bala.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/Oleada.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/HUD.cpp.o
@@ -286,13 +347,16 @@ ZWave: CMakeFiles/ZWave.dir/src/Menu.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o
 ZWave: CMakeFiles/ZWave.dir/src/Mapa.cpp.o
+ZWave: CMakeFiles/ZWave.dir/src/Personaje.cpp.o
+ZWave: CMakeFiles/ZWave.dir/src/Estadistica.cpp.o
+ZWave: CMakeFiles/ZWave.dir/src/Partida.cpp.o
 ZWave: CMakeFiles/ZWave.dir/build.make
 ZWave: _deps/sfml-build/lib/libsfml-graphics.2.6.2.dylib
 ZWave: _deps/sfml-build/lib/libsfml-window.2.6.2.dylib
 ZWave: _deps/sfml-build/lib/libsfml-audio.2.6.2.dylib
 ZWave: _deps/sfml-build/lib/libsfml-system.2.6.2.dylib
 ZWave: CMakeFiles/ZWave.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable ZWave"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX executable ZWave"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ZWave.dir/link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Copiando assets y datos al directorio de build..."
 	/opt/homebrew/bin/cmake -E copy_directory /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/assets /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/build/assets

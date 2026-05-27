@@ -9,8 +9,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Arma.cpp" "CMakeFiles/ZWave.dir/src/Arma.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Arma.cpp.o.d"
+  "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ArmaDatos.cpp" "CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/ArmaDatos.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Bala.cpp" "CMakeFiles/ZWave.dir/src/Bala.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Bala.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Entidad.cpp" "CMakeFiles/ZWave.dir/src/Entidad.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Entidad.cpp.o.d"
+  "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Estadistica.cpp" "CMakeFiles/ZWave.dir/src/Estadistica.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Estadistica.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorDeArchivos.cpp" "CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/GestorRecursos.cpp" "CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/GestorRecursos.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/HUD.cpp" "CMakeFiles/ZWave.dir/src/HUD.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/HUD.cpp.o.d"
@@ -19,6 +21,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Mapa.cpp" "CMakeFiles/ZWave.dir/src/Mapa.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Mapa.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Menu.cpp" "CMakeFiles/ZWave.dir/src/Menu.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Menu.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Oleada.cpp" "CMakeFiles/ZWave.dir/src/Oleada.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Oleada.cpp.o.d"
+  "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Partida.cpp" "CMakeFiles/ZWave.dir/src/Partida.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Partida.cpp.o.d"
+  "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Personaje.cpp" "CMakeFiles/ZWave.dir/src/Personaje.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Personaje.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Zombie.cpp" "CMakeFiles/ZWave.dir/src/Zombie.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/Zombie.cpp.o.d"
   "/Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/main.cpp" "CMakeFiles/ZWave.dir/src/main.cpp.o" "gcc" "CMakeFiles/ZWave.dir/src/main.cpp.o.d"
   )

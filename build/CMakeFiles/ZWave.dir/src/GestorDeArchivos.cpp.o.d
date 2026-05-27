@@ -833,4 +833,8 @@ CMakeFiles/ZWave.dir/src/GestorDeArchivos.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/sstream \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Personaje.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/ArmaDatos.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Estadistica.h \
+  /Users/josue/Documents/progra2/Z-Ware/UTN-TP-juego/src/Partida.h
