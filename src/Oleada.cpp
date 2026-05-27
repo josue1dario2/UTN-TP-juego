@@ -1,125 +1,117 @@
-// Oleada.cpp - Sistema de oleadas de zombies
+// Oleada.cpp - Implementacion de Oleada segun diagrama UML
 
 #include "Oleada.h"
+#include "Zombie.h"
+#include <iostream>
 #include <cstdlib>
-#include <algorithm>
 
-// Constructor: inicializa todo en cero
 Oleada::Oleada()
-    : oleadaActual(0),
-      totalZombies(0),
-      zombiesSpawnados(0),
-      zombiesMuertos(0),
-      intervaloSpawn(2.0f),
-      timerSpawn(0.f),
-      oleadaActiva(false),
-      tiempoEntreOleadas(5.0f),
-      timerTransicion(0.f),
-      enTransicion(false)
-{
+    : numero(0), enemigosTotales(0), enemigosVivos(0), completada(false) {
 }
 
-// inicia una nueva oleada
+Oleada::~Oleada() {
+    for (auto* z : zombies) {
+        delete z;
+    }
+}
+
+// === Segun diagrama UML ===
+void Oleada::iniciar(int numeroOleada) {
+    numero = numeroOleada;
+    enemigosTotales = 5 + numeroOleada * 3;
+    enemigosVivos = enemigosTotales;
+    completada = false;
+    std::cout << "Oleada " << numero << " iniciada. Enemigos: " << enemigosTotales << std::endl;
+}
+
+void Oleada::actualizar() {
+    if (completada) return;
+    for (auto* z : zombies) {
+        if (z->muerto()) {
+            enemigosVivos--;
+        }
+    }
+    if (enemigosVivos <= 0) {
+        enemigosVivos = 0;
+        completada = true;
+        std::cout << "Oleada " << numero << " completada!" << std::endl;
+    }
+}
+
+// === Compatibilidad con Juego.cpp ===
 void Oleada::iniciarOleada(int numeroOleada) {
-    oleadaActual = numeroOleada;
-
-    // mas zombies por oleada: oleada 1 = 8, oleada 5 = 20, oleada 10 = 35
-    totalZombies = 5 + numeroOleada * 3;
-
-    zombiesSpawnados = 0;
-    zombiesMuertos = 0;
-
-    // spawning mas rapido en oleadas avanzadas (minimo 0.4s)
-    intervaloSpawn = std::max(0.4f, 2.0f - numeroOleada * 0.15f);
-    timerSpawn = 0.f;
-
-    oleadaActiva = true;
-    enTransicion = false;
+    numero = numeroOleada;
+    enemigosTotales = 5 + numeroOleada * 3;
+    enemigosVivos = enemigosTotales;
+    completada = false;
 }
 
-// actualiza: actualiza timers cada frame
 void Oleada::actualizar(float dt) {
-    // --- Transicion: descanso entre oleadas ---
-    if (enTransicion) {
-        timerTransicion -= dt;
-        if (timerTransicion <= 0.f) {
-            enTransicion = false;
-            iniciarOleada(oleadaActual + 1);
+    if (completada) return;
+    for (auto* z : zombies) {
+        if (z->muerto()) {
+            enemigosVivos--;
         }
-        return;
     }
-
-    // --- Oleada activa: spawning ---
-    if (oleadaActiva) {
-        if (timerSpawn > 0.f) {
-            timerSpawn -= dt;
-        }
-
-        if (oleadaCompletada()) {
-            oleadaActiva = false;
-            enTransicion = true;
-            timerTransicion = tiempoEntreOleadas;
-        }
+    if (enemigosVivos <= 0) {
+        enemigosVivos = 0;
+        completada = true;
     }
 }
 
-// true si hay que spawnear un nuevo zombie
-bool Oleada::debeSpawnearZombie() {
-    if (oleadaActiva && timerSpawn <= 0.f && zombiesSpawnados < totalZombies) {
-        timerSpawn = intervaloSpawn;
-        zombiesSpawnados++;
-        return true;
-    }
-    return false;
-}
-
-// notifica que un zombie fue eliminado
-void Oleada::zombieMuerto() {
-    zombiesMuertos++;
-}
-
-// true si la oleada termino (todos spawneados y todos muertos)
 bool Oleada::oleadaCompletada() const {
-    return zombiesSpawnados >= totalZombies && zombiesMuertos >= totalZombies;
+    return completada;
 }
 
-// determina que tipo de zombie aparece segun la oleada
+bool Oleada::debeSpawnearZombie() {
+    // Por implementar: controlar spawn rate
+    return !completada && enemigosVivos > 0;
+}
+
+void Oleada::zombieMuerto() {
+    enemigosVivos--;
+    if (enemigosVivos <= 0) {
+        enemigosVivos = 0;
+        completada = true;
+    }
+}
+
+int Oleada::getOleadaActual() const {
+    return numero;
+}
+
+int Oleada::getZombiesRestantes() const {
+    return enemigosVivos;
+}
+
+bool Oleada::estaOleadaActiva() const {
+    return !completada;
+}
+
 TipoZombie Oleada::getZombieTypeForWave() const {
     int dado = std::rand() % 100;
-
-    if (oleadaActual <= 3) {
+    if (numero <= 3) {
         return (dado < 85) ? TipoZombie::NORMAL : TipoZombie::RAPIDO;
     }
-
-    if (oleadaActual <= 6) {
+    if (numero <= 6) {
         if (dado < 55) return TipoZombie::NORMAL;
         if (dado < 85) return TipoZombie::RAPIDO;
         return TipoZombie::PESADO;
     }
-
     if (dado < 35) return TipoZombie::NORMAL;
     if (dado < 65) return TipoZombie::RAPIDO;
     return TipoZombie::PESADO;
 }
 
-// --- Getters ---
-
-int Oleada::getOleadaActual() const {
-    return oleadaActual;
+// === Getters UML ===
+int Oleada::getNumero() const {
+    return numero;
 }
 
-int Oleada::getZombiesRestantes() const {
-    return totalZombies - zombiesMuertos;
+int Oleada::getEnemigosVivos() const {
+    return enemigosVivos;
 }
 
-bool Oleada::estaOleadaActiva() const {
-    return oleadaActiva;
-}
-
-bool Oleada::estaEnTransicion() const {
-    return enTransicion;
-}
-
-float Oleada::getTemporizadorTransicion() const {
-    return timerTransicion;
+bool Oleada::estaCompletada() const {
+    return completada;
 }

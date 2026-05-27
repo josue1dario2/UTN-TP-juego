@@ -18,7 +18,7 @@
 
 // Forward declarations para punteros
 class Jugador;
-class Enemigo;
+class Zombie;
 class Bala;
 class Arma;
 
@@ -69,7 +69,7 @@ private:
     float timerTransicionOleada;
 
     Jugador* jugador;
-    std::vector<Enemigo*> zombies;
+    std::vector<Zombie*> zombies;
     std::vector<Bala*> balas;
 
     Oleada gestorOleadas;

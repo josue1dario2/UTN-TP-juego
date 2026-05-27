@@ -22,7 +22,6 @@ set(SOURCES
     src/main.cpp
     src/Juego.cpp
     src/Entidad.cpp
-    src/Enemigo.cpp
     src/Jugador.cpp
     src/Zombie.cpp
     src/Arma.cpp

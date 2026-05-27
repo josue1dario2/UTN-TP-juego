@@ -1,44 +1,48 @@
 #pragma once
-// Zombie.h - Clase enemigo zombie (hereda de Enemigo)
+// Zombie.h - Clase zombie segun diagrama UML
 
-#include "Enemigo.h"
+#include "Entidad.h"
 
-// Tipos de zombie
 enum class TipoZombie {
-    NORMAL,  // Zombie estandar: balance vida/velocidad/dano
-    RAPIDO,    // Zombie rapido: poca vida pero muy veloz
-    PESADO    // Zombie pesado: mucha vida y dano pero lento
+    NORMAL,
+    RAPIDO,
+    PESADO
 };
 
-class Zombie : public Enemigo {
+class Zombie : public Entidad {
 private:
-    TipoZombie tipo;
-    int dano;
+    int tipo;
+    int vida;
+    int ataque;
+    float velocidad;
+
     int dineroAlMorir;
     float cooldownAtaque;
     float timerAtaque;
-
     sf::Vector2f posicionObjetivo;
-
-    float timerCaminar;
     float escalaBase;
     int anchoFrame;
     int altoFrame;
+    float timerCaminar;
 
 public:
-    Zombie(sf::Texture& textura, sf::Vector2f posicionSpawn, TipoZombie tipo);
+    Zombie(sf::Texture& textura, sf::Vector2f posicionSpawn, TipoZombie zTipo);
+    ~Zombie();
 
     void update(float deltaTime) override;
     void render(sf::RenderWindow& ventana) override;
 
-    void moverHacia(sf::Vector2f objetivo, float deltaTime);
-    void setObjetivo(sf::Vector2f objetivo) override;
-    bool puedeAtacar() const;
-    void atacar() override;
-    void quitarVida(int cantidad) override;
-    bool muerto() const override;
+    // Segun diagrama UML
+    void atacar();
+    void quitarVida(int cantidad);
+    bool muerto() const;
 
+    // Metodos que necesita Juego.cpp
+    void moverHacia(sf::Vector2f objetivo, float deltaTime);
+    void setObjetivo(sf::Vector2f objetivo);
+    bool puedeAtacar() const;
     int getDano() const;
     int getDineroAlMorir() const;
     TipoZombie getTipo() const;
+    bool esPosicionValida(sf::Vector2f nuevaPos) const;
 };

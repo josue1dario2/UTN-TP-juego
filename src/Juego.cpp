@@ -1,6 +1,5 @@
 #include "Juego.h"
 #include "Jugador.h"
-#include "Enemigo.h"
 #include "Zombie.h"
 #include "Arma.h"
 #include "Bala.h"
@@ -330,7 +329,7 @@ void Juego::spawnearZombie() {
     sf::Texture* tex = &texturaRespaldoZombie;
     if (recursos.tieneTextura("zombie")) tex = &recursos.getTextura("zombie");
     
-    Enemigo* nuevoZombie = new Zombie(*tex, posSpawn, tipo);
+    Zombie* nuevoZombie = new Zombie(*tex, posSpawn, tipo);
     nuevoZombie->setMapa(&mapa);
     zombies.push_back(nuevoZombie);
 }
@@ -346,9 +345,7 @@ void Juego::verificarColisiones() {
                 z->recibirDano(b->getDano());
                 b->recibirDano(1000);
                 if (!z->estaVivo() && jugador) {
-                    if (Zombie* zPtr = dynamic_cast<Zombie*>(z)) {
-                        jugador->agregarPuntos(zPtr->getDineroAlMorir());
-                    }
+                    jugador->agregarPuntos(z->getDineroAlMorir());
                     gestorOleadas.zombieMuerto();
                 }
                 break;
