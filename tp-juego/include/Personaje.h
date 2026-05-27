@@ -13,15 +13,22 @@ private:
     
     std::string habilidad;
 
+
     sf::Vector2f posicionAnterior;
     float movimientoX;
     float movimientoY;
+
+    // Sistema de colisiones por mapa
+    const sf::Image* mapaColision;
+    bool esPosicionValida(float x, float y) const;
+
 
 public:
 
     Personaje();
 
     void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
+    void setMapaColision(const sf::Image* mapa);
 
     void actualizar(float deltaTime) override;
 
