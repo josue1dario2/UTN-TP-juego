@@ -1,7 +1,7 @@
 #pragma once
-// Zombie.h - Clase enemigo zombie
+// Zombie.h - Clase enemigo zombie (hereda de Enemigo)
 
-#include "Entidad.h"
+#include "Enemigo.h"
 
 // Tipos de zombie
 enum class TipoZombie {
@@ -10,7 +10,7 @@ enum class TipoZombie {
     PESADO    // Zombie pesado: mucha vida y dano pero lento
 };
 
-class Zombie : public Entidad {
+class Zombie : public Enemigo {
 private:
     TipoZombie tipo;
     int dano;
@@ -32,9 +32,11 @@ public:
     void render(sf::RenderWindow& ventana) override;
 
     void moverHacia(sf::Vector2f objetivo, float deltaTime);
-    void setObjetivo(sf::Vector2f objetivo);
+    void setObjetivo(sf::Vector2f objetivo) override;
     bool puedeAtacar() const;
-    void atacar();
+    void atacar() override;
+    void quitarVida(int cantidad) override;
+    bool muerto() const override;
 
     int getDano() const;
     int getDineroAlMorir() const;

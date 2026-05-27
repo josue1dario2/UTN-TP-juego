@@ -5,7 +5,7 @@
 #include <cmath>
 
 Zombie::Zombie(sf::Texture& textura, sf::Vector2f posicionSpawn, TipoZombie zTipo)
-    : Entidad(textura),
+    : Enemigo(textura),
       tipo(zTipo),
       dano(10),
       dineroAlMorir(50),
@@ -164,4 +164,12 @@ int Zombie::getDineroAlMorir() const {
 
 TipoZombie Zombie::getTipo() const {
     return tipo;
+}
+
+void Zombie::quitarVida(int cantidad) {
+    recibirDano(cantidad);
+}
+
+bool Zombie::muerto() const {
+    return !estaVivo();
 }
