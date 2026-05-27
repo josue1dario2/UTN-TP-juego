@@ -10,6 +10,13 @@ protected:
     sf::Texture textura;
     sf::Sprite sprite;
 
+    //------------HITBOX------------
+    sf::FloatRect hitbox;
+
+    sf::RectangleShape hitboxDebug;
+
+    bool mostrarHitbox;
+
 public:
 
     ObjetoGrafico();
@@ -17,9 +24,11 @@ public:
     //------------CONFIGURACION DE SPRITE------------
     bool cargarTextura(const std::string& ruta);
     void centrarOrigen();
-    void setearTamanioSprite(int ancho, int alto);
+    void setearTamanioSprite(int ancho, int alto); //ajusta cuantos pixeles de la textura se muestran en el sprite
+    void escalarSprite(float factorX, float factorY); //multiplica el tamaño del sprite por los factores dados
 
     //------------POSICIONAMIENTO------------
+    void setPosicionCentrado(float x, float y); //tiene en cuenta el origen centrado del sprite para posicionar
     void setPosicion(float x, float y);
     void mover(float offsetX, float offsetY);
 
@@ -29,5 +38,9 @@ public:
 
     //------------GETTERS------------
     sf::Vector2f getPosicion() const;
+
+    //------------HITBOX------------
+    void setHitbox(float ancho, float alto);
+    sf::FloatRect getHitbox() const;
 
 };

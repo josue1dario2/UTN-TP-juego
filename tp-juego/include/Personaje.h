@@ -13,9 +13,15 @@ private:
     
     std::string habilidad;
 
+
+    sf::Vector2f posicionAnterior;
+    float movimientoX;
+    float movimientoY;
+
     // Sistema de colisiones por mapa
     const sf::Image* mapaColision;
     bool esPosicionValida(float x, float y) const;
+
 
 public:
 
@@ -26,5 +32,15 @@ public:
 
     void actualizar(float deltaTime) override;
 
-    void controlar(float movimiento);   // Movimiento con W, A, S, D
+    //void controlar(float movimiento);   // Movimiento con W, A, S, D
+
+    void guardarPosicionAnterior();
+
+    void volverPosicionAnteriorX();
+
+    void volverPosicionAnteriorY();
+
+    float getMovimientoX() const;
+
+    float getMovimientoY() const;
 };

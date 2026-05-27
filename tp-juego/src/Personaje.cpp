@@ -15,10 +15,15 @@ Personaje::Personaje() {
     cargarTextura("assets/jugador2.png");
 
     setearTamanioSprite(13, 16);
-    centrarOrigen();
+    centrarOrigen(); // centrar el origen del sprite para facilitar el posicionamiento
+    escalarSprite(3.f, 3.f);
 
-    sprite.setScale(3.f,3.f);
-    sprite.setPosition(1920.f, 1080.f);
+    setHitbox(13.f * 2.f, 16.f * 2.1f); // Ajustar el tamaño del hitbox según el sprite escalado
+
+    setPosicionCentrado(1720.f, 1080.f);
+
+    movimientoX = 0.f;
+    movimientoY = 0.f;
 }
 
 void Personaje::setMapaColision(const sf::Image* mapa) {
@@ -38,11 +43,16 @@ bool Personaje::esPosicionValida(float x, float y) const {
     // Obtener color del píxel del mapa
     sf::Color color = mapaColision->getPixel(static_cast<unsigned int>(x), static_cast<unsigned int>(y));
 
-    // Si es negro (0,0,0), blanco (255,255,255), fucsia estándar (255,0,255) o el fucsia exacto del mapa (238,0,255)
-    if ((color.r == 0 && color.g == 0 && color.b == 0) || 
-        (color.r == 255 && color.g == 255 && color.b == 255) ||
-        (color.r == 255 && color.g == 0 && color.b == 255) ||
-        (color.r == 238 && color.g == 0 && color.b == 255)) {
+    // Tolerancia para negro (muy oscuro / vacío)
+    bool esNegro = (color.r < 30 && color.g < 30 && color.b < 30);
+    
+    // Tolerancia para blanco
+    bool esBlanco = (color.r > 225 && color.g > 225 && color.b > 225);
+    
+    // Tolerancia para fucsia estándar (255,0,255) y el fucsia exacto del mapa (238,0,255)
+    bool esFucsia = (color.r > 200 && color.g < 50 && color.b > 200);
+
+    if (esNegro || esBlanco || esFucsia) {
         return false;
     }
 
@@ -107,9 +117,49 @@ void Personaje::controlar(float movimiento) {
     }
 }
 
+void Personaje::guardarPosicionAnterior() {
+    posicionAnterior = getPosicion();
+}
+
+void Personaje::volverPosicionAnteriorX() {
+    setPosicionCentrado(posicionAnterior.x, getPosicion().y);
+}
+
+void Personaje::volverPosicionAnteriorY() {
+    setPosicionCentrado(getPosicion().x, posicionAnterior.y);
+}
+
 void Personaje::actualizar(float deltaTime) {
     // lógica adicional para el personaje, como animaciones o habilidades
-    float movimiento = velocidad * deltaTime;
-    controlar(movimiento);
+    movimientoX = 0.f;
+    movimientoY = 0.f;
 
+    float movimiento = velocidad * deltaTime;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        movimientoX -= movimiento;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        movimientoX += movimiento;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        movimientoY -= movimiento;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        movimientoY += movimiento;
+    }
+
+    // Aplica las colisiones del mapa y mueve al personaje suavemente
+    controlar(movimiento);
+}
+
+float Personaje::getMovimientoX() const {
+    return movimientoX;
+}
+
+float Personaje::getMovimientoY() const {
+    return movimientoY;
 }
