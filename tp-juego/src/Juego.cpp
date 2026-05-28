@@ -8,6 +8,8 @@ Juego::Juego() {
 
     ventana.create(modoEscritorio, "Mi Juego", sf::Style::Fullscreen);
 
+    ventana.setMouseCursorVisible(false); // Ocultar el cursor estándar de la computadora
+
     ventana.setFramerateLimit(60);
 
     vista.setSize(1280.f, 720.f);
@@ -190,6 +192,9 @@ void Juego::actualizar() {
 
     vista.setCenter(cx, cy);
     ventana.setView(vista);
+
+    // Actualizar la mira personalizada y hacerla girar
+    mira.actualizar(ventana, deltaTime);
 }
 
 // Dibuja todos los elementos en pantalla
@@ -208,6 +213,9 @@ void Juego::renderizar() {
 
     // Dibujar la estela del disparo del arma
     jugador.getArma().dibujar(ventana);
+
+    // Dibujar el puntero personalizado (la mira giratoria) encima de todo
+    mira.dibujar(ventana);
 
     ventana.display();
 }
