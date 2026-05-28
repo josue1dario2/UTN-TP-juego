@@ -28,11 +28,8 @@ public:
     Personaje();
 
     void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
-    void setMapaColision(const sf::Image* mapa);
 
     void actualizar(float deltaTime) override;
-
-    //void controlar(float movimiento);   // Movimiento con W, A, S, D
 
     void guardarPosicionAnterior();
 

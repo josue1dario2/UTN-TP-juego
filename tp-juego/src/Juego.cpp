@@ -92,10 +92,6 @@ void Juego::iniciar(){
     texturaMapa.loadFromFile("assets/mapa.png");
     spriteMapa.setTexture(texturaMapa);
 
-    // Cargar la imagen en memoria para el sistema de colisiones por color
-    imagenMapaColision.loadFromFile("assets/mapa.png");
-    jugador.setMapaColision(&imagenMapaColision);
-
     while (ventana.isOpen()){
 
         //obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
