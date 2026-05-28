@@ -82,3 +82,7 @@ float Personaje::getMovimientoX() const {
 float Personaje::getMovimientoY() const {
     return movimientoY;
 }
+
+Arma& Personaje::getArma() {
+    return armaEquipada;
+}
