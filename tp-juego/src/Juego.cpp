@@ -93,7 +93,8 @@ void Juego::iniciar(){
 
     texturaMapa.loadFromFile("assets/mapa.png");
     spriteMapa.setTexture(texturaMapa);
-    
+
+
 
     while (ventana.isOpen()){
 
@@ -133,9 +134,6 @@ void Juego::procesarEventos() {
 void Juego::actualizar() {
     jugador.actualizar(deltaTime);
 
-    float deltaX = 12.f;
-    float deltaY = 18.f;
-
     //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
     jugador.guardarPosicionAnterior();
     jugador.mover(jugador.getMovimientoX(), 0.f);
@@ -156,21 +154,17 @@ void Juego::actualizar() {
         }
     }
 
-    sf::Vector2f posJugador = jugador.getPosicion();
-    sf::Vector2u tamanoMapa = texturaMapa.getSize();
-    sf::Vector2f tamanoVista = vista.getSize();
-
-    float cx = posJugador.x;
-    float cy = posJugador.y;
+    auxVistaX = jugador.getPosicion().x;
+    auxVistaY = jugador.getPosicion().y;
 
     // Limitar el centro de la cámara para que nunca muestre el exterior (el vacío negro)
-    if (cx < tamanoVista.x / 2.f) cx = tamanoVista.x / 2.f;
-    if (cx > tamanoMapa.x - tamanoVista.x / 2.f) cx = tamanoMapa.x - tamanoVista.x / 2.f;
+    if (auxVistaX < vista.getSize().x / 2.f) auxVistaX = vista.getSize().x / 2.f;
+    if (auxVistaX > texturaMapa.getSize().x - vista.getSize().x / 2.f) auxVistaX = texturaMapa.getSize().x - vista.getSize().x / 2.f;
 
-    if (cy < tamanoVista.y / 2.f) cy = tamanoVista.y / 2.f;
-    if (cy > tamanoMapa.y - tamanoVista.y / 2.f) cy = tamanoMapa.y - tamanoVista.y / 2.f;
+    if (auxVistaY < vista.getSize().y / 2.f) auxVistaY = vista.getSize().y / 2.f;
+    if (auxVistaY > texturaMapa.getSize().y - vista.getSize().y / 2.f) auxVistaY = texturaMapa.getSize().y - vista.getSize().y / 2.f;
 
-    vista.setCenter(cx, cy);
+    vista.setCenter(auxVistaX, auxVistaY);
     ventana.setView(vista);
 
     // Actualizar la mira personalizada y hacerla girar

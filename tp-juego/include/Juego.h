@@ -11,6 +11,9 @@ class Juego {
         sf::RenderWindow ventana;
         sf::View vista;
 
+        float auxVistaX;
+        float auxVistaY;
+
         // RELOJ PARA CONTROLAR EL TIEMPO ENTRE FRAMES
         sf::Clock relojDelta;
         float deltaTime;
@@ -25,7 +28,7 @@ class Juego {
 
         sf::Texture texturaMapa;
         sf::Sprite spriteMapa;
-        
+
         Puntero mira;
 
         void procesarEventos();
