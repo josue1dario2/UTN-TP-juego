@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Personaje.h"
 #include "ObjetoMapa.h"
+#include "Puntero.h"
 #include <vector>
 
 class Juego {
@@ -24,6 +25,8 @@ class Juego {
 
         sf::Texture texturaMapa;
         sf::Sprite spriteMapa;
+        
+        Puntero mira;
 
         void procesarEventos();
         void actualizar();

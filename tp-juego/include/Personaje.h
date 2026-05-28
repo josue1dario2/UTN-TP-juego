@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Entidad.h"
+#include "Arma.h"
 
 
 class Personaje : public Entidad {
@@ -20,7 +21,9 @@ private:
 
     // Sistema de colisiones por mapa
     const sf::Image* mapaColision;
-    bool esPosicionValida(float x, float y) const;
+
+    // Arma equipada del jugador
+    Arma armaEquipada;
 
 
 public:
@@ -28,8 +31,11 @@ public:
     Personaje();
 
     void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
+    
+    Arma& getArma();
 
     void actualizar(float deltaTime) override;
+    void controlar(float movimiento);
 
     void guardarPosicionAnterior();
 

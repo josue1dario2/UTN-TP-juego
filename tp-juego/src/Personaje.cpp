@@ -22,6 +22,8 @@ Personaje::Personaje() {
 
     setPosicionCentrado(1720.f, 1080.f);
 
+    armaEquipada = Arma(1, "Pistola de Supervivencia", 35, 600.f, 0.f);
+
     movimientoX = 0.f;
     movimientoY = 0.f;
 }
