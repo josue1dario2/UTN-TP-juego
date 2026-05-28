@@ -93,6 +93,7 @@ void Juego::iniciar(){
 
     texturaMapa.loadFromFile("assets/mapa.png");
     spriteMapa.setTexture(texturaMapa);
+    
 
     while (ventana.isOpen()){
 
