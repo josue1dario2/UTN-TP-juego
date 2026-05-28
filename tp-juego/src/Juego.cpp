@@ -118,6 +118,15 @@ void Juego::procesarEventos() {
         if(evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::Escape){
             ventana.close();
         }
+
+        // Detectar clic izquierdo del mouse para disparar
+        if (evento.type == sf::Event::MouseButtonPressed && evento.mouseButton.button == sf::Mouse::Left) {
+            sf::Vector2i posicionMouseVentana = sf::Mouse::getPosition(ventana);
+            sf::Vector2f posicionMouseMundo = ventana.mapPixelToCoords(posicionMouseVentana);
+            
+            // Disparar el arma equipada apuntando al mouse
+            jugador.getArma().disparar(jugador.getPosicion(), posicionMouseMundo, imagenMapaColision);
+        }
     }
 }
 
@@ -125,13 +134,25 @@ void Juego::procesarEventos() {
 void Juego::actualizar() {
     jugador.actualizar(deltaTime);
 
+    float deltaX = 12.f;
+    float deltaY = 18.f;
+
     //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
     jugador.guardarPosicionAnterior();
     jugador.mover(jugador.getMovimientoX(), 0.f);
     for(auto& obstaculo : obstaculos) {
         if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
             jugador.volverPosicionAnteriorX();
+            break;
         }
+    }
+    // Colisión por color del mapa (fucsia/negro)
+    sf::Vector2f posH = jugador.getPosicion();
+    if (!jugador.esPosicionValida(posH.x - deltaX, posH.y - deltaY) || 
+        !jugador.esPosicionValida(posH.x + deltaX, posH.y - deltaY) ||
+        !jugador.esPosicionValida(posH.x - deltaX, posH.y + deltaY) ||
+        !jugador.esPosicionValida(posH.x + deltaX, posH.y + deltaY)) {
+        jugador.volverPosicionAnteriorX();
     }
 
     //movimiento vertical jugador
@@ -140,7 +161,16 @@ void Juego::actualizar() {
     for(auto& obstaculo : obstaculos) {
         if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
             jugador.volverPosicionAnteriorY();
+            break;
         }
+    }
+    // Colisión por color del mapa (fucsia/negro)
+    sf::Vector2f posV = jugador.getPosicion();
+    if (!jugador.esPosicionValida(posV.x - deltaX, posV.y - deltaY) || 
+        !jugador.esPosicionValida(posV.x + deltaX, posV.y - deltaY) ||
+        !jugador.esPosicionValida(posV.x - deltaX, posV.y + deltaY) ||
+        !jugador.esPosicionValida(posV.x + deltaX, posV.y + deltaY)) {
+        jugador.volverPosicionAnteriorY();
     }
 
 
@@ -175,6 +205,9 @@ void Juego::renderizar() {
     }
 
     jugador.dibujar(ventana);
+
+    // Dibujar la estela del disparo del arma
+    jugador.getArma().dibujar(ventana);
 
     ventana.display();
 }

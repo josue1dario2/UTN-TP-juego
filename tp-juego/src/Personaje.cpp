@@ -22,12 +22,18 @@ Personaje::Personaje() {
 
     setPosicionCentrado(1720.f, 1080.f);
 
+    armaEquipada = Arma(1, "Pistola de Supervivencia", 35, 600.f, 0.f);
+
     movimientoX = 0.f;
     movimientoY = 0.f;
 }
 
 void Personaje::setMapaColision(const sf::Image* mapa) {
     mapaColision = mapa;
+}
+
+Arma& Personaje::getArma() {
+    return armaEquipada;
 }
 
 bool Personaje::esPosicionValida(float x, float y) const {
@@ -46,13 +52,10 @@ bool Personaje::esPosicionValida(float x, float y) const {
     // Tolerancia para negro (muy oscuro / vacío)
     bool esNegro = (color.r < 30 && color.g < 30 && color.b < 30);
     
-    // Tolerancia para blanco
-    bool esBlanco = (color.r > 225 && color.g > 225 && color.b > 225);
-    
-    // Tolerancia para fucsia estándar (255,0,255) y el fucsia exacto del mapa (238,0,255)
+    // Tolerancia para fucsia estándar (255,0,255) y el fucsia exacto del mapa (238,0,255 o similar)
     bool esFucsia = (color.r > 200 && color.g < 50 && color.b > 200);
 
-    if (esNegro || esBlanco || esFucsia) {
+    if (esNegro || esFucsia) {
         return false;
     }
 
@@ -152,8 +155,10 @@ void Personaje::actualizar(float deltaTime) {
         movimientoY += movimiento;
     }
 
-    // Aplica las colisiones del mapa y mueve al personaje suavemente
-    controlar(movimiento);
+    // Actualiza los proyectiles del arma con el mapa de colisión
+    if (mapaColision) {
+        armaEquipada.actualizar(deltaTime, *mapaColision);
+    }
 }
 
 float Personaje::getMovimientoX() const {
