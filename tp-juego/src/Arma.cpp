@@ -39,6 +39,6 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
 
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-            proyectiles.emplace_back(getPosicion(), posicionMouse, 1000.f, 5.f);
+            proyectiles.emplace_back(getPosicion(), posicionMouse, 1000.f, 500.f);
         }
 }

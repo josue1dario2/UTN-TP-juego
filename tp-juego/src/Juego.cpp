@@ -129,6 +129,12 @@ void Juego::actualizar() {
         proyectil.actualizar(deltaTime);
     }
 
+    proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(),[](const Proyectil& p) {
+        return p.debeDestruirse();
+    }
+    ), proyectiles.end()
+    );
+
     auxVistaX = jugador.getPosicion().x;
     auxVistaY = jugador.getPosicion().y;
 
