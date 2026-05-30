@@ -7,6 +7,7 @@ ObjetoGrafico::ObjetoGrafico()
     hitboxDebug.setFillColor(sf::Color::Transparent);
     hitboxDebug.setOutlineColor(sf::Color::Red);
     hitboxDebug.setOutlineThickness(2.f);
+    angulo = 0.f;
 
 }
 
@@ -89,6 +90,16 @@ sf::Vector2f ObjetoGrafico::getPosicion() const
 {
     return sprite.getPosition();
 }
+
+float ObjetoGrafico::getAngulo() const{
+    return angulo;
+}
+
+void ObjetoGrafico::setAngulo(float nuevoAngulo){
+    angulo = nuevoAngulo;
+    sprite.setRotation(angulo);
+}
+
 
 void ObjetoGrafico::setHitbox(float ancho, float alto)
 {

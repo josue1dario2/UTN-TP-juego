@@ -118,21 +118,12 @@ void Juego::procesarEventos() {
         if(evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::Escape){
             ventana.close();
         }
-
-        // Detectar clic izquierdo del mouse para disparar
-        if (evento.type == sf::Event::MouseButtonPressed && evento.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2i posicionMouseVentana = sf::Mouse::getPosition(ventana);
-            sf::Vector2f posicionMouseMundo = ventana.mapPixelToCoords(posicionMouseVentana);
-            
-            // Disparar el arma equipada apuntando al mouse
-            jugador.getArma().disparar(jugador.getPosicion(), posicionMouseMundo);
-        }
     }
 }
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
-    jugador.actualizar(deltaTime);
+    jugador.actualizar(deltaTime, mira.getPosicion());
 
     //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
     jugador.guardarPosicionAnterior();
@@ -184,8 +175,6 @@ void Juego::renderizar() {
     }
 
     jugador.dibujar(ventana);
-
-    // Dibujar la estela del disparo del arma
     jugador.getArma().dibujar(ventana);
 
     // Dibujar el puntero personalizado (la mira giratoria) encima de todo

@@ -1,4 +1,5 @@
 #include "Personaje.h"
+#include <cmath>
 
 Personaje::Personaje() {
     // Valores por defecto por ahora
@@ -10,7 +11,6 @@ Personaje::Personaje() {
     armaduraActual = 50.f;
     velocidad = 200.f;
     habilidad = "Ninguna";
-    mapaColision = nullptr;
 
     cargarTextura("assets/jugador2.png");
 
@@ -22,7 +22,9 @@ Personaje::Personaje() {
 
     setPosicionCentrado(1720.f, 1080.f);
 
-    armaEquipada = Arma(1, "Pistola de Supervivencia", 35, 600.f, 0.f);
+    inventarioArmas.emplace_back();
+
+    armaEquipada = 0;
 
     movimientoX = 0.f;
     movimientoY = 0.f;
@@ -51,7 +53,7 @@ void Personaje::volverPosicionAnteriorY() {
     setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
-void Personaje::actualizar(float deltaTime) {
+void Personaje::actualizar(float deltaTime, const sf::Vector2f& posicionMouse) {
     // lógica adicional para el personaje, como animaciones o habilidades
     movimientoX = 0.f;
     movimientoY = 0.f;
@@ -73,6 +75,24 @@ void Personaje::actualizar(float deltaTime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         movimientoY += movimiento;
     }
+
+    //seguimiento de arma equipada
+    if (!inventarioArmas.empty()) {
+        Arma& arma = inventarioArmas[armaEquipada];
+        arma.setPosicionCentrado(getPosicion().x, getPosicion().y);
+        
+        // Actualizar el ángulo de la mira
+        float deltaX = posicionMouse.x - getPosicion().x;
+        float deltaY =  getPosicion().y - posicionMouse.y;
+
+        if (deltaX < 0) {
+            arma.escalarSprite(2.f, -2.f); // Voltear horizontalmente
+        } else {
+            arma.escalarSprite(2.f, 2.f); // Escala normal
+        }
+        
+        arma.setAngulo(std::atan2(deltaY, deltaX) * -180.f / 3.14159f);
+    }
 }
 
 float Personaje::getMovimientoX() const {
@@ -84,5 +104,5 @@ float Personaje::getMovimientoY() const {
 }
 
 Arma& Personaje::getArma() {
-    return armaEquipada;
+    return inventarioArmas[armaEquipada];
 }

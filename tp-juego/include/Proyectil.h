@@ -8,14 +8,15 @@ private:
     float alcanceMax;
     float distanciaRecorrida;
     bool activo;
-    sf::CircleShape formaBala;
 
 public:
     Proyectil(sf::Vector2f posInicial, sf::Vector2f dir, float alc = 600.f, float vel = 800.f);
 
     void actualizar(float deltaTime) override;
-    void dibujar(sf::RenderWindow& ventana) override;
 
-    void verificarColisiones();
+    sf::Vector2f getPosicion() const {
+        return direccion;
+    }
+
     bool isActivo() const;
 };

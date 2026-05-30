@@ -19,11 +19,9 @@ private:
     float movimientoX;
     float movimientoY;
 
-    // Sistema de colisiones por mapa
-    const sf::Image* mapaColision;
-
     // Arma equipada del jugador
-    Arma armaEquipada;
+    std::vector<Arma> inventarioArmas;
+    int armaEquipada; // Índice del arma actualmente equipada en el inventario
 
 
 public:
@@ -31,10 +29,8 @@ public:
     Personaje();
 
     void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
-    
-    Arma& getArma();
 
-    void actualizar(float deltaTime) override;
+    void actualizar(float deltaTime, const sf::Vector2f& posicionMouse);
     void controlar(float movimiento);
 
     void guardarPosicionAnterior();
@@ -46,4 +42,6 @@ public:
     float getMovimientoX() const;
 
     float getMovimientoY() const;
+
+    Arma& getArma();
 };

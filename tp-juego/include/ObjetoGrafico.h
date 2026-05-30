@@ -10,6 +10,8 @@ protected:
     sf::Texture textura;
     sf::Sprite sprite;
 
+    float angulo;
+
     //------------HITBOX------------
     sf::FloatRect hitbox;
 
@@ -38,6 +40,8 @@ public:
 
     //------------GETTERS------------
     sf::Vector2f getPosicion() const;
+    float getAngulo() const;
+    void setAngulo(float nuevoAngulo);
 
     //------------HITBOX------------
     void setHitbox(float ancho, float alto);
