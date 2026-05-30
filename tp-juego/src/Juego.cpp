@@ -123,26 +123,10 @@ void Juego::procesarEventos() {
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
-    jugador.actualizar(deltaTime, mira.getPosicion());
+    jugador.actualizar(deltaTime, mira.getPosicion(), obstaculos,proyectiles);
 
-    //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
-    jugador.guardarPosicionAnterior();
-    jugador.mover(jugador.getMovimientoX(), 0.f);
-    for(auto& obstaculo : obstaculos) {
-        if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
-            jugador.volverPosicionAnteriorX();
-            break;
-        }
-    }
-
-    //movimiento vertical jugador
-    jugador.guardarPosicionAnterior();
-    jugador.mover(0.f, jugador.getMovimientoY());
-    for(auto& obstaculo : obstaculos) {
-        if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
-            jugador.volverPosicionAnteriorY();
-            break;
-        }
+    for(auto& proyectil : proyectiles) {
+        proyectil.actualizar(deltaTime);
     }
 
     auxVistaX = jugador.getPosicion().x;
@@ -172,6 +156,9 @@ void Juego::renderizar() {
     // Dibuja los obstáculos con un bucle
     for(auto& obstaculo : obstaculos) {
         obstaculo.dibujar(ventana);
+    }
+    for(auto& proyectil : proyectiles) {
+        proyectil.dibujar(ventana);
     }
 
     jugador.dibujar(ventana);

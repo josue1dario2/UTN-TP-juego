@@ -53,7 +53,7 @@ void Personaje::volverPosicionAnteriorY() {
     setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
-void Personaje::actualizar(float deltaTime, const sf::Vector2f& posicionMouse) {
+void Personaje::actualizar(float deltaTime, const sf::Vector2f& posicionMouse, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles) {
     // lógica adicional para el personaje, como animaciones o habilidades
     movimientoX = 0.f;
     movimientoY = 0.f;
@@ -76,22 +76,30 @@ void Personaje::actualizar(float deltaTime, const sf::Vector2f& posicionMouse) {
         movimientoY += movimiento;
     }
 
+    //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
+    guardarPosicionAnterior();
+    mover(getMovimientoX(), 0.f);
+    for(auto& obstaculo : obstaculos) {
+        if (getHitbox().intersects(obstaculo.getHitbox())) {
+            volverPosicionAnteriorX();
+            break;
+        }
+    }
+
+    //movimiento vertical jugador
+    guardarPosicionAnterior();
+    mover(0.f, getMovimientoY());
+    for(auto& obstaculo : obstaculos) {
+        if (getHitbox().intersects(obstaculo.getHitbox())) {
+            volverPosicionAnteriorY();
+            break;
+        }
+    }
+
     //seguimiento de arma equipada
     if (!inventarioArmas.empty()) {
         Arma& arma = inventarioArmas[armaEquipada];
-        arma.setPosicionCentrado(getPosicion().x, getPosicion().y);
-        
-        // Actualizar el ángulo de la mira
-        float deltaX = posicionMouse.x - getPosicion().x;
-        float deltaY =  getPosicion().y - posicionMouse.y;
-
-        if (deltaX < 0) {
-            arma.escalarSprite(2.f, -2.f); // Voltear horizontalmente
-        } else {
-            arma.escalarSprite(2.f, 2.f); // Escala normal
-        }
-        
-        arma.setAngulo(std::atan2(deltaY, deltaX) * -180.f / 3.14159f);
+        arma.actualizar(deltaTime, posicionMouse, getPosicion(), proyectiles);
     }
 }
 

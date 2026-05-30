@@ -3,6 +3,8 @@
 #include <string>
 #include "Entidad.h"
 #include "Arma.h"
+#include "ObjetoMapa.h"
+#include "Proyectil.h"
 
 
 class Personaje : public Entidad {
@@ -30,7 +32,7 @@ public:
 
     void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
 
-    void actualizar(float deltaTime, const sf::Vector2f& posicionMouse);
+    void actualizar(float deltaTime, const sf::Vector2f& posicionMouse, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles);
     void controlar(float movimiento);
 
     void guardarPosicionAnterior();

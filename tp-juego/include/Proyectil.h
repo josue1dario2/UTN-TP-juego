@@ -3,10 +3,14 @@
 
 class Proyectil : public ObjetoGrafico {
 private:
+    sf::Vector2f origen;
     sf::Vector2f direccion;
+
     float velocidad;
     float alcanceMax;
+
     float distanciaRecorrida;
+    
     bool activo;
 
 public:
@@ -15,8 +19,9 @@ public:
     void actualizar(float deltaTime) override;
 
     sf::Vector2f getPosicion() const {
-        return direccion;
+        return origen;
     }
 
     bool isActivo() const;
+    bool destruir() const;
 };

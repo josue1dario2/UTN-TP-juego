@@ -1,9 +1,10 @@
 #include "Proyectil.h"
 
-Proyectil::Proyectil(sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel) : ObjetoGrafico() {
+Proyectil::Proyectil(sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel) {
+    origen = posInicial;
     direccion = dir;
-    velocidad = vel;
     alcanceMax = alc;
+    velocidad = vel;
     distanciaRecorrida = 0.f;
     activo = true;
 
