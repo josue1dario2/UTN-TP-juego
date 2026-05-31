@@ -14,9 +14,8 @@ private:
     float tiempoDesdeUltimoDisparo;
 
     float cadencia;
-    int danio;
+    float danio;
     float alcance;
-    float costo;
 
 public:
     Arma();
@@ -27,7 +26,7 @@ public:
     // Getters y Setters
     int getIdArma() const;
     std::string getNombre() const;
-    int getDanio() const;
+    float getDanio() const;
     float getAlcance() const;
     float getCosto() const;
 };

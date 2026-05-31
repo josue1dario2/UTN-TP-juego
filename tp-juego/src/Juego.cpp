@@ -128,7 +128,7 @@ void Juego::actualizar() {
     jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles,texturaProyectil);
 
     for(auto& proyectil : proyectiles) {
-        proyectil.actualizar(deltaTime);
+        proyectil.actualizar(deltaTime, obstaculos);
     }
 
     proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(),[](const Proyectil& p) {

@@ -5,9 +5,8 @@
 Arma::Arma() {
     idArma = 1;
     nombre = "Pistola de Supervivencia";
-    danio = 35;
+    danio = 35.f;
     alcance = 600.f;
-    costo = 0.f;
     cadencia = 0.5f; // 0.5 segundos entre disparos
     tiempoDesdeUltimoDisparo = 0.f;
 
@@ -26,7 +25,10 @@ Arma::Arma(int id, std::string nom, int dmg, float alc, float cost) {
     nombre = nom;
     danio = dmg;
     alcance = alc;
-    costo = cost;
+}
+
+float Arma::getDanio() const {
+    return danio;
 }
 
 void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const sf::Vector2f &posicionJugador
@@ -49,7 +51,7 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
 
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && tiempoDesdeUltimoDisparo >= cadencia) {
-            proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, 1000.f, 1500.f);
+            proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, 1000.f, 1500.f, getDanio());
             tiempoDesdeUltimoDisparo = 0.f; // Reiniciar el temporizador
         }
 }

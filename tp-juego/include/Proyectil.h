@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjetoGrafico.h"
+#include "ObjetoMapa.h"
 
 class Proyectil : public ObjetoGrafico {
 private:
@@ -8,13 +9,16 @@ private:
 
     float velocidad;
     float alcanceMax;
+    float danio;
 
     float distanciaRecorrida;
 
-public:
-    Proyectil(sf::Texture& textura, sf::Vector2f posInicial, sf::Vector2f dir, float alc = 600.f, float vel = 800.f);
+    bool estadoActivo;
 
-    void actualizar(float deltaTime) override;
+public:
+    Proyectil(sf::Texture& textura, sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel, float danio);
+
+    void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
 
     bool debeDestruirse() const;
 };

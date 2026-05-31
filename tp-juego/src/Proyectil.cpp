@@ -1,7 +1,8 @@
 #include "Proyectil.h"
 #include <cmath>
+#include <iostream>
 
-Proyectil::Proyectil(sf::Texture& texturaProyectil,sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel) {
+Proyectil::Proyectil(sf::Texture& texturaProyectil,sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel, float danio) {
     setPosicionCentrado(posInicial.x, posInicial.y);
     sprite.setTexture(texturaProyectil);
     escalarSprite(1.5f, 1.5f);
@@ -9,6 +10,7 @@ Proyectil::Proyectil(sf::Texture& texturaProyectil,sf::Vector2f posInicial, sf::
     
     velocidad = vel;
     alcanceMax = alc;
+    this->danio = danio;
     distanciaRecorrida = 0.f;
     direccion.x = dir.x - posInicial.x;
     direccion.y = dir.y - posInicial.y;
@@ -20,15 +22,24 @@ Proyectil::Proyectil(sf::Texture& texturaProyectil,sf::Vector2f posInicial, sf::
     setHitbox(5.f, 5.f); // Hitbox pequeña para el proyectil
 
     setAngulo(std::atan2(direccion.y, direccion.x) * 180.f / 3.14159f);
+
+    estadoActivo = true;
 }
 
 bool Proyectil::debeDestruirse() const {
-    return distanciaRecorrida >= alcanceMax;
+    return distanciaRecorrida >= alcanceMax || !estadoActivo;
 }
 
-void Proyectil::actualizar(float deltaTime) {
+void Proyectil::actualizar(float deltaTime,const std::vector<ObjetoMapa>& obstaculos) {
 
     float desplazamiento = velocidad * deltaTime;
     mover(direccion.x * desplazamiento, direccion.y * desplazamiento);
     distanciaRecorrida += desplazamiento;
+
+    for(auto& obstaculo : obstaculos) {
+        if (getHitbox().intersects(obstaculo.getHitbox())) {
+            estadoActivo = false;
+            break;
+        }
+    }
 }
