@@ -8,18 +8,21 @@ class Arma : public ObjetoGrafico {
 private:
     int idArma;
     std::string nombre;
-    int danio;
-
+    
     int municionActual;
+    
+    float tiempoDesdeUltimoDisparo;
 
     float cadencia;
+    int danio;
     float alcance;
     float costo;
 
 public:
     Arma();
     Arma(int id, std::string nom, int dmg, float alc, float cost);
-    void actualizar(float deltaTime, const sf::Vector2f &posicionMouse, const sf::Vector2f& posicionJugador, std::vector<Proyectil>& proyectiles);
+    void actualizar(float deltaTime, const sf::Vector2f &posicionMouse, const sf::Vector2f& posicionJugador, 
+        std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil);
 
     // Getters y Setters
     int getIdArma() const;

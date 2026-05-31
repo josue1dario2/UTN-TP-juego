@@ -53,7 +53,7 @@ void Personaje::volverPosicionAnteriorY() {
     setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
-void Personaje::actualizar(float deltaTime, const sf::Vector2f& posicionMouse, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles) {
+void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos) {
     // lógica adicional para el personaje, como animaciones o habilidades
     movimientoX = 0.f;
     movimientoY = 0.f;
@@ -94,12 +94,6 @@ void Personaje::actualizar(float deltaTime, const sf::Vector2f& posicionMouse, c
             volverPosicionAnteriorY();
             break;
         }
-    }
-
-    //seguimiento de arma equipada
-    if (!inventarioArmas.empty()) {
-        Arma& arma = inventarioArmas[armaEquipada];
-        arma.actualizar(deltaTime, posicionMouse, getPosicion(), proyectiles);
     }
 }
 

@@ -32,7 +32,7 @@ public:
 
     void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
 
-    void actualizar(float deltaTime, const sf::Vector2f& posicionMouse, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles);
+    void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
     void controlar(float movimiento);
 
     void guardarPosicionAnterior();

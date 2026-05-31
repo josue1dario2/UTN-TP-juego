@@ -10,14 +10,11 @@ private:
     float alcanceMax;
 
     float distanciaRecorrida;
-    
-    bool activo;
 
 public:
-    Proyectil(sf::Vector2f posInicial, sf::Vector2f dir, float alc = 600.f, float vel = 800.f);
+    Proyectil(sf::Texture& textura, sf::Vector2f posInicial, sf::Vector2f dir, float alc = 600.f, float vel = 800.f);
 
     void actualizar(float deltaTime) override;
 
-    bool isActivo() const;
     bool debeDestruirse() const;
 };

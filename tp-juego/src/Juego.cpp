@@ -19,6 +19,7 @@ Juego::Juego() {
 
     // Inicialización de elementos del terreno
     inicializarObstaculos(obstaculos);
+    texturaProyectil.loadFromFile("assets/bala.png");
 
 }
 
@@ -123,7 +124,8 @@ void Juego::procesarEventos() {
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
-    jugador.actualizar(deltaTime, mira.getPosicion(), obstaculos,proyectiles);
+    jugador.actualizar(deltaTime, obstaculos);
+    jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles,texturaProyectil);
 
     for(auto& proyectil : proyectiles) {
         proyectil.actualizar(deltaTime);
