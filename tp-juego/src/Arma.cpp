@@ -5,9 +5,19 @@
 Arma::Arma() {
     idArma = 1;
     nombre = "Pistola de Supervivencia";
-    danio = 35;
+    danio = 35.f;
     alcance = 600.f;
-    costo = 0.f;
+    cadencia = 0.5f; // 0.5 segundos entre disparos
+    tiempoDesdeUltimoDisparo = 0.f;
+
+    cargarTextura("assets/pistola.png");
+    centrarOrigen();
+
+    sf::FloatRect bounds = sprite.getLocalBounds();
+
+    sprite.setOrigin(0.f, bounds.height / 2.f);
+
+    escalarSprite(2.f, 2.f);
 }
 
 Arma::Arma(int id, std::string nom, int dmg, float alc, float cost) {
@@ -15,55 +25,33 @@ Arma::Arma(int id, std::string nom, int dmg, float alc, float cost) {
     nombre = nom;
     danio = dmg;
     alcance = alc;
-    costo = cost;
 }
 
-int Arma::getIdArma() const { return idArma; }
-std::string Arma::getNombre() const { return nombre; }
-int Arma::getDanio() const { return danio; }
-float Arma::getAlcance() const { return alcance; }
-float Arma::getCosto() const { return costo; }
-
-void Arma::disparar(sf::Vector2f origen, sf::Vector2f destino) {
-    // Calcular dirección del disparo
-    sf::Vector2f dir = destino - origen;
-    float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-    if (len > 0.f) {
-        dir /= len;
-    } else {
-        dir = sf::Vector2f(1.f, 0.f);
-    }
-
-    // Instanciar un Proyectil formal (que hereda de ObjetoGrafico y tiene Hitbox)
-    proyectiles.push_back(Proyectil(origen, dir, alcance, 800.f));
-
-    std::cout << nombre << " disparada! Objeto Proyectil lanzado hacia el mouse." << std::endl;
+float Arma::getDanio() const {
+    return danio;
 }
 
-void Arma::recargar() {
-    std::cout << "Recargando el arma: " << nombre << std::endl;
-}
-
-void Arma::actualizar(float deltaTime) {
-    for (size_t i = 0; i < proyectiles.size(); ) {
-        // Actualizar el proyectil
-        proyectiles[i].actualizar(deltaTime);
+void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const sf::Vector2f &posicionJugador
+    , std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil) {
+    // Lógica de actualización del arma, como animaciones o efectos de disparo
+    tiempoDesdeUltimoDisparo += deltaTime;
+    // Actualizar el ángulo de la mira
+        float deltaX = posicionMouse.x - posicionJugador.x;
+        float deltaY =  posicionJugador.y - posicionMouse.y;
         
-        // Verificar colisión del proyectil contra el mapa de color
-        proyectiles[i].verificarColisiones();
-
-        // Si ya no está activo, eliminar de la lista
-        if (!proyectiles[i].isActivo()) {
-            proyectiles.erase(proyectiles.begin() + i);
-            continue;
+        if (deltaX < 0) {
+            escalarSprite(2.f, -2.f); // Voltear horizontalmente
+            setPosicionCentrado(posicionJugador.x - 16, posicionJugador.y + 12.f);
+        } else {
+            escalarSprite(2.f, 2.f); // Escala normal
+            setPosicionCentrado(posicionJugador.x + 16, posicionJugador.y + 12.f);
         }
+        
+        setAngulo(std::atan2(deltaY, deltaX) * -180.f / 3.14159f);
 
-        i++;
-    }
-}
 
-void Arma::dibujar(sf::RenderWindow& ventana) {
-    for (auto& proyectil : proyectiles) {
-        proyectil.dibujar(ventana);
-    }
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && tiempoDesdeUltimoDisparo >= cadencia) {
+            proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, 1000.f, 1500.f, getDanio());
+            tiempoDesdeUltimoDisparo = 0.f; // Reiniciar el temporizador
+        }
 }

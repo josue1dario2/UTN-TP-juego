@@ -1,4 +1,5 @@
 #include "Personaje.h"
+#include <cmath>
 
 Personaje::Personaje() {
     // Valores por defecto por ahora
@@ -10,7 +11,6 @@ Personaje::Personaje() {
     armaduraActual = 50.f;
     velocidad = 200.f;
     habilidad = "Ninguna";
-    mapaColision = nullptr;
 
     cargarTextura("assets/jugador2.png");
 
@@ -22,7 +22,9 @@ Personaje::Personaje() {
 
     setPosicionCentrado(1720.f, 1080.f);
 
-    armaEquipada = Arma(1, "Pistola de Supervivencia", 35, 600.f, 0.f);
+    inventarioArmas.emplace_back();
+
+    armaEquipada = 0;
 
     movimientoX = 0.f;
     movimientoY = 0.f;
@@ -51,7 +53,7 @@ void Personaje::volverPosicionAnteriorY() {
     setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
-void Personaje::actualizar(float deltaTime) {
+void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos) {
     // lógica adicional para el personaje, como animaciones o habilidades
     movimientoX = 0.f;
     movimientoY = 0.f;
@@ -73,6 +75,26 @@ void Personaje::actualizar(float deltaTime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         movimientoY += movimiento;
     }
+
+    //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
+    guardarPosicionAnterior();
+    mover(getMovimientoX(), 0.f);
+    for(auto& obstaculo : obstaculos) {
+        if (getHitbox().intersects(obstaculo.getHitbox())) {
+            volverPosicionAnteriorX();
+            break;
+        }
+    }
+
+    //movimiento vertical jugador
+    guardarPosicionAnterior();
+    mover(0.f, getMovimientoY());
+    for(auto& obstaculo : obstaculos) {
+        if (getHitbox().intersects(obstaculo.getHitbox())) {
+            volverPosicionAnteriorY();
+            break;
+        }
+    }
 }
 
 float Personaje::getMovimientoX() const {
@@ -84,5 +106,5 @@ float Personaje::getMovimientoY() const {
 }
 
 Arma& Personaje::getArma() {
-    return armaEquipada;
+    return inventarioArmas[armaEquipada];
 }

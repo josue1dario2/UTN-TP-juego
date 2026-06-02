@@ -1,4 +1,5 @@
 # UTN-TP-juego
+# THE LAST SQUAD
 
 # Estructura
 En assets va todo los graficos y audio (mp3, png, etc)
@@ -39,7 +40,7 @@ Se encarga de todas las funciones relacionadas a la posicion, a las texturas/spr
 Hereda de [ObjetoGrafico](#objetografico), se encarga de las caracteristicas tipicas de cualquier objeto con "vida" dentro del juego
 
 ## Personaje
-Hereda de [Entidad](#entidad), tiene toda la logica del jugador principal
+Hereda de [Entidad](#entidad), tiene toda la logica del jugador principal.
 
 ## ObjetoMapa
 Hereda de [ObjetoGrafico](#objetografico), se usa para elementos decorativos o que bloquean el paso a entidades.

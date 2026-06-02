@@ -22,12 +22,13 @@ class Juego {
         Personaje jugador;
 
         std::vector<ObjetoMapa> obstaculos; // Vector para almacenar múltiples elementos del mapa/paredes/obstaculos
-
-
-
+        std::vector<Proyectil> proyectiles; // Vector para almacenar múltiples proyectiles
 
         sf::Texture texturaMapa;
         sf::Sprite spriteMapa;
+        
+        sf::Texture texturaProyectil;
+
 
         Puntero mira;
 

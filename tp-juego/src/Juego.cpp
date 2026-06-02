@@ -19,6 +19,7 @@ Juego::Juego() {
 
     // Inicialización de elementos del terreno
     inicializarObstaculos(obstaculos);
+    texturaProyectil.loadFromFile("assets/bala.png");
 
 }
 
@@ -118,41 +119,23 @@ void Juego::procesarEventos() {
         if(evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::Escape){
             ventana.close();
         }
-
-        // Detectar clic izquierdo del mouse para disparar
-        if (evento.type == sf::Event::MouseButtonPressed && evento.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2i posicionMouseVentana = sf::Mouse::getPosition(ventana);
-            sf::Vector2f posicionMouseMundo = ventana.mapPixelToCoords(posicionMouseVentana);
-            
-            // Disparar el arma equipada apuntando al mouse
-            jugador.getArma().disparar(jugador.getPosicion(), posicionMouseMundo);
-        }
     }
 }
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
-    jugador.actualizar(deltaTime);
+    jugador.actualizar(deltaTime, obstaculos);
+    jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles,texturaProyectil);
 
-    //movimiento horizontal jugador, chequeo de colisiones mediante bucle for
-    jugador.guardarPosicionAnterior();
-    jugador.mover(jugador.getMovimientoX(), 0.f);
-    for(auto& obstaculo : obstaculos) {
-        if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
-            jugador.volverPosicionAnteriorX();
-            break;
-        }
+    for(auto& proyectil : proyectiles) {
+        proyectil.actualizar(deltaTime, obstaculos);
     }
 
-    //movimiento vertical jugador
-    jugador.guardarPosicionAnterior();
-    jugador.mover(0.f, jugador.getMovimientoY());
-    for(auto& obstaculo : obstaculos) {
-        if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
-            jugador.volverPosicionAnteriorY();
-            break;
-        }
+    proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(),[](const Proyectil& p) {
+        return p.debeDestruirse();
     }
+    ), proyectiles.end()
+    );
 
     auxVistaX = jugador.getPosicion().x;
     auxVistaY = jugador.getPosicion().y;
@@ -182,10 +165,11 @@ void Juego::renderizar() {
     for(auto& obstaculo : obstaculos) {
         obstaculo.dibujar(ventana);
     }
+    for(auto& proyectil : proyectiles) {
+        proyectil.dibujar(ventana);
+    }
 
     jugador.dibujar(ventana);
-
-    // Dibujar la estela del disparo del arma
     jugador.getArma().dibujar(ventana);
 
     // Dibujar el puntero personalizado (la mira giratoria) encima de todo

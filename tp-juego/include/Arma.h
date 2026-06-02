@@ -4,33 +4,29 @@
 #include <vector>
 #include "Proyectil.h"
 
-class Arma {
+class Arma : public ObjetoGrafico {
 private:
     int idArma;
     std::string nombre;
-    int danio;
-    float alcance;
-    float costo;
+    
+    int municionActual;
+    
+    float tiempoDesdeUltimoDisparo;
 
-    // Vector de objetos Proyectil de acuerdo con las clases del proyecto
-    std::vector<Proyectil> proyectiles;
+    float cadencia;
+    float danio;
+    float alcance;
 
 public:
     Arma();
     Arma(int id, std::string nom, int dmg, float alc, float cost);
+    void actualizar(float deltaTime, const sf::Vector2f &posicionMouse, const sf::Vector2f& posicionJugador, 
+        std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil);
 
     // Getters y Setters
     int getIdArma() const;
     std::string getNombre() const;
-    int getDanio() const;
+    float getDanio() const;
     float getAlcance() const;
     float getCosto() const;
-
-    // Métodos del diagrama UML
-    void disparar(sf::Vector2f origen, sf::Vector2f destino);
-    void recargar();
-
-    // Métodos de actualización y dibujo de proyectiles
-    void actualizar(float deltaTime);
-    void dibujar(sf::RenderWindow& ventana);
 };
