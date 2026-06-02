@@ -6,7 +6,7 @@ Arma::Arma() {
     idArma = 1;
     nombre = "Pistola de Supervivencia";
     danio = 35.f;
-    alcance = 600.f;
+    alcance = 100.f;
     cadencia = 0.5f; // 0.5 segundos entre disparos
     tiempoDesdeUltimoDisparo = 0.f;
 
@@ -51,7 +51,7 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
 
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && tiempoDesdeUltimoDisparo >= cadencia) {
-            proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, 1000.f, 1500.f, getDanio());
+            proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, alcance, 1500.f, getDanio());
             tiempoDesdeUltimoDisparo = 0.f; // Reiniciar el temporizador
         }
 }
