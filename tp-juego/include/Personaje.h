@@ -46,4 +46,6 @@ public:
     float getMovimientoY() const;
 
     Arma& getArma();
+
+    void elegirArma();
 };

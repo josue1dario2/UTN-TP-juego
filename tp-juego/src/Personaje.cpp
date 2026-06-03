@@ -22,6 +22,15 @@ Personaje::Personaje() {
 
     setPosicionCentrado(1720.f, 1080.f);
 
+    inventarioArmas.reserve(4);
+
+    
+    inventarioArmas.emplace_back(1, "pistola", 0.5f, 30.f, 500.f, 0.f, 360, 15);
+
+    inventarioArmas.emplace_back(2, "escopeta", 1.f, 20.f, 500.f, 0.f, 32, 8);
+
+    inventarioArmas.emplace_back(3, "rifle", 0.2f, 50.f, 800.f, 500.f, 240, 30);
+
     inventarioArmas.emplace_back();
 
     armaEquipada = 0;
@@ -95,6 +104,8 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
             break;
         }
     }
+
+    elegirArma();
 }
 
 float Personaje::getMovimientoX() const {
@@ -107,4 +118,22 @@ float Personaje::getMovimientoY() const {
 
 Arma& Personaje::getArma() {
     return inventarioArmas[armaEquipada];
+}
+
+void Personaje::elegirArma() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+        armaEquipada = 0;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) && inventarioArmas[1].estaDisponible()) {
+        armaEquipada = 1;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) && inventarioArmas[2].estaDisponible()) {
+        armaEquipada = 2;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) && inventarioArmas[3].estaDisponible()) {
+        armaEquipada = 3;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && inventarioArmas[4].estaDisponible()) {
+        armaEquipada = 4;
+    }
 }
