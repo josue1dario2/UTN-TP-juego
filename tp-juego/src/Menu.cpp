@@ -53,7 +53,15 @@ OpcionMenu Menu::mostrarMenuPrincipal() {
         titulo.setString("ZWAVE");
         titulo.setCharacterSize(64);
         titulo.setFillColor(sf::Color(220, 40, 40));
-        titulo.setPosition(350.f, 100.f);
+        sf::FloatRect tituloBounds = titulo.getLocalBounds();
+
+        titulo.setOrigin(
+            tituloBounds.left + tituloBounds.width / 2.f,
+            tituloBounds.top + tituloBounds.height / 2.f
+        );
+          
+        titulo.setPosition(640.f, 130.f);
+
 
         sf::Text textos[3];
 
