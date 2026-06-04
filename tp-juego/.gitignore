@@ -2,3 +2,8 @@ build/
 *.exe
 *.o
 *.obj
+.vs/
+tp-juego/.vs/
+out/
+tp-juego/build/
+tp-juego/out/

@@ -30,6 +30,8 @@ public:
 
     Personaje();
 
+    void seleccionarPersonaje(int tipo);
+
     void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
 
     void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);

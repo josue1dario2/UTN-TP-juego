@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Menu.h"
 #include "Personaje.h"
 #include "ObjetoMapa.h"
 #include "Puntero.h"
@@ -24,6 +25,7 @@ class Juego {
         std::vector<ObjetoMapa> obstaculos; // Vector para almacenar múltiples elementos del mapa/paredes/obstaculos
         std::vector<Proyectil> proyectiles; // Vector para almacenar múltiples proyectiles
 
+        bool pausa;
         sf::Texture texturaMapa;
         sf::Sprite spriteMapa;
         
@@ -40,5 +42,8 @@ class Juego {
 
     public:
         Juego();
+        //Juego(TipoPersonaje personajeElegido);
         void iniciar();       
+
+        Menu menuPausa;
 };

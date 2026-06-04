@@ -1,8 +1,13 @@
 #include "../include/Juego.h"
 
 
-Juego::Juego() {
+
+/*
+    Juego::Juego(TipoPersonaje personajeElegido) {
+    
     deltaTime = 0.f;
+
+    jugador.seleccionarPersonaje(static_cast<int>(personajeElegido));
 
     sf::VideoMode modoEscritorio = sf::VideoMode::getDesktopMode();
 
@@ -22,7 +27,30 @@ Juego::Juego() {
     texturaProyectil.loadFromFile("assets/bala.png");
 
 }
+*/
+Juego::Juego() {
+        pausa = false;
+        deltaTime = 0.f;
 
+
+        sf::VideoMode modoEscritorio = sf::VideoMode::getDesktopMode();
+
+        ventana.create(modoEscritorio, "Mi Juego", sf::Style::Fullscreen);
+
+        ventana.setMouseCursorVisible(false); // Ocultar el cursor estándar de la computadora
+
+        ventana.setFramerateLimit(60);
+
+        vista.setSize(1280.f, 720.f);
+        vista.setCenter(640.f, 360.f);
+        ventana.setView(vista);
+
+
+        // Inicialización de elementos del terreno
+        inicializarObstaculos(obstaculos);
+        texturaProyectil.loadFromFile("assets/bala.png");
+
+    }
 
 void Juego::inicializarObstaculos(std::vector<ObjetoMapa>& obstaculos) {
     obstaculos.reserve(40);
@@ -90,37 +118,50 @@ void Juego::inicializarObstaculos(std::vector<ObjetoMapa>& obstaculos) {
 
 
 // Ejecuta el bucle principal del juego
-void Juego::iniciar(){
+void Juego::iniciar() {
 
     texturaMapa.loadFromFile("assets/mapa.png");
     spriteMapa.setTexture(texturaMapa);
 
+    while (ventana.isOpen()) {
 
-
-    while (ventana.isOpen()){
-
-        //obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
         deltaTime = relojDelta.restart().asSeconds();
 
         procesarEventos();
-        actualizar();
+
+        if (pausa) {
+            OpcionPausa opcion = menuPausa.mostrarMenuPausa(ventana);
+
+            if (opcion == OpcionPausa::Seguir) {
+                pausa = false;
+            }
+            else if (opcion == OpcionPausa::Salir) {
+                ventana.close();
+            }
+        }
+        else {
+            actualizar();
+        }
+
         renderizar();
     }
-
 }
 
 // Maneja eventos de ventana e input del usuario
 void Juego::procesarEventos() {
     sf::Event evento;
-    while (ventana.pollEvent(evento)){
-        if(evento.type == sf::Event::Closed){
+
+    while (ventana.pollEvent(evento)) {
+        if (evento.type == sf::Event::Closed) {
             ventana.close();
         }
-        if(evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::Escape){
-            ventana.close();
+
+        if (evento.type == sf::Event::KeyPressed && evento.key.code == sf::Keyboard::Escape) {
+            pausa = true;
         }
     }
 }
+
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
@@ -153,6 +194,7 @@ void Juego::actualizar() {
     // Actualizar la mira personalizada y hacerla girar
     mira.actualizar(ventana, deltaTime);
 }
+
 
 // Dibuja todos los elementos en pantalla
 void Juego::renderizar() {

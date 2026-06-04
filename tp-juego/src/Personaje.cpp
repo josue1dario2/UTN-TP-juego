@@ -30,6 +30,29 @@ Personaje::Personaje() {
     movimientoY = 0.f;
 }
 
+
+void Personaje::seleccionarPersonaje(int tipo) {
+    if (tipo == 0) {
+        cargarAtributos(0, "Superviviente", 100.f, 50.f, 200.f, "Equilibrado");
+        cargarTextura("assets/jugador2.png");
+    }
+    else if (tipo == 1) {
+        cargarAtributos(1, "Tanque", 160.f, 100.f, 140.f, "Resistencia");
+        cargarTextura("assets/jugador2.png");
+    }
+    else if (tipo == 2) {
+        cargarAtributos(2, "Explorador", 80.f, 25.f, 280.f, "Velocidad");
+        cargarTextura("assets/jugador2.png");
+    }
+
+    setearTamanioSprite(13, 16);
+    centrarOrigen();
+    escalarSprite(3.f, 3.f);
+    setHitbox(13.f * 2.f, 16.f * 2.1f);
+    setPosicionCentrado(1720.f, 1080.f);
+}
+
+
 void Personaje::cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab) {
     idPersonaje = id;
     nombre = nom;
