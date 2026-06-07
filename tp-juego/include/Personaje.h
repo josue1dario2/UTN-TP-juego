@@ -5,6 +5,7 @@
 #include "Arma.h"
 #include "ObjetoMapa.h"
 #include "Proyectil.h"
+#include "archivoArma.h"
 
 
 class Personaje : public Entidad {
@@ -30,9 +31,9 @@ public:
 
     Personaje();
 
-    void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
+    Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad);
 
-    void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
+    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
     void controlar(float movimiento);
 
     void guardarPosicionAnterior();

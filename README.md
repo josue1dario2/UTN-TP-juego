@@ -9,7 +9,7 @@ En src todo el codigo fuente
 Gitignore es para no subir archivos basura de la compilacion
 
 # compilar
-g++ src/main.cpp src/Juego.cpp src/Personaje.cpp src/ObjetoGrafico.cpp src/Entidad.cpp src/ObjetoMapa.cpp src/Oleada.cpp src/Zombie.cpp src/Arma.cpp src/Proyectil.cpp src/Puntero.cpp -Iinclude -o build/juego -lsfml-graphics -lsfml-window -lsfml-system
+g++ src/main.cpp src/Juego.cpp src/Personaje.cpp src/ObjetoGrafico.cpp src/Entidad.cpp src/ObjetoMapa.cpp src/Oleada.cpp src/Zombie.cpp src/Arma.cpp src/Proyectil.cpp src/Puntero.cpp src/MenuDesarrollador.cpp src/archivoArma.cpp -Iinclude -o build/juego -lsfml-graphics -lsfml-window -lsfml-system
 
 # ejecuta
 .\build\juego.exe

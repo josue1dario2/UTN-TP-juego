@@ -1,4 +1,4 @@
-#include "Arma.h"
+#include "../include/Arma.h"
 #include <cmath>
 #include <iostream>
 
@@ -16,8 +16,9 @@ Arma::Arma(int id, std::string nombre, float cadencia, float danio, float alcanc
     this->municionMaxima = municionMaxima;
     this->tamanioCargador = tamanioCargador;
 
-    this->nombre = "assets/" + nombre + ".png";
-    cargarTextura(this->nombre);
+    std::string rutaTextura = "assets/" + nombre + ".png";
+    this->nombre = nombre;
+    cargarTextura(rutaTextura);
 
     sf::FloatRect bounds = sprite.getLocalBounds();
     sprite.setOrigin(0.f, bounds.height / 2.f);
@@ -33,6 +34,10 @@ float Arma::getAlcance() const {
 }
 int Arma::getIdArma() const {
     return idArma;
+}
+
+std::string Arma::getNombre() const {
+    return nombre;
 }
 
 void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const sf::Vector2f &posicionJugador,
@@ -55,6 +60,11 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && tiempoDesdeUltimoDisparo >= cadencia) {
             switch(getIdArma()) {
+
+                case 0: {
+                    //generarAtaqueCuchillo();
+                    break;
+                }
 
                 case 2:
                 { // Escopeta

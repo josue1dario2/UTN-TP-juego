@@ -3,8 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-class ObjetoGrafico
-{
+class ObjetoGrafico {
 protected:
 
     sf::Texture textura;

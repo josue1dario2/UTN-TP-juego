@@ -1,6 +1,7 @@
-#include "Personaje.h"
+#include "../include/Personaje.h"
 #include <cmath>
 
+/*
 Personaje::Personaje() {
     // Valores por defecto por ahora
     idPersonaje = 0;
@@ -11,43 +12,70 @@ Personaje::Personaje() {
     armaduraActual = 50.f;
     velocidad = 200.f;
     habilidad = "Ninguna";
-
-    cargarTextura("assets/jugador2.png");
-
-    setearTamanioSprite(13, 16);
-    centrarOrigen(); // centrar el origen del sprite para facilitar el posicionamiento
-    escalarSprite(3.f, 3.f);
-
-    setHitbox(13.f * 2.f, 16.f * 2.1f); // Ajustar el tamaño del hitbox según el sprite escalado
-
-    setPosicionCentrado(1720.f, 1080.f);
-
-    inventarioArmas.reserve(4);
-
     
-    inventarioArmas.emplace_back(1, "pistola", 0.5f, 30.f, 500.f, 0.f, 360, 15);
-
-    inventarioArmas.emplace_back(2, "escopeta", 1.f, 20.f, 500.f, 0.f, 32, 8);
-
-    inventarioArmas.emplace_back(3, "rifle", 0.2f, 50.f, 800.f, 500.f, 240, 30);
-
-    inventarioArmas.emplace_back();
-
+    cargarTextura("assets/jugador.png");
+    
+    setearTamanioSprite(39, 48);
+    centrarOrigen(); // centrar el origen del sprite para facilitar el posicionamiento
+    //escalarSprite(3.f, 3.f);
+    
+    setHitbox(13.f * 2.f, 16.f * 2.1f); // Ajustar el tamaño del hitbox según el sprite escalado
+    
+    setPosicionCentrado(1720.f, 1080.f);
+    
+    inventarioArmas.reserve(5);
+    
+    archivoArma archivo("armas.dat");
+    
+    archivo.entregarArma(inventarioArmas, 1);
+    archivo.entregarArma(inventarioArmas, 0);
+    archivo.entregarArma(inventarioArmas, 2);
+    archivo.entregarArma(inventarioArmas, 3);
+    archivo.entregarArma(inventarioArmas, 4);
+    
     armaEquipada = 0;
-
+    
     movimientoX = 0.f;
     movimientoY = 0.f;
 }
+*/
 
-void Personaje::cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab) {
+Personaje::Personaje(){
+    idPersonaje = 0;
+    nombre = "Superviviente";
+    vidaMax = 1.f;
+    vidaActual = 1.f;
+    armaduraMax = 1.f;
+    armaduraActual = 1.f;
+    velocidad = 1.f;
+    habilidad = "-";
+}
+
+Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad) {
     idPersonaje = id;
-    nombre = nom;
+    this->nombre = nombre;
     vidaMax = vida;
     vidaActual = vida;
     armaduraMax = armadura;
     armaduraActual = armadura;
-    velocidad = vel;
-    habilidad = hab;
+    this->velocidad = velocidad;
+    habilidad = "-";
+
+    cargarTextura("assets/" + nombre + ".png");
+    setearTamanioSprite(39, 48);
+    centrarOrigen();
+
+    setHitbox(13.f * 2.f, 16.f * 2.1f);
+    setPosicionCentrado(1720.f, 1080.f);
+
+    archivoArma archivo("armas.dat");
+
+    inventarioArmas.reserve(5);
+    archivo.entregarArma(inventarioArmas, 1);
+    archivo.entregarArma(inventarioArmas, 0);
+    archivo.entregarArma(inventarioArmas, 2);
+    archivo.entregarArma(inventarioArmas, 3);
+    archivo.entregarArma(inventarioArmas, 4);
 }
 
 void Personaje::guardarPosicionAnterior() {

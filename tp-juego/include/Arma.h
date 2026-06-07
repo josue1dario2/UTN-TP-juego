@@ -26,7 +26,7 @@ public:
     Arma();
     Arma(int id, std::string nombre, float cadencia, float danio, float alcance, float costo, int municionMaxima, int tamanioCargador);
 
-    void actualizar(float deltaTime, const sf::Vector2f &posicionMouse, const sf::Vector2f& posicionJugador, 
+    virtual void actualizar(float deltaTime, const sf::Vector2f &posicionMouse, const sf::Vector2f& posicionJugador, 
         std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil);
 
     // Getters y Setters
