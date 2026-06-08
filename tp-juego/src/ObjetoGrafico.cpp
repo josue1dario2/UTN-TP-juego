@@ -3,7 +3,7 @@
 ObjetoGrafico::ObjetoGrafico()
 {
     //------------HITBOX------------
-    mostrarHitbox = true;
+    mostrarHitbox = false;
     hitboxDebug.setFillColor(sf::Color::Transparent);
     hitboxDebug.setOutlineColor(sf::Color::Red);
     hitboxDebug.setOutlineThickness(2.f);

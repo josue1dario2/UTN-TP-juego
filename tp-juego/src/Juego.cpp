@@ -1,7 +1,9 @@
 #include "../include/Juego.h"
 
 
-Juego::Juego() : jugador(1, 3, "jugador", 100.f, 50.f, 200.f) {
+Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown) :
+    jugador(idJug, idArma, nombre, vida, armadura, velocidad, cooldown) {
+
     deltaTime = 0.f;
 
     sf::VideoMode modoEscritorio = sf::VideoMode::getDesktopMode();
@@ -19,7 +21,6 @@ Juego::Juego() : jugador(1, 3, "jugador", 100.f, 50.f, 200.f) {
     // Inicialización de elementos del terreno
     inicializarObstaculos(obstaculos);
     texturaProyectil.loadFromFile("assets/bala.png");
-
 }
 
 // Ejecuta el bucle principal del juego
@@ -27,8 +28,6 @@ void Juego::iniciar(){
 
     texturaMapa.loadFromFile("assets/mapa.png");
     spriteMapa.setTexture(texturaMapa);
-    
-    
     
     while (ventana.isOpen()){
 

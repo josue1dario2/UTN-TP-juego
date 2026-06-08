@@ -1,5 +1,6 @@
 #include "../include/MenuDesarrollador.h"
 #include "../include/archivoArma.h"
+#include "../include/archivoPersonaje.h"
 
 void limpiarPantalla() {
     #ifdef _WIN32
@@ -168,12 +169,6 @@ void MenuDesarrollador::menuArmas() {
 }
 
 void MenuDesarrollador::menuPersonajes() {
-    // Implementación similar a menuArmas, pero para personajes
-    // Debería permitir crear, listar y modificar personajes utilizando un archivo similar a archivoArma
-    }
-
-/*
-void MenuDesarrollador::menuPersonajes() {
     
     bool flag = true;
     
@@ -202,7 +197,7 @@ void MenuDesarrollador::menuPersonajes() {
                 
                 int idPersonaje, idArmaEspecial;
                 char nombre[50];
-                float vida, armadura, velocidad;
+                float vida, armadura, velocidad, cooldownHabilidad;
                 
                 std::cout << "Ingrese el ID del personaje: ";
                 std::cin >> idPersonaje;
@@ -216,6 +211,8 @@ void MenuDesarrollador::menuPersonajes() {
                 std::cin >> armadura;
                 std::cout << "Ingrese la velocidad del personaje: ";
                 std::cin >> velocidad;
+                std::cout << "Ingrese el cooldown de la habilidad del personaje: ";
+                std::cin >> cooldownHabilidad;
                 
                 RegistroPersonaje personaje;
                 
@@ -225,6 +222,7 @@ void MenuDesarrollador::menuPersonajes() {
                 personaje.vida = vida;
                 personaje.armadura = armadura;
                 personaje.velocidad = velocidad;
+                personaje.cooldownHabilidad = cooldownHabilidad;
                 
                 archivo.grabarRegistroPersonaje(personaje);
                 
@@ -249,11 +247,14 @@ void MenuDesarrollador::menuPersonajes() {
                 int idMod = -1;
                 std::cout << "Ingrese el ID del personaje a modificar: ";
                 std::cin >> idMod;
+
                 if(idMod < 0) {
                     std::cout << "ID no valido" << std::endl;
                     break;
                 }
+
                 int posicion = archivo.buscarPersonaje(idMod);
+
                 if(posicion == -1) {
                     std::cout << "No se encontro el personaje con ID " << idMod << std::endl;
                     std::cout << "Presiona Enter para continuar...";
@@ -261,50 +262,52 @@ void MenuDesarrollador::menuPersonajes() {
                     std::cin.get();
                     break;
                 }
+
                 RegistroPersonaje personajeModificar = archivo.traerRegistro(posicion);
 
                 std::cout << "Nombre actual: " << personajeModificar.nombre << std::endl;
-                std::cout << "Ingrese el nuevo nombre del arma: ";
-                std::cin >> armaModificar.nombre;
+                std::cout << "Ingrese el nuevo nombre del personaje: ";
+                std::cin >> personajeModificar.nombre;
 
-                std::cout << "Cadencia actual: " << armaModificar.cadencia << std::endl;
-                std::cout << "Ingrese la nueva cadencia del arma: ";
-                std::cin >> armaModificar.cadencia;
+                std::cout << "ID arma especial actual: " << personajeModificar.idArmaEspecial << std::endl;
+                std::cout << "Ingrese la nueva ID arma especial: ";
+                std::cin >> personajeModificar.idArmaEspecial;
 
-                std::cout << "Daño actual: " << armaModificar.danio << std::endl;
-                std::cout << "Ingrese el nuevo daño del arma: ";
-                std::cin >> armaModificar.danio;
+                std::cout << "Vida actual: " << personajeModificar.vida << std::endl;
+                std::cout << "Ingrese la nueva vida del personaje: ";
+                std::cin >> personajeModificar.vida;
 
-                std::cout << "Alcance actual: " << armaModificar.alcance << std::endl;
-                std::cout << "Ingrese el nuevo alcance del arma: ";
-                std::cin >> armaModificar.alcance;
+                std::cout << "Armadura actual: " << personajeModificar.armadura << std::endl;
+                std::cout << "Ingrese la nueva armadura del personaje: ";
+                std::cin >> personajeModificar.armadura;
 
-                std::cout << "Costo actual: " << armaModificar.costo << std::endl;
-                std::cout << "Ingrese el nuevo costo del arma: ";
-                std::cin >> armaModificar.costo;
+                std::cout << "Velocidad actual: " << personajeModificar.velocidad << std::endl;
+                std::cout << "Ingrese la nueva velocidad del personaje: ";
+                std::cin >> personajeModificar.velocidad;
 
-                std::cout << "Munición máxima actual: " << armaModificar.municionMaxima << std::endl;
-                std::cout << "Ingrese la nueva munición máxima del arma: ";
-                std::cin >> armaModificar.municionMaxima;
+                std::cout << "Cooldown de habilidad actual: " << personajeModificar.cooldownHabilidad << std::endl;
+                std::cout << "Ingrese el nuevo cooldown de habilidad del personaje: ";
+                std::cin >> personajeModificar.cooldownHabilidad;
 
                 std::cout << "Confirmar modificación? (1 = si, 0 = no): ";
+
                 int confirmar;
                 std::cin >> confirmar;
+
                 if(confirmar != 1) {
                     std::cout << "Modificación cancelada" << std::endl;
                     break;
                 }
 
-                if(archivo.sobreEscribirRegistro(armaModificar, posicion)) {
+                if(archivo.sobreEscribirRegistro(personajeModificar, posicion)) {
                     std::cout << "Modificacion exitosa" << std::endl;
                 } else {
-                    std::cout << "Error al modificar el arma" << std::endl;
+                    std::cout << "Error al modificar el personaje" << std::endl;
                 }
 
                 std::cout << "Presiona Enter para continuar...";
                 std::cin.ignore();
                 std::cin.get();
-
 
                 break;
             }
@@ -316,7 +319,7 @@ void MenuDesarrollador::menuPersonajes() {
         }
     }
 }
-*/
+
 
 void MenuDesarrollador::menuPrincipal() {
     bool flag = true;

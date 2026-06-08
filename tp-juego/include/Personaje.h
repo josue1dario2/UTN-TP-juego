@@ -14,7 +14,7 @@ private:
     std::string nombre;
     float armaduraMax;
     float armaduraActual;
-    
+    float cooldownHabilidad;
     std::string habilidad;
 
 
@@ -31,7 +31,7 @@ public:
 
     Personaje();
 
-    Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad);
+    Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad, float cooldownHabilidad);
 
     virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
     void controlar(float movimiento);

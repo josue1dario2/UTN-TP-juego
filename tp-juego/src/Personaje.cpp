@@ -51,7 +51,7 @@ Personaje::Personaje(){
     habilidad = "-";
 }
 
-Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad) {
+Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad, float cooldownHabilidad) {
     idPersonaje = id;
     this->nombre = nombre;
     vidaMax = vida;
@@ -59,10 +59,14 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     armaduraMax = armadura;
     armaduraActual = armadura;
     this->velocidad = velocidad;
+    this->cooldownHabilidad = cooldownHabilidad;
     habilidad = "-";
+    armaEquipada = 0;
 
+    mostrarHitbox = false;
     cargarTextura("assets/" + nombre + ".png");
-    setearTamanioSprite(39, 48);
+    escalarSprite(0.8f,0.8f);
+    //setearTamanioSprite(39, 48);
     centrarOrigen();
 
     setHitbox(13.f * 2.f, 16.f * 2.1f);
@@ -71,11 +75,17 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     archivoArma archivo("armas.dat");
 
     inventarioArmas.reserve(5);
-    archivo.entregarArma(inventarioArmas, 1);
     archivo.entregarArma(inventarioArmas, 0);
+    archivo.entregarArma(inventarioArmas, 1);
     archivo.entregarArma(inventarioArmas, 2);
     archivo.entregarArma(inventarioArmas, 3);
-    archivo.entregarArma(inventarioArmas, 4);
+    archivo.entregarArma(inventarioArmas, idArmaEspecial);
+
+    inventarioArmas[0].setDesbloqueo(true);
+    inventarioArmas[1].setDesbloqueo(true);
+    inventarioArmas[2].setDesbloqueo(true);
+    inventarioArmas[3].setDesbloqueo(true);
+    //inventarioArmas[4].setDesbloqueo(true);
 }
 
 void Personaje::guardarPosicionAnterior() {
@@ -144,6 +154,7 @@ float Personaje::getMovimientoY() const {
     return movimientoY;
 }
 
+// devuelve el arma asi se actualiza en la clase juego
 Arma& Personaje::getArma() {
     return inventarioArmas[armaEquipada];
 }

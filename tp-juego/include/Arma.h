@@ -9,9 +9,9 @@ private:
     int idArma;
     std::string nombre;
     
-    int municionActual;
-    
     float tiempoDesdeUltimoDisparo;
+    float tiempoRecarga;
+    bool enRecarga;
 
     float cadencia;
     float danio;
@@ -19,6 +19,10 @@ private:
     float costo;
     int municionMaxima;
     int tamanioCargador;
+
+    int municionActual;
+    int municionEnCargador;
+    bool desbloqueada;
 
     void disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil);
 
@@ -35,6 +39,18 @@ public:
     float getDanio() const;
     float getAlcance() const;
     float getCosto() const;
+
+    void setDesbloqueo(bool estado);
+    void llenarMunicion();
+    void recargar(int cantidad);
+
+    int getMunicionActual() const { return municionActual; }
+    int getMunicionEnCargador() const { return municionEnCargador; }
+    int getTamanioCargador() const { return tamanioCargador; }
+    int getMunicionMaxima() const { return municionMaxima; }
+
+    bool getEnRecarga() const { return enRecarga; }
+    bool getEstadoDesbloqueo() const { return desbloqueada; }
 
     bool estaDisponible() const; // Verifica si el arma está disponible para ser equipada
 };

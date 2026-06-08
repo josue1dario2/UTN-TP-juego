@@ -4,6 +4,7 @@
 
 Arma::Arma() {
     idArma = -1;
+    desbloqueada = false;
 }
 
 Arma::Arma(int id, std::string nombre, float cadencia, float danio, float alcance, float costo, int municionMaxima, int tamanioCargador) {
@@ -24,6 +25,25 @@ Arma::Arma(int id, std::string nombre, float cadencia, float danio, float alcanc
     sprite.setOrigin(0.f, bounds.height / 2.f);
 
     tiempoDesdeUltimoDisparo = 0.f;
+    tiempoRecarga = 0.f;
+
+    switch(id) {
+
+        case 0: { //cuchillo
+            municionActual = 0;
+            municionEnCargador = 2;
+            desbloqueada = true;
+            break;
+        }
+
+        default: {
+            municionActual = municionMaxima/2; // Empieza con la mitad de la munición total
+            municionEnCargador = 0;
+            desbloqueada = false;
+            break;
+        }
+    }
+
 }
 
 float Arma::getDanio() const {
@@ -44,7 +64,8 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
     std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil) {
     // Lógica de actualización del arma, como animaciones o efectos de disparo
     tiempoDesdeUltimoDisparo += deltaTime;
-    // Actualizar el ángulo de la mira
+    tiempoRecarga += deltaTime;
+    // ----------------- Actualizar el ángulo de la mira
         float deltaX = posicionMouse.x - posicionJugador.x;
         float deltaY =  posicionJugador.y - posicionMouse.y;
         
@@ -58,12 +79,16 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
         
         setAngulo(std::atan2(deltaY, deltaX) * -180.f / 3.14159f);
 
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && tiempoDesdeUltimoDisparo >= cadencia) {
-            switch(getIdArma()) {
+        // ----------------- Lógica de disparo
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && tiempoDesdeUltimoDisparo >= cadencia && municionEnCargador > 0 && !enRecarga) {
+            // el switch es para poder manejar los disparos especiales
+            switch(getIdArma()) { 
 
-                case 0: {
-                    //generarAtaqueCuchillo();
+                case 0: { //cuchillo
+                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 500.f, getDanio());
+                    municionEnCargador = 2;
                     break;
+
                 }
 
                 case 2:
@@ -78,10 +103,55 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
                     break;
                 }
             }
-        tiempoDesdeUltimoDisparo = 0.f;
+
+
+            std::cout << "Disparando " << getNombre() << ". Munición en cargador antes de disparar: " << municionEnCargador << std::endl;
+            municionEnCargador--;
+            std::cout << "Munición en cargador después de disparar: " << municionEnCargador << std::endl;
+            tiempoDesdeUltimoDisparo = 0.f;
+        }
+
+        // ----------------- Lógica de recarga
+        if (tiempoRecarga >= 1.f) {
+            enRecarga = false;
+        }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) && municionEnCargador < tamanioCargador && !enRecarga && municionActual > 0) {
+            int cantidad = 0;
+
+            if (municionActual >= (tamanioCargador - municionEnCargador)) {
+                cantidad = tamanioCargador - municionEnCargador;
+            } else {
+                cantidad = municionActual;
+            }
+            municionActual -= cantidad;
+
+            recargar(cantidad);
+            tiempoRecarga = 0.f;
+            enRecarga = true;
+
+            std::cout << "Recarga ejecutada con " << getNombre() << ". Munición en restante: " << municionActual << std::endl;
         }
 }
 
+void Arma::recargar(int cantidad) {
+    municionEnCargador += cantidad;
+}
+
+bool Arma::estaDisponible() const {
+    return desbloqueada; // Un id de -1 indica un arma no disponible
+}
+
+void Arma::setDesbloqueo(bool estado) {
+    desbloqueada = estado;
+}
+
+// llena la municion actual
+void Arma::llenarMunicion() {
+    municionActual = municionMaxima;
+}
+
+// ------------------ Lógica de disparos especiales
 void Arma::disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil) {
     const int cantidadPerdigones = 8;
 
@@ -103,8 +173,4 @@ void Arma::disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& p
 
         proyectiles.emplace_back(texturaProyectil, getPosicion(), objetivo, getAlcance(), 2000.f, getDanio());
     }
-}
-
-bool Arma::estaDisponible() const {
-    return idArma != -1; // Un id de -1 indica un arma no disponible
 }
