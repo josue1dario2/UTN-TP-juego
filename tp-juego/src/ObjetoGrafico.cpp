@@ -10,6 +10,7 @@ ObjetoGrafico::ObjetoGrafico()
 
 }
 
+
 bool ObjetoGrafico::cargarTextura(const std::string& ruta)
 {
     if (!textura.loadFromFile(ruta))
