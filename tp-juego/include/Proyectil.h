@@ -18,7 +18,7 @@ private:
 public:
     Proyectil(sf::Texture& textura, sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel, float danio);
 
-    void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
+    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
 
     bool debeDestruirse() const;
 };

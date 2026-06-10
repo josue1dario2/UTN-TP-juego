@@ -9,7 +9,7 @@ En src todo el codigo fuente
 Gitignore es para no subir archivos basura de la compilacion
 
 # compilar
-g++ src/main.cpp src/Juego.cpp src/Personaje.cpp src/ObjetoGrafico.cpp src/Entidad.cpp src/ObjetoMapa.cpp src/Oleada.cpp src/Zombie.cpp src/Arma.cpp src/Proyectil.cpp src/Puntero.cpp -Iinclude -o build/juego -lsfml-graphics -lsfml-window -lsfml-system
+g++ src/main.cpp src/Juego.cpp src/Personaje.cpp src/ObjetoGrafico.cpp src/Entidad.cpp src/ObjetoMapa.cpp src/Oleada.cpp src/Zombie.cpp src/Arma.cpp src/Proyectil.cpp src/Puntero.cpp src/MenuDesarrollador.cpp src/archivoArma.cpp src/archivoPersonaje.cpp -Iinclude -o build/juego -lsfml-graphics -lsfml-window -lsfml-system
 
 # ejecuta
 .\build\juego.exe
@@ -31,7 +31,10 @@ ObjetoGrafico
 │
 ├── ObjetoMapa
 │
-└── Proyectil  (FALTA)
+├── Arma
+│
+└── Proyectil
+
 
 ## ObjetoGrafico
 Se encarga de todas las funciones relacionadas a la posicion, a las texturas/sprites y la hitbox, las clases que la hereden tienen que hacer override a la funcion "actualizar" si quieren tener su propia logica
@@ -44,3 +47,9 @@ Hereda de [Entidad](#entidad), tiene toda la logica del jugador principal.
 
 ## ObjetoMapa
 Hereda de [ObjetoGrafico](#objetografico), se usa para elementos decorativos o que bloquean el paso a entidades.
+
+## Arma
+Hereda de [ObjetoGrafico](#objetografico), su pricipal funcion es seguir al jugador, y tiene funciones para detectar cuando quiere disparar o recargar, gestiona la municion y genera proyectiles.
+
+## Proyectil 
+Hereda de [ObjetoGrafico](#objetografico), su funcion es como indica el nombre ser un proyectil que se desplaza por la pantalla, dentro de juego hay un vector que almacena este tipo de objeto, eso sirve para que los enemigos por ejemplo lo reciban y comparen la hitbox para morir o recibir daño o para que al chocar con un elemento del mapa de destruya.
