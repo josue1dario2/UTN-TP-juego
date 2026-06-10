@@ -21,15 +21,14 @@ Juego::Juego() {
   // Inicialización de elementos del terreno
   inicializarObstaculos(obstaculos);
 
-  // *******JOSUE 2: Definimos 6 zonas de spawn en los corredores laterales
-  // libres de obstáculos
+  // Definimos 6 zonas de spawn en los corredores laterales libres de obstáculos
   zonasSpawn = {
-      sf::FloatRect(200.f, 100.f, 400.f, 350.f),  // Superior Izquierda (Calle)
-      sf::FloatRect(3250.f, 100.f, 400.f, 350.f), // Superior Derecha (Calle)
-      sf::FloatRect(200.f, 850.f, 400.f, 350.f),  // Central Izquierda (Calle)
-      sf::FloatRect(3250.f, 850.f, 400.f, 350.f), // Central Derecha (Calle)
-      sf::FloatRect(200.f, 1600.f, 400.f, 350.f), // Inferior Izquierda (Calle)
-      sf::FloatRect(3250.f, 1600.f, 400.f, 350.f) // Inferior Derecha (Calle)
+      sf::FloatRect(200.f, 100.f, 400.f, 350.f),  // Superior Izquierda
+      sf::FloatRect(3250.f, 100.f, 400.f, 350.f), // Superior Derecha
+      sf::FloatRect(200.f, 850.f, 400.f, 350.f),  // Central Izquierda
+      sf::FloatRect(3250.f, 850.f, 400.f, 350.f), // Central Derecha
+      sf::FloatRect(200.f, 1600.f, 400.f, 350.f), // Inferior Izquierda
+      sf::FloatRect(3250.f, 1600.f, 400.f, 350.f) // Inferior Derecha
   };
   indiceZonaActiva = -1;
 }
@@ -104,11 +103,11 @@ void Juego::inicializarZombies() {
   float distMinZombies = 100.f;
   int maxIntentos = 100;
 
-  // * Reservamos memoria para evitar reasignación y pérdida de punteros de
+  // Reservamos memoria para evitar reasignación y pérdida de punteros de
   // textura
   zombies.reserve(cantidadZombiesDeseada + 10);
 
-  // * Buscamos la zona de spawn que esté más lejana del jugador
+  // Buscamos la zona de spawn que esté más lejana del jugador
   float maxDistSq = -1.f;
   int indexMasLejano = 0;
   sf::Vector2f posJugador = jugador.getPosicion();
