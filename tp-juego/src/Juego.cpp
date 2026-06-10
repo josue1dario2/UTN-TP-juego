@@ -11,8 +11,7 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
 
   ventana.create(modoEscritorio, "Mi Juego", sf::Style::Fullscreen);
 
-  ventana.setMouseCursorVisible(
-      false); // Ocultar el cursor estándar de la computadora
+  ventana.setMouseCursorVisible(false); // Ocultar el cursor estándar de la computadora
 
   ventana.setFramerateLimit(60);
 
@@ -101,6 +100,7 @@ void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
   obstaculos.back().setPosicion(3672.f, 2014.f);
 }
 
+// Ejecuta el bucle principal del juego
 void Juego::iniciar() {
   std::srand(static_cast<unsigned>(std::time(nullptr)));
 
@@ -321,6 +321,7 @@ void Juego::inicializarZombies() {
       refZombie.escalarSprite(1.2f, 1.2f);
       refZombie.setHitbox(26.f, 33.6f);
       refZombie.setPosicionCentrado(spawn.x, spawn.y);
+
       zombiesCreados++;
     } else {
       // Si superamos el número de intentos, salimos para evitar bloqueo
