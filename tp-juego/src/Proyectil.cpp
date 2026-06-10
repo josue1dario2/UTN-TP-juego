@@ -1,49 +1,45 @@
 #include "Proyectil.h"
+#include <cmath>
+#include <iostream>
 
-Proyectil::Proyectil(sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel) : ObjetoGrafico() {
-    direccion = dir;
+Proyectil::Proyectil(sf::Texture& texturaProyectil,sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel, float danio) {
+    setPosicionCentrado(posInicial.x, posInicial.y);
+    sprite.setTexture(texturaProyectil);
+    escalarSprite(1.5f, 1.5f);
+    mostrarHitbox = false;
+    
     velocidad = vel;
     alcanceMax = alc;
+    this->danio = danio;
     distanciaRecorrida = 0.f;
-    activo = true;
+    direccion.x = dir.x - posInicial.x;
+    direccion.y = dir.y - posInicial.y;
 
-    // Configurar la representación visual estándar de la bala
-    formaBala.setRadius(5.f);
-    formaBala.setFillColor(sf::Color::Yellow);
-    formaBala.setOrigin(5.f, 5.f); // Centrado
+    float longitud = std::sqrt(direccion.x * direccion.x + direccion.y * direccion.y);
+    direccion.x /= longitud;
+    direccion.y /= longitud;
 
-    setPosicionCentrado(posInicial.x, posInicial.y);
-    setHitbox(10.f, 10.f); // Hitbox pequeña para el proyectil
+    setHitbox(5.f, 5.f); // Hitbox pequeña para el proyectil
+
+    setAngulo(std::atan2(direccion.y, direccion.x) * 180.f / 3.14159f);
+
+    estadoActivo = true;
 }
 
-void Proyectil::actualizar(float deltaTime) {
-    if (!activo) return;
+bool Proyectil::debeDestruirse() const {
+    return distanciaRecorrida >= alcanceMax || !estadoActivo;
+}
 
-    float paso = velocidad * deltaTime;
-    mover(direccion.x * paso, direccion.y * paso);
-    distanciaRecorrida += paso;
+void Proyectil::actualizar(float deltaTime,const std::vector<ObjetoMapa>& obstaculos) {
 
-    // Si supera el alcance máximo, se desactiva
-    if (distanciaRecorrida >= alcanceMax) {
-        activo = false;
+    float desplazamiento = velocidad * deltaTime;
+    mover(direccion.x * desplazamiento, direccion.y * desplazamiento);
+    distanciaRecorrida += desplazamiento;
+
+    for(auto& obstaculo : obstaculos) {
+        if (getHitbox().intersects(obstaculo.getHitbox())) {
+            estadoActivo = false;
+            break;
+        }
     }
-}
-
-void Proyectil::dibujar(sf::RenderWindow& ventana) {
-    if (!activo) return;
-
-    // Sincronizar la posición visual de la forma de la bala
-    formaBala.setPosition(getPosicion());
-    ventana.draw(formaBala);
-
-    // Dibujar la hitbox de depuración si mostrarHitbox está activado en ObjetoGrafico
-    ObjetoGrafico::dibujar(ventana);
-}
-
-void Proyectil::verificarColisiones() {
-
-}
-
-bool Proyectil::isActivo() const {
-    return activo;
 }

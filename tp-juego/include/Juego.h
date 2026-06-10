@@ -22,15 +22,16 @@ private:
   // INCIALIZACION DE ELEMENTOS DEL JUEGO
   Personaje jugador;
 
-  std::vector<ObjetoMapa> obstaculos; // Vector para almacenar múltiples
-                                      // elementos del mapa/paredes/obstaculos
-  std::vector<Zombie>
-      zombies; // Vector para almacenar a los zombies activos en la partida
+  std::vector<ObjetoMapa> obstaculos; // Vector para almacenar múltiples elementos del mapa/paredes/obstaculos
+  std::vector<Proyectil> proyectiles; // Vector para almacenar múltiples proyectiles
+  std::vector<Zombie> zombies;        // Vector para almacenar a los zombies activos en la partida
 
   std::vector<sf::FloatRect> zonasSpawn;
   int indiceZonaActiva;
+
   sf::Texture texturaMapa;
   sf::Sprite spriteMapa;
+  sf::Texture texturaProyectil;
 
   Puntero mira;
 
@@ -42,6 +43,6 @@ private:
   void inicializarZombies();
 
 public:
-  Juego();
+  Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown);
   void iniciar();
 };

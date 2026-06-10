@@ -2,7 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 
-Juego::Juego() {
+Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown) :
+    jugador(idJug, idArma, nombre, vida, armadura, velocidad, cooldown) {
+
   deltaTime = 0.f;
 
   sf::VideoMode modoEscritorio = sf::VideoMode::getDesktopMode();
@@ -31,6 +33,8 @@ Juego::Juego() {
       sf::FloatRect(3250.f, 1600.f, 400.f, 350.f) // Inferior Derecha
   };
   indiceZonaActiva = -1;
+
+  texturaProyectil.loadFromFile("assets/bala.png");
 }
 
 void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
@@ -97,14 +101,150 @@ void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
   obstaculos.back().setPosicion(3672.f, 2014.f);
 }
 
+void Juego::iniciar() {
+  std::srand(static_cast<unsigned>(std::time(nullptr)));
+
+  texturaMapa.loadFromFile("assets/mapa.png");
+  spriteMapa.setTexture(texturaMapa);
+
+  inicializarZombies();
+
+  while (ventana.isOpen()) {
+    // obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
+    deltaTime = relojDelta.restart().asSeconds();
+
+    procesarEventos();
+    actualizar();
+    renderizar();
+  }
+}
+
+// Maneja eventos de ventana e input del usuario
+void Juego::procesarEventos() {
+  sf::Event evento;
+  while (ventana.pollEvent(evento)) {
+    if (evento.type == sf::Event::Closed) {
+      ventana.close();
+    }
+    if (evento.type == sf::Event::KeyPressed &&
+        evento.key.code == sf::Keyboard::Escape) {
+      ventana.close();
+    }
+
+    // Detectar clic izquierdo del mouse para disparar
+    if (evento.type == sf::Event::MouseButtonPressed &&
+        evento.mouseButton.button == sf::Mouse::Left) {
+      sf::Vector2i posicionMouseVentana = sf::Mouse::getPosition(ventana);
+      sf::Vector2f posicionMouseMundo =
+          ventana.mapPixelToCoords(posicionMouseVentana);
+
+      // Disparar el arma equipada apuntando al mouse
+      jugador.getArma().disparar(jugador.getPosicion(), posicionMouseMundo);
+    }
+  }
+}
+
+// Actualiza la logica del juego
+void Juego::actualizar() {
+  // Lógica de movimiento del jugador
+  jugador.actualizar(deltaTime, obstaculos);
+  jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles, texturaProyectil);
+
+  for (auto &proyectil : proyectiles) {
+    proyectil.actualizar(deltaTime, obstaculos);
+  }
+
+  proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(), [](const Proyectil &p) { return p.debeDestruirse(); }), proyectiles.end());
+
+  // El jugador choca contra los zombies vivos para no poder empujarlos
+  for (const auto &zombie : zombies) {
+    if (!zombie.muerto() && jugador.getHitbox().intersects(zombie.getHitbox())) {
+      jugador.setPosicionCentrado(jugador.getPosicionAnterior().x, jugador.getPosicionAnterior().y);
+      break;
+    }
+  }
+
+  auxVistaX = jugador.getPosicion().x;
+  auxVistaY = jugador.getPosicion().y;
+
+  // Limitar el centro de la cámara para que nunca muestre el exterior (el vacío negro)
+  if (auxVistaX < vista.getSize().x / 2.f)
+    auxVistaX = vista.getSize().x / 2.f;
+  if (auxVistaX > texturaMapa.getSize().x - vista.getSize().x / 2.f)
+    auxVistaX = texturaMapa.getSize().x - vista.getSize().x / 2.f;
+
+  if (auxVistaY < vista.getSize().y / 2.f)
+    auxVistaY = vista.getSize().y / 2.f;
+  if (auxVistaY > texturaMapa.getSize().y - vista.getSize().y / 2.f)
+    auxVistaY = texturaMapa.getSize().y - vista.getSize().y / 2.f;
+
+  vista.setCenter(auxVistaX, auxVistaY);
+  ventana.setView(vista);
+
+  // Actualizar la mira personalizada y hacerla girar
+  mira.actualizar(ventana, deltaTime);
+
+  // Actualizar zombies
+  for (auto &zombie : zombies) {
+    zombie.actualizar(deltaTime, jugador.getHitbox(), obstaculos, zombies);
+  }
+}
+
+// Dibuja todos los elementos en pantalla
+void Juego::renderizar() {
+  ventana.clear();
+
+  // acá se dibujan las cosas
+  ventana.draw(spriteMapa);
+
+  // La zona activa (la más lejana) se dibuja en verde. Las zonas inactivas se dibujan en azul.
+  for (size_t i = 0; i < zonasSpawn.size(); ++i) {
+    const auto &zona = zonasSpawn[i];
+    sf::RectangleShape rectSpawn(sf::Vector2f(zona.width, zona.height));
+    rectSpawn.setPosition(zona.left, zona.top);
+    if (static_cast<int>(i) == indiceZonaActiva) {
+      rectSpawn.setFillColor(
+          sf::Color(0, 255, 0, 30)); // Relleno verde muy transparente
+      rectSpawn.setOutlineColor(sf::Color::Green);
+    } else {
+      rectSpawn.setFillColor(
+          sf::Color(0, 0, 255, 15)); // Relleno azul sumamente transparente
+      rectSpawn.setOutlineColor(sf::Color(0, 0, 255, 100)); // Borde azul
+    }
+    rectSpawn.setOutlineThickness(3.f);
+    ventana.draw(rectSpawn);
+  }
+
+  // Dibuja los obstáculos con un bucle
+  for (auto &obstaculo : obstaculos) {
+    obstaculo.dibujar(ventana);
+  }
+
+  for (auto &proyectil : proyectiles) {
+    proyectil.dibujar(ventana);
+  }
+
+  jugador.dibujar(ventana);
+  jugador.getArma().dibujar(ventana);
+
+  // Dibujar todos los zombies
+  for (auto &zombie : zombies) {
+    zombie.dibujar(ventana);
+  }
+
+  // Dibujar el puntero personalizado (la mira giratoria) encima de todo
+  mira.dibujar(ventana);
+
+  ventana.display();
+}
+
 void Juego::inicializarZombies() {
   int cantidadZombiesDeseada = 5;
   int zombiesCreados = 0;
   float distMinZombies = 100.f;
   int maxIntentos = 100;
 
-  // Reservamos memoria para evitar reasignación y pérdida de punteros de
-  // textura
+  // Reservamos memoria para evitar reasignación y pérdida de punteros de textura
   zombies.reserve(cantidadZombiesDeseada + 10);
 
   // Buscamos la zona de spawn que esté más lejana del jugador
@@ -181,183 +321,10 @@ void Juego::inicializarZombies() {
       refZombie.escalarSprite(1.2f, 1.2f);
       refZombie.setHitbox(26.f, 33.6f);
       refZombie.setPosicionCentrado(spawn.x, spawn.y);
-
       zombiesCreados++;
     } else {
       // Si superamos el número de intentos, salimos para evitar bloqueo
       break;
     }
   }
-}
-
-// Ejecuta el bucle principal del juego
-void Juego::iniciar() {
-
-  std::srand(static_cast<unsigned>(std::time(nullptr)));
-
-  texturaMapa.loadFromFile("assets/mapa.png");
-  spriteMapa.setTexture(texturaMapa);
-
-  inicializarZombies();
-
-  while (ventana.isOpen()) {
-
-    // obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
-    deltaTime = relojDelta.restart().asSeconds();
-
-    procesarEventos();
-    actualizar();
-    renderizar();
-  }
-}
-
-// Maneja eventos de ventana e input del usuario
-void Juego::procesarEventos() {
-  sf::Event evento;
-  while (ventana.pollEvent(evento)) {
-    if (evento.type == sf::Event::Closed) {
-      ventana.close();
-    }
-    if (evento.type == sf::Event::KeyPressed &&
-        evento.key.code == sf::Keyboard::Escape) {
-      ventana.close();
-    }
-
-    // Detectar clic izquierdo del mouse para disparar
-    if (evento.type == sf::Event::MouseButtonPressed &&
-        evento.mouseButton.button == sf::Mouse::Left) {
-      sf::Vector2i posicionMouseVentana = sf::Mouse::getPosition(ventana);
-      sf::Vector2f posicionMouseMundo =
-          ventana.mapPixelToCoords(posicionMouseVentana);
-
-      // Disparar el arma equipada apuntando al mouse
-      jugador.getArma().disparar(jugador.getPosicion(), posicionMouseMundo);
-    }
-  }
-}
-
-// Actualiza la logica del juego
-void Juego::actualizar() {
-  jugador.actualizar(deltaTime);
-
-  // movimiento horizontal jugador, chequeo de colisiones mediante bucle for
-  jugador.guardarPosicionAnterior();
-  jugador.mover(jugador.getMovimientoX(), 0.f);
-
-  bool colisionoX = false;
-  for (auto &obstaculo : obstaculos) {
-    if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
-      jugador.volverPosicionAnteriorX();
-      colisionoX = true;
-      break;
-    }
-  }
-  // El jugador choca contra los zombies vivos para no poder empujarlos
-  if (!colisionoX) {
-    for (const auto &zombie : zombies) {
-      if (!zombie.muerto() &&
-          jugador.getHitbox().intersects(zombie.getHitbox())) {
-        jugador.volverPosicionAnteriorX();
-        break;
-      }
-    }
-  }
-
-  // movimiento vertical jugador
-  jugador.guardarPosicionAnterior();
-  jugador.mover(0.f, jugador.getMovimientoY());
-
-  bool colisionoY = false;
-  for (auto &obstaculo : obstaculos) {
-    if (jugador.getHitbox().intersects(obstaculo.getHitbox())) {
-      jugador.volverPosicionAnteriorY();
-      colisionoY = true;
-      break;
-    }
-  }
-  // El jugador choca contra los zombies vivos para no poder empujarlos
-  if (!colisionoY) {
-    for (const auto &zombie : zombies) {
-      if (!zombie.muerto() &&
-          jugador.getHitbox().intersects(zombie.getHitbox())) {
-        jugador.volverPosicionAnteriorY();
-        break;
-      }
-    }
-  }
-
-  auxVistaX = jugador.getPosicion().x;
-  auxVistaY = jugador.getPosicion().y;
-
-  // Limitar el centro de la cámara para que nunca muestre el exterior (el vacío
-  // negro)
-  if (auxVistaX < vista.getSize().x / 2.f)
-    auxVistaX = vista.getSize().x / 2.f;
-  if (auxVistaX > texturaMapa.getSize().x - vista.getSize().x / 2.f)
-    auxVistaX = texturaMapa.getSize().x - vista.getSize().x / 2.f;
-
-  if (auxVistaY < vista.getSize().y / 2.f)
-    auxVistaY = vista.getSize().y / 2.f;
-  if (auxVistaY > texturaMapa.getSize().y - vista.getSize().y / 2.f)
-    auxVistaY = texturaMapa.getSize().y - vista.getSize().y / 2.f;
-
-  vista.setCenter(auxVistaX, auxVistaY);
-  ventana.setView(vista);
-
-  // Actualizar la mira personalizada y hacerla girar
-  mira.actualizar(ventana, deltaTime);
-
-  // Actualizar zombies
-  // Pasamos la referencia del vector de zombies para que puedan hacer los
-  // cálculos de separación.
-  for (auto &zombie : zombies) {
-    zombie.actualizar(deltaTime, jugador.getHitbox(), obstaculos, zombies);
-  }
-}
-
-// Dibuja todos los elementos en pantalla
-void Juego::renderizar() {
-  ventana.clear();
-
-  // aca se dibujan las cosas
-  ventana.draw(spriteMapa);
-
-  // La zona activa (la más lejana) se dibuja en verde. Las zonas inactivas se
-  // dibujan en azul.
-  for (size_t i = 0; i < zonasSpawn.size(); ++i) {
-    const auto &zona = zonasSpawn[i];
-    sf::RectangleShape rectSpawn(sf::Vector2f(zona.width, zona.height));
-    rectSpawn.setPosition(zona.left, zona.top);
-    if (static_cast<int>(i) == indiceZonaActiva) {
-      rectSpawn.setFillColor(
-          sf::Color(0, 255, 0, 30)); // Relleno verde muy transparente
-      rectSpawn.setOutlineColor(sf::Color::Green);
-    } else {
-      rectSpawn.setFillColor(
-          sf::Color(0, 0, 255, 15)); // Relleno azul sumamente transparente
-      rectSpawn.setOutlineColor(sf::Color(0, 0, 255, 100)); // Borde azul
-    }
-    rectSpawn.setOutlineThickness(3.f);
-    ventana.draw(rectSpawn);
-  }
-
-  // Dibuja los obstáculos con un bucle
-  for (auto &obstaculo : obstaculos) {
-    obstaculo.dibujar(ventana);
-  }
-
-  jugador.dibujar(ventana);
-
-  // Dibujar todos los zombies
-  for (auto &zombie : zombies) {
-    zombie.dibujar(ventana);
-  }
-
-  // Dibujar la estela del disparo del arma
-  jugador.getArma().dibujar(ventana);
-
-  // Dibujar el puntero personalizado (la mira giratoria) encima de todo
-  mira.dibujar(ventana);
-
-  ventana.display();
 }

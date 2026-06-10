@@ -3,6 +3,9 @@
 #include <string>
 #include "Entidad.h"
 #include "Arma.h"
+#include "ObjetoMapa.h"
+#include "Proyectil.h"
+#include "archivoArma.h"
 
 
 class Personaje : public Entidad {
@@ -11,7 +14,7 @@ private:
     std::string nombre;
     float armaduraMax;
     float armaduraActual;
-    
+    float cooldownHabilidad;
     std::string habilidad;
 
 
@@ -19,22 +22,18 @@ private:
     float movimientoX;
     float movimientoY;
 
-    // Sistema de colisiones por mapa
-    const sf::Image* mapaColision;
-
     // Arma equipada del jugador
-    Arma armaEquipada;
+    std::vector<Arma> inventarioArmas;
+    int armaEquipada; // Índice del arma actualmente equipada en el inventario
 
 
 public:
 
     Personaje();
 
-    void cargarAtributos(int id, std::string nom, float vida, float armadura, float vel, std::string hab);
-    
-    Arma& getArma();
+    Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad, float cooldownHabilidad);
 
-    void actualizar(float deltaTime) override;
+    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
     void controlar(float movimiento);
 
     void guardarPosicionAnterior();
@@ -43,7 +42,13 @@ public:
 
     void volverPosicionAnteriorY();
 
+    sf::Vector2f getPosicionAnterior() const { return posicionAnterior; }
+
     float getMovimientoX() const;
 
     float getMovimientoY() const;
+
+    Arma& getArma();
+
+    void elegirArma();
 };

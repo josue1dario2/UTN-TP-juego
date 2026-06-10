@@ -4,33 +4,53 @@
 #include <vector>
 #include "Proyectil.h"
 
-class Arma {
+class Arma : public ObjetoGrafico {
 private:
     int idArma;
     std::string nombre;
-    int danio;
+    
+    float tiempoDesdeUltimoDisparo;
+    float tiempoRecarga;
+    bool enRecarga;
+
+    float cadencia;
+    float danio;
     float alcance;
     float costo;
+    int municionMaxima;
+    int tamanioCargador;
 
-    // Vector de objetos Proyectil de acuerdo con las clases del proyecto
-    std::vector<Proyectil> proyectiles;
+    int municionActual;
+    int municionEnCargador;
+    bool desbloqueada;
+
+    void disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil);
 
 public:
     Arma();
-    Arma(int id, std::string nom, int dmg, float alc, float cost);
+    Arma(int id, std::string nombre, float cadencia, float danio, float alcance, float costo, int municionMaxima, int tamanioCargador);
+
+    virtual void actualizar(float deltaTime, const sf::Vector2f &posicionMouse, const sf::Vector2f& posicionJugador, 
+        std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil);
 
     // Getters y Setters
     int getIdArma() const;
     std::string getNombre() const;
-    int getDanio() const;
+    float getDanio() const;
     float getAlcance() const;
     float getCosto() const;
 
-    // Métodos del diagrama UML
-    void disparar(sf::Vector2f origen, sf::Vector2f destino);
-    void recargar();
+    void setDesbloqueo(bool estado);
+    void llenarMunicion();
+    void recargar(int cantidad);
 
-    // Métodos de actualización y dibujo de proyectiles
-    void actualizar(float deltaTime);
-    void dibujar(sf::RenderWindow& ventana);
+    int getMunicionActual() const { return municionActual; }
+    int getMunicionEnCargador() const { return municionEnCargador; }
+    int getTamanioCargador() const { return tamanioCargador; }
+    int getMunicionMaxima() const { return municionMaxima; }
+
+    bool getEnRecarga() const { return enRecarga; }
+    bool getEstadoDesbloqueo() const { return desbloqueada; }
+
+    bool estaDisponible() const; // Verifica si el arma está disponible para ser equipada
 };
