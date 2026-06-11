@@ -26,6 +26,11 @@ private:
     std::vector<Arma> inventarioArmas;
     int armaEquipada; // Índice del arma actualmente equipada en el inventario
 
+    float tiempoHabilidad; //tiempo desde que se activo la habilidad
+    bool habilidadActivada;
+    bool habilidadDisponible;
+    float multiplicadorZoom;
+
 
 public:
 
@@ -48,5 +53,14 @@ public:
 
     Arma& getArma();
 
+    void setVelocidad(float velocidad);
+
     void elegirArma();
+
+    void activarHabilidad(float deltaTime);
+
+    void habilidadRecon(float deltaTime);
+
+    float getMultiplicadorZoom();
+
 };

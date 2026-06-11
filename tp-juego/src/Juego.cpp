@@ -58,6 +58,8 @@ void Juego::procesarEventos() {
 void Juego::actualizar() {
     jugador.actualizar(deltaTime, obstaculos);
     jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles,texturaProyectil);
+
+    vista.setSize(1280.f * jugador.getMultiplicadorZoom(), 720.f * jugador.getMultiplicadorZoom());
     
     for(auto& proyectil : proyectiles) {
         proyectil.actualizar(deltaTime, obstaculos);
