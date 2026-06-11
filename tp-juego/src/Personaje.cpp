@@ -10,6 +10,8 @@ Personaje::Personaje(){
     armaduraActual = 1.f;
     velocidad = 1.f;
     habilidad = "-";
+    habilidadActivada = false;
+    armaEquipada = 0;
 }
 
 Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad, float cooldownHabilidad) {
@@ -24,6 +26,10 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     this->cooldownHabilidad = cooldownHabilidad;
     habilidad = "-";
     armaEquipada = 0;
+    habilidadActivada = false;
+    tiempoHabilidad = 0;
+    habilidadDisponible = true;
+    multiplicadorZoom = 1.f;
 
     mostrarHitbox = false;
     if (!cargarTextura("assets/" + nombre + ".png")) {
@@ -126,6 +132,10 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
     }
 
     elegirArma();
+
+    tiempoHabilidad += deltaTime;
+
+    activarHabilidad(deltaTime);
 }
 
 float Personaje::getMovimientoX() const { return movimientoX; }
@@ -135,6 +145,14 @@ float Personaje::getMovimientoY() const { return movimientoY; }
 // devuelve el arma así se actualiza en la clase juego
 Arma& Personaje::getArma() {
     return inventarioArmas[armaEquipada];
+}
+
+void Personaje::setVelocidad(float velocidad){
+    this->velocidad = velocidad;
+}
+
+float Personaje::getMultiplicadorZoom(){
+    return multiplicadorZoom;
 }
 
 void Personaje::elegirArma() {
@@ -152,6 +170,60 @@ void Personaje::elegirArma() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && inventarioArmas[4].estaDisponible()) {
         armaEquipada = 4;
+    }
+}
+
+void Personaje::activarHabilidad(float deltaTime){
+    
+    if (tiempoHabilidad >= cooldownHabilidad && habilidadActivada == false){
+        habilidadDisponible = true;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && habilidadDisponible == true && habilidadActivada == false){
+        habilidadActivada = true;
+        tiempoHabilidad = 0;
+        habilidadDisponible = false;
+        std::cout << "se activo la habilidad" << std::endl;
+    }
+    
+    switch (idPersonaje) {
+
+        case 0: {
+            habilidadRecon(deltaTime);
+            break;
+        }
+
+    }
+}
+
+void Personaje::habilidadRecon(float deltaTime) {
+
+    if(habilidadActivada) {
+    
+        setVelocidad(0);
+
+        if(multiplicadorZoom < 2.f){
+            multiplicadorZoom += deltaTime;
+        }
+
+        if (tiempoHabilidad >= 10){
+            std::cout << "habilidad desactivada" << std:: endl;
+            habilidadActivada = false;
+            setVelocidad(200);
+            tiempoHabilidad = 0;
+        }
+        
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && tiempoHabilidad > 1){
+            std::cout << "habilidad desactivada" << std:: endl;
+            habilidadActivada = false;
+            setVelocidad(200);
+            tiempoHabilidad = 0;
+        }
+        
+    } else {
+        if(multiplicadorZoom > 1.f){
+            multiplicadorZoom -= deltaTime;
+        }
     }
 }
 

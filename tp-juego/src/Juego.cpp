@@ -135,6 +135,13 @@ void Juego::procesarEventos() {
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
+    jugador.actualizar(deltaTime, obstaculos);
+    jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles,texturaProyectil);
+
+    vista.setSize(1280.f * jugador.getMultiplicadorZoom(), 720.f * jugador.getMultiplicadorZoom());
+    
+    for(auto& proyectil : proyectiles) {
+        proyectil.actualizar(deltaTime, obstaculos);
   // Obtener hitboxes de zombies vivos para colision del jugador
   std::vector<sf::FloatRect> hitboxesZombies;
   for (const auto &zombie : zombies) {
