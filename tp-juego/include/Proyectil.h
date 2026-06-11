@@ -21,4 +21,6 @@ public:
     virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
 
     bool debeDestruirse() const;
+    float getDanio() const { return danio; }
+    void desactivar() { estadoActivo = false; }
 };

@@ -6,8 +6,7 @@ Entidad::Entidad()
     vidaActual = vidaMax;
 }
 
-/*
-void Entidad::recibirDanio(int cantidad)
+void Entidad::recibirDanio(float cantidad)
 {
     vidaActual -= cantidad;
 
@@ -21,4 +20,3 @@ bool Entidad::estaVivo() const
 {
     return vidaActual > 0;
 }
-*/

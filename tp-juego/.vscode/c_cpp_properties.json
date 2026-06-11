@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include",
+                "/opt/homebrew/opt/sfml/include",
                 "/opt/homebrew/opt/sfml@2/include",
                 "/opt/homebrew/include"
             ],

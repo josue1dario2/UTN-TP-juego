@@ -38,14 +38,15 @@ public:
 
     Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad, float cooldownHabilidad);
 
-    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
-    void controlar(float movimiento);
+    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect>& obstaculosAdicionales = {});
 
     void guardarPosicionAnterior();
 
     void volverPosicionAnteriorX();
 
     void volverPosicionAnteriorY();
+
+    sf::Vector2f getPosicionAnterior() const { return posicionAnterior; }
 
     float getMovimientoX() const;
 
@@ -56,11 +57,15 @@ public:
     void setVelocidad(float velocidad);
 
     void elegirArma();
-
+  
     void activarHabilidad(float deltaTime);
 
     void habilidadRecon(float deltaTime);
 
     float getMultiplicadorZoom();
 
+    float getArmaduraActual() const { return armaduraActual; }
+    float getArmaduraMax() const { return armaduraMax; }
+
+    void recibirDanio(float cantidad) override;
 };
