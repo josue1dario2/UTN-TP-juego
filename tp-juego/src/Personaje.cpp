@@ -20,17 +20,22 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     armaduraMax = armadura;
     armaduraActual = armadura;
     this->velocidad = velocidad;
+    if (this->velocidad <= 0.f) this->velocidad = 200.f;
     this->cooldownHabilidad = cooldownHabilidad;
     habilidad = "-";
     armaEquipada = 0;
 
     mostrarHitbox = false;
-    cargarTextura("assets/" + nombre + ".png");
+    if (!cargarTextura("assets/" + nombre + ".png")) {
+        cargarTextura("assets/jugador.png");
+    }
     escalarSprite(0.8f,0.8f);
+    //setearTamanioSprite(39, 48);
     centrarOrigen();
 
     setHitbox(13.f * 2.f, 16.f * 2.1f);
     setPosicionCentrado(1720.f, 1080.f);
+    posicionAnterior = sf::Vector2f(1720.f, 1080.f);
 
     archivoArma archivo("armas.dat");
 
@@ -57,8 +62,8 @@ void Personaje::volverPosicionAnteriorY() {
   setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
-void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos) {
-    // lógica adicional para el personaje, como animaciones o habilidades
+void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect>& obstaculosAdicionales) {
+    // logica adicional para el personaje, como animaciones o habilidades
     movimientoX = 0.f;
     movimientoY = 0.f;
 
@@ -83,20 +88,40 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
     // movimiento horizontal jugador, chequeo de colisiones mediante bucle for
     guardarPosicionAnterior();
     mover(getMovimientoX(), 0.f);
+    bool colisionoX = false;
     for(auto& obstaculo : obstaculos) {
         if (getHitbox().intersects(obstaculo.getHitbox())) {
             volverPosicionAnteriorX();
+            colisionoX = true;
             break;
+        }
+    }
+    if (!colisionoX) {
+        for(const auto& rect : obstaculosAdicionales) {
+            if (getHitbox().intersects(rect)) {
+                volverPosicionAnteriorX();
+                break;
+            }
         }
     }
 
     // movimiento vertical jugador
     guardarPosicionAnterior();
     mover(0.f, getMovimientoY());
+    bool colisionoY = false;
     for(auto& obstaculo : obstaculos) {
         if (getHitbox().intersects(obstaculo.getHitbox())) {
             volverPosicionAnteriorY();
+            colisionoY = true;
             break;
+        }
+    }
+    if (!colisionoY) {
+        for(const auto& rect : obstaculosAdicionales) {
+            if (getHitbox().intersects(rect)) {
+                volverPosicionAnteriorY();
+                break;
+            }
         }
     }
 
@@ -127,5 +152,25 @@ void Personaje::elegirArma() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && inventarioArmas[4].estaDisponible()) {
         armaEquipada = 4;
+    }
+}
+
+void Personaje::recibirDanio(float cantidad) {
+    if (armaduraActual > 0) {
+        float absorcion = cantidad * 0.5f;
+        if (armaduraActual >= absorcion) {
+            armaduraActual -= absorcion;
+            vidaActual -= (cantidad - absorcion);
+        } else {
+            float remanente = absorcion - armaduraActual;
+            armaduraActual = 0;
+            vidaActual -= (cantidad - absorcion + remanente);
+        }
+    } else {
+        vidaActual -= cantidad;
+    }
+
+    if (vidaActual < 0) {
+        vidaActual = 0;
     }
 }

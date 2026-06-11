@@ -21,6 +21,8 @@ protected:
 public:
 
     ObjetoGrafico();
+    ObjetoGrafico(const ObjetoGrafico& otro);
+    ObjetoGrafico& operator=(const ObjetoGrafico& otro);
 
     //------------CONFIGURACION DE SPRITE------------
     bool cargarTextura(const std::string& ruta);

@@ -130,44 +130,80 @@ void Juego::procesarEventos() {
         evento.key.code == sf::Keyboard::Escape) {
       ventana.close();
     }
-
-    // Detectar clic izquierdo del mouse para disparar
-    if (evento.type == sf::Event::MouseButtonPressed &&
-        evento.mouseButton.button == sf::Mouse::Left) {
-      sf::Vector2i posicionMouseVentana = sf::Mouse::getPosition(ventana);
-      sf::Vector2f posicionMouseMundo =
-          ventana.mapPixelToCoords(posicionMouseVentana);
-
-      // Disparar el arma equipada apuntando al mouse
-      jugador.getArma().disparar(jugador.getPosicion(), posicionMouseMundo);
-    }
   }
 }
 
 // Actualiza la logica del juego
 void Juego::actualizar() {
-  // Lógica de movimiento del jugador
-  jugador.actualizar(deltaTime, obstaculos);
-  jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles, texturaProyectil);
+  // Obtener hitboxes de zombies vivos para colision del jugador
+  std::vector<sf::FloatRect> hitboxesZombies;
+  for (const auto &zombie : zombies) {
+    if (!zombie.muerto()) {
+      hitboxesZombies.push_back(zombie.getHitbox());
+    }
+  }
+
+  // Logica de movimiento del jugador (solo si esta vivo)
+  if (jugador.estaVivo()) {
+    jugador.actualizar(deltaTime, obstaculos, hitboxesZombies);
+    jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles, texturaProyectil);
+  }
 
   for (auto &proyectil : proyectiles) {
     proyectil.actualizar(deltaTime, obstaculos);
   }
 
-  proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(), [](const Proyectil &p) { return p.debeDestruirse(); }), proyectiles.end());
-
-  // El jugador choca contra los zombies vivos para no poder empujarlos
-  for (const auto &zombie : zombies) {
-    if (!zombie.muerto() && jugador.getHitbox().intersects(zombie.getHitbox())) {
-      jugador.setPosicionCentrado(jugador.getPosicionAnterior().x, jugador.getPosicionAnterior().y);
-      break;
+  // 1. Deteccion de colision de Proyectil vs Zombie
+  for (auto &proyectil : proyectiles) {
+    for (auto &zombie : zombies) {
+      if (!zombie.muerto() && proyectil.getHitbox().intersects(zombie.getHitbox())) {
+        zombie.quitarVida(proyectil.getDanio());
+        proyectil.desactivar();
+        std::cout << "IMPACTO Zombie recibio " << proyectil.getDanio() 
+                  << " de danio. Vida restante: " << zombie.getVida() << std::endl;
+        
+        if (zombie.muerto()) {
+          std::cout << "MUERTE Un Zombie ha sido eliminado!" << std::endl;
+        }
+        break;
+      }
     }
   }
+
+  proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(), [](const Proyectil &p) { return p.debeDestruirse(); }), proyectiles.end());
+
+  // Chequear ataque de los zombies usando un hitbox ligeramente expandido para tolerancia
+  for (auto &zombie : zombies) {
+    if (!zombie.muerto() && jugador.estaVivo()) {
+      sf::FloatRect expandedHitbox = jugador.getHitbox();
+      expandedHitbox.left -= 2.f;
+      expandedHitbox.top -= 2.f;
+      expandedHitbox.width += 4.f;
+      expandedHitbox.height += 4.f;
+
+      if (expandedHitbox.intersects(zombie.getHitbox())) {
+        // Logica de ataque del zombie al jugador con Cooldown
+        if (zombie.puedeAtacar()) {
+          jugador.recibirDanio(zombie.getAtaque());
+          zombie.reiniciarTiempoAtaque();
+          std::cout << "ATAQUE Zombie ataco al jugador! Vida del jugador: " << jugador.getVidaActual() 
+                    << " | Armadura: " << jugador.getArmaduraActual() << std::endl;
+
+          if (!jugador.estaVivo()) {
+            std::cout << "GAME OVER El jugador ha muerto. Partida terminada." << std::endl;
+          }
+        }
+      }
+    }
+  }
+
+  // Limpiar zombies muertos del vector
+  zombies.erase(std::remove_if(zombies.begin(), zombies.end(), [](const Zombie &z) { return z.muerto(); }), zombies.end());
 
   auxVistaX = jugador.getPosicion().x;
   auxVistaY = jugador.getPosicion().y;
 
-  // Limitar el centro de la cámara para que nunca muestre el exterior (el vacío negro)
+  // Limitar el centro de la camara para que nunca muestre el exterior (el vacio negro)
   if (auxVistaX < vista.getSize().x / 2.f)
     auxVistaX = vista.getSize().x / 2.f;
   if (auxVistaX > texturaMapa.getSize().x - vista.getSize().x / 2.f)
@@ -186,7 +222,7 @@ void Juego::actualizar() {
 
   // Actualizar zombies
   for (auto &zombie : zombies) {
-    zombie.actualizar(deltaTime, jugador.getHitbox(), obstaculos, zombies);
+    zombie.actualizar(deltaTime, jugador.estaVivo() ? jugador.getHitbox() : sf::FloatRect(), obstaculos, zombies);
   }
 }
 
@@ -224,8 +260,10 @@ void Juego::renderizar() {
     proyectil.dibujar(ventana);
   }
 
-  jugador.dibujar(ventana);
-  jugador.getArma().dibujar(ventana);
+  if (jugador.estaVivo()) {
+    jugador.dibujar(ventana);
+    jugador.getArma().dibujar(ventana);
+  }
 
   // Dibujar todos los zombies
   for (auto &zombie : zombies) {

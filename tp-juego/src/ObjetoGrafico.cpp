@@ -11,6 +11,29 @@ ObjetoGrafico::ObjetoGrafico()
 
 }
 
+ObjetoGrafico::ObjetoGrafico(const ObjetoGrafico& otro) {
+    textura = otro.textura;
+    sprite = otro.sprite;
+    sprite.setTexture(textura); // Volver a enlazar la textura copiada al sprite copiado
+    hitbox = otro.hitbox;
+    hitboxDebug = otro.hitboxDebug;
+    mostrarHitbox = otro.mostrarHitbox;
+    angulo = otro.angulo;
+}
+
+ObjetoGrafico& ObjetoGrafico::operator=(const ObjetoGrafico& otro) {
+    if (this != &otro) {
+        textura = otro.textura;
+        sprite = otro.sprite;
+        sprite.setTexture(textura); // Volver a enlazar la textura copiada al sprite copiado
+        hitbox = otro.hitbox;
+        hitboxDebug = otro.hitboxDebug;
+        mostrarHitbox = otro.mostrarHitbox;
+        angulo = otro.angulo;
+    }
+    return *this;
+}
+
 
 bool ObjetoGrafico::cargarTextura(const std::string& ruta)
 {

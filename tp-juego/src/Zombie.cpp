@@ -12,6 +12,9 @@ Zombie::Zombie() : Entidad() {
   vidaMax = 100.0f;
   vidaActual = 100.0f;
   this->velocidad = 1.0f; // Campo de Entidad
+
+  tiempoDesdeUltimoAtaque = 0.f;
+  cooldownAtaque = 1.0f; // 1 segundo de cooldown por defecto
 }
 
 Zombie::Zombie(int tipo, int vida, int ataque, float velocidad) : Entidad() {
@@ -24,6 +27,9 @@ Zombie::Zombie(int tipo, int vida, int ataque, float velocidad) : Entidad() {
   vidaMax = static_cast<float>(vida);
   vidaActual = static_cast<float>(vida);
   this->velocidad = velocidad;
+
+  tiempoDesdeUltimoAtaque = 0.f;
+  cooldownAtaque = 1.0f; // 1 segundo
 }
 
 int Zombie::getTipo() const { return tipo; }
@@ -66,6 +72,12 @@ void Zombie::actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
                         const std::vector<Zombie> &todosLosZombies) {
   if (muerto())
     return;
+
+  if (hitboxJugador.width == 0.f && hitboxJugador.height == 0.f) {
+    return; // Si el jugador esta muerto o desaparecio, el zombie no realiza movimientos
+  }
+
+  tiempoDesdeUltimoAtaque += deltaTime;
 
   // 1. Resolver colisión física rectangular con el jugador para evitar
   // cualquier superposición

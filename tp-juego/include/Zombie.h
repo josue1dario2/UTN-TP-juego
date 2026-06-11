@@ -9,6 +9,8 @@ private:
   int vida;
   int ataque;
   float velocidad;
+  float tiempoDesdeUltimoAtaque;
+  float cooldownAtaque;
 
 public:
   Zombie();
@@ -36,4 +38,7 @@ public:
   void actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
                   const std::vector<ObjetoMapa> &obstaculos,
                   const std::vector<Zombie> &todosLosZombies);
+
+  bool puedeAtacar() const { return tiempoDesdeUltimoAtaque >= cooldownAtaque; }
+  void reiniciarTiempoAtaque() { tiempoDesdeUltimoAtaque = 0.f; }
 };
