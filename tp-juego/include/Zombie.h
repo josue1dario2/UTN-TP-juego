@@ -6,9 +6,7 @@
 class Zombie : public Entidad {
 private:
   int tipo;
-  int vida;
   int ataque;
-  float velocidad;
   float tiempoDesdeUltimoAtaque;
   float cooldownAtaque;
 

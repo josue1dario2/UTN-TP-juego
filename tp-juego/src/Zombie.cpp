@@ -4,14 +4,12 @@
 
 Zombie::Zombie() : Entidad() {
   tipo = 1;
-  vida = 100;
   ataque = 10;
-  velocidad = 1.0f;
 
   // Inicializar campos de Entidad
   vidaMax = 100.0f;
   vidaActual = 100.0f;
-  this->velocidad = 1.0f; // Campo de Entidad
+  velocidad = 80.0f;
 
   tiempoDesdeUltimoAtaque = 0.f;
   cooldownAtaque = 1.0f; // 1 segundo de cooldown por defecto
@@ -19,9 +17,7 @@ Zombie::Zombie() : Entidad() {
 
 Zombie::Zombie(int tipo, int vida, int ataque, float velocidad) : Entidad() {
   this->tipo = tipo;
-  this->vida = vida;
   this->ataque = ataque;
-  this->velocidad = velocidad;
 
   // Sincronizar campos de Entidad
   vidaMax = static_cast<float>(vida);
@@ -36,11 +32,11 @@ int Zombie::getTipo() const { return tipo; }
 
 void Zombie::setTipo(int tipo) { this->tipo = tipo; }
 
-int Zombie::getVida() const { return vida; }
+int Zombie::getVida() const { return static_cast<int>(vidaActual); }
 
 void Zombie::setVida(int vida) {
-  this->vida = vida;
   vidaActual = static_cast<float>(vida);
+  vidaMax = static_cast<float>(vida);
 }
 
 int Zombie::getAtaque() const { return ataque; }
@@ -58,14 +54,10 @@ void Zombie::atacar() {
 }
 
 void Zombie::quitarVida(int cantidad) {
-  vida -= cantidad;
-  if (vida < 0) {
-    vida = 0;
-  }
-  vidaActual = static_cast<float>(vida);
+  recibirDanio(static_cast<float>(cantidad));
 }
 
-bool Zombie::muerto() const { return vida <= 0; }
+bool Zombie::muerto() const { return !estaVivo(); }
 
 void Zombie::actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
                         const std::vector<ObjetoMapa> &obstaculos,
