@@ -2,7 +2,7 @@
 #include "ObjetoMapa.h"
 #include "Personaje.h"
 #include "Puntero.h"
-#include "Zombie.h"
+#include "ZombieManager.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -24,10 +24,8 @@ private:
 
   std::vector<ObjetoMapa> obstaculos; // Vector para almacenar múltiples elementos del mapa/paredes/obstaculos
   std::vector<Proyectil> proyectiles; // Vector para almacenar múltiples proyectiles
-  std::vector<Zombie> zombies;        // Vector para almacenar a los zombies activos en la partida
-
-  std::vector<sf::FloatRect> zonasSpawn;
-  int indiceZonaActiva;
+  
+  ZombieManager zombieManager;
 
   sf::Texture texturaMapa;
   sf::Sprite spriteMapa;
@@ -40,7 +38,6 @@ private:
   void renderizar();
 
   void inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos);
-  void inicializarZombies();
 
 public:
   Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown);
