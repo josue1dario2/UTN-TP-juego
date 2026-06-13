@@ -23,7 +23,7 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
   inicializarObstaculos(obstaculos);
 
   // Definimos 6 zonas de spawn en los corredores laterales libres de obstáculos
-  zonasSpawn = {
+  std::vector<sf::FloatRect> zonasSpawn = {
       sf::FloatRect(200.f, 100.f, 400.f, 350.f),  // Superior Izquierda
       sf::FloatRect(3250.f, 100.f, 400.f, 350.f), // Superior Derecha
       sf::FloatRect(200.f, 850.f, 400.f, 350.f),  // Central Izquierda
@@ -31,7 +31,7 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
       sf::FloatRect(200.f, 1600.f, 400.f, 350.f), // Inferior Izquierda
       sf::FloatRect(3250.f, 1600.f, 400.f, 350.f) // Inferior Derecha
   };
-  indiceZonaActiva = -1;
+  zombieManager.inicializarZonasSpawn(zonasSpawn);
 
   texturaProyectil.loadFromFile("assets/bala.png");
 }
@@ -107,7 +107,7 @@ void Juego::iniciar() {
   texturaMapa.loadFromFile("assets/mapa.png");
   spriteMapa.setTexture(texturaMapa);
 
-  inicializarZombies();
+  zombieManager.inicializarZombies(5, jugador, obstaculos);
 
   while (ventana.isOpen()) {
     // obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
@@ -136,12 +136,7 @@ void Juego::procesarEventos() {
 // Actualiza la logica del juego
 void Juego::actualizar() {
   // Obtener hitboxes de zombies vivos para colision del jugador
-  std::vector<sf::FloatRect> hitboxesZombies;
-  for (const auto &zombie : zombies) {
-    if (!zombie.muerto()) {
-      hitboxesZombies.push_back(zombie.getHitbox());
-    }
-  }
+  std::vector<sf::FloatRect> hitboxesZombies = zombieManager.getHitboxesZombies();
 
   // Logica de movimiento del jugador (solo si esta vivo)
   if (jugador.estaVivo()) {
@@ -154,52 +149,8 @@ void Juego::actualizar() {
     proyectil.actualizar(deltaTime, obstaculos);
   }
 
-  // 1. Deteccion de colision de Proyectil vs Zombie
-  for (auto &proyectil : proyectiles) {
-    for (auto &zombie : zombies) {
-      if (!zombie.muerto() && proyectil.getHitbox().intersects(zombie.getHitbox())) {
-        zombie.quitarVida(proyectil.getDanio());
-        proyectil.desactivar();
-        std::cout << "IMPACTO Zombie recibio " << proyectil.getDanio() 
-                  << " de danio. Vida restante: " << zombie.getVida() << std::endl;
-        
-        if (zombie.muerto()) {
-          std::cout << "MUERTE Un Zombie ha sido eliminado!" << std::endl;
-        }
-        break;
-      }
-    }
-  }
-
-  proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(), [](const Proyectil &p) { return p.debeDestruirse(); }), proyectiles.end());
-
-  // Chequear ataque de los zombies usando un hitbox ligeramente expandido para tolerancia
-  for (auto &zombie : zombies) {
-    if (!zombie.muerto() && jugador.estaVivo()) {
-      sf::FloatRect expandedHitbox = jugador.getHitbox();
-      expandedHitbox.left -= 2.f;
-      expandedHitbox.top -= 2.f;
-      expandedHitbox.width += 4.f;
-      expandedHitbox.height += 4.f;
-
-      if (expandedHitbox.intersects(zombie.getHitbox())) {
-        // Logica de ataque del zombie al jugador con Cooldown
-        if (zombie.puedeAtacar()) {
-          jugador.recibirDanio(zombie.getAtaque());
-          zombie.reiniciarTiempoAtaque();
-          std::cout << "ATAQUE Zombie ataco al jugador! Vida del jugador: " << jugador.getVidaActual() 
-                    << " | Armadura: " << jugador.getArmaduraActual() << std::endl;
-
-          if (!jugador.estaVivo()) {
-            std::cout << "GAME OVER El jugador ha muerto. Partida terminada." << std::endl;
-          }
-        }
-      }
-    }
-  }
-
-  // Limpiar zombies muertos del vector
-  zombies.erase(std::remove_if(zombies.begin(), zombies.end(), [](const Zombie &z) { return z.muerto(); }), zombies.end());
+  // Lógica de zombies y colisión de balas delegada en ZombieManager
+  zombieManager.actualizar(deltaTime, jugador, obstaculos, proyectiles);
 
   auxVistaX = jugador.getPosicion().x;
   auxVistaY = jugador.getPosicion().y;
@@ -220,11 +171,6 @@ void Juego::actualizar() {
 
   // Actualizar la mira personalizada y hacerla girar
   mira.actualizar(ventana, deltaTime);
-
-  // Actualizar zombies
-  for (auto &zombie : zombies) {
-    zombie.actualizar(deltaTime, jugador.estaVivo() ? jugador.getHitbox() : sf::FloatRect(), obstaculos, zombies);
-  }
 }
 
 // Dibuja todos los elementos en pantalla
@@ -234,23 +180,8 @@ void Juego::renderizar() {
   // acá se dibujan las cosas
   ventana.draw(spriteMapa);
 
-  // La zona activa (la más lejana) se dibuja en verde. Las zonas inactivas se dibujan en azul.
-  for (size_t i = 0; i < zonasSpawn.size(); ++i) {
-    const auto &zona = zonasSpawn[i];
-    sf::RectangleShape rectSpawn(sf::Vector2f(zona.width, zona.height));
-    rectSpawn.setPosition(zona.left, zona.top);
-    if (static_cast<int>(i) == indiceZonaActiva) {
-      rectSpawn.setFillColor(
-          sf::Color(0, 255, 0, 30)); // Relleno verde muy transparente
-      rectSpawn.setOutlineColor(sf::Color::Green);
-    } else {
-      rectSpawn.setFillColor(
-          sf::Color(0, 0, 255, 15)); // Relleno azul sumamente transparente
-      rectSpawn.setOutlineColor(sf::Color(0, 0, 255, 100)); // Borde azul
-    }
-    rectSpawn.setOutlineThickness(3.f);
-    ventana.draw(rectSpawn);
-  }
+  // Dibuja las zonas de spawn
+  zombieManager.dibujarZonasSpawn(ventana);
 
   // Dibuja los obstáculos con un bucle
   for (auto &obstaculo : obstaculos) {
@@ -267,104 +198,10 @@ void Juego::renderizar() {
   }
 
   // Dibujar todos los zombies
-  for (auto &zombie : zombies) {
-    zombie.dibujar(ventana);
-  }
+  zombieManager.dibujarZombies(ventana);
 
   // Dibujar el puntero personalizado (la mira giratoria) encima de todo
   mira.dibujar(ventana);
 
   ventana.display();
-}
-
-void Juego::inicializarZombies() {
-  int cantidadZombiesDeseada = 5;
-  int zombiesCreados = 0;
-  float distMinZombies = 100.f;
-  int maxIntentos = 100;
-
-  // Reservamos memoria para evitar reasignación y pérdida de punteros de textura
-  zombies.reserve(cantidadZombiesDeseada + 10);
-
-  // Buscamos la zona de spawn que esté más lejana del jugador
-  float maxDistSq = -1.f;
-  int indexMasLejano = 0;
-  sf::Vector2f posJugador = jugador.getPosicion();
-
-  for (size_t i = 0; i < zonasSpawn.size(); ++i) {
-    const auto &zona = zonasSpawn[i];
-    sf::Vector2f centroZona(zona.left + zona.width / 2.f,
-                            zona.top + zona.height / 2.f);
-    sf::Vector2f diff = centroZona - posJugador;
-    float distSq = diff.x * diff.x + diff.y * diff.y;
-    if (distSq > maxDistSq) {
-      maxDistSq = distSq;
-      indexMasLejano = i;
-    }
-  }
-  indiceZonaActiva = indexMasLejano;
-  const sf::FloatRect &zonaActiva = zonasSpawn[indiceZonaActiva];
-
-  while (zombiesCreados < cantidadZombiesDeseada) {
-    bool spawnValido = false;
-    sf::Vector2f spawn(0.f, 0.f);
-
-    for (int intento = 0; intento < maxIntentos; ++intento) {
-      float rx =
-          zonaActiva.left +
-          static_cast<float>(std::rand() % static_cast<int>(zonaActiva.width));
-      float ry =
-          zonaActiva.top +
-          static_cast<float>(std::rand() % static_cast<int>(zonaActiva.height));
-      spawn = sf::Vector2f(rx, ry);
-
-      // 1. Verificar colisión con obstáculos
-      sf::FloatRect hitboxZombie(spawn.x - 13.f, spawn.y - 16.8f, 26.f, 33.6f);
-      bool colisionaConObstaculo = false;
-      for (const auto &obstaculo : obstaculos) {
-        if (hitboxZombie.intersects(obstaculo.getHitbox())) {
-          colisionaConObstaculo = true;
-          break;
-        }
-      }
-      if (colisionaConObstaculo) {
-        continue; // Colisiona con obstáculo
-      }
-
-      // 2. Verificar si está muy cerca de otro zombie ya creado (superposición)
-      bool colisionaConZombie = false;
-      for (const auto &zombieExistente : zombies) {
-        sf::Vector2f diffZombie = spawn - zombieExistente.getPosicion();
-        float distZombieSq =
-            diffZombie.x * diffZombie.x + diffZombie.y * diffZombie.y;
-        if (distZombieSq < distMinZombies * distMinZombies) {
-          colisionaConZombie = true;
-          break;
-        }
-      }
-      if (colisionaConZombie) {
-        continue; // Demasiado cerca de otro zombie
-      }
-
-      // Si pasa todas las validaciones, el punto de spawn es válido
-      spawnValido = true;
-      break;
-    }
-
-    // Si encontramos una posición válida, creamos el zombie
-    if (spawnValido) {
-      zombies.emplace_back(1, 100, 10, 80.f);
-      Zombie &refZombie = zombies.back();
-      refZombie.cargarTextura("assets/zombie.png");
-      refZombie.centrarOrigen();
-      refZombie.escalarSprite(1.2f, 1.2f);
-      refZombie.setHitbox(26.f, 33.6f);
-      refZombie.setPosicionCentrado(spawn.x, spawn.y);
-
-      zombiesCreados++;
-    } else {
-      // Si superamos el número de intentos, salimos para evitar bloqueo
-      break;
-    }
-  }
 }
