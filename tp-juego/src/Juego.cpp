@@ -1,6 +1,7 @@
 #include "../include/Juego.h"
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 
 Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown) :
     jugador(idJug, idArma, nombre, vida, armadura, velocidad, cooldown) {
@@ -148,6 +149,8 @@ void Juego::actualizar() {
   for (auto &proyectil : proyectiles) {
     proyectil.actualizar(deltaTime, obstaculos);
   }
+
+  proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(), [](const Proyectil &p) { return p.debeDestruirse(); }), proyectiles.end());
 
   // Lógica de zombies y colisión de balas delegada en ZombieManager
   zombieManager.actualizar(deltaTime, jugador, obstaculos, proyectiles);
