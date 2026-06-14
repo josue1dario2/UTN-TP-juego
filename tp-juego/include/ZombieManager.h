@@ -5,7 +5,6 @@
 #include "ObjetoMapa.h"
 #include "Proyectil.h"
 
-// Forward declaration of Personaje to avoid circular dependency
 class Personaje;
 
 class ZombieManager {
