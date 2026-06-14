@@ -5,7 +5,13 @@
 #include <algorithm>
 
 ZombieManager::ZombieManager() {
-    indiceZonaActiva = -1;
+    oleadaActual = 1;
+    enPeriodoDescanso = false;
+    cronometroDescanso = 0.f;
+    temporizadorSpawn = 0.f;
+    zombiesRestantesPorCrear = 5;
+    cronometroOleada = 0.f;
+    std::cout << "OLEADA Inicio de la Oleada " << oleadaActual << " (Zombies a crear: " << zombiesRestantesPorCrear << ")" << std::endl;
 }
 
 // Guarda en el gestor las áreas rectangulares del mapa donde pueden aparecer (spawnear) los zombies
@@ -13,89 +19,98 @@ void ZombieManager::inicializarZonasSpawn(const std::vector<sf::FloatRect>& zona
     zonasSpawn = zonas;
 }
 
-// Selecciona la zona de spawn más lejana al jugador y genera en ella los zombies en posiciones aleatorias seguras
-void ZombieManager::inicializarZombies(int cantidadDeseada, const Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos) {
-    int zombiesCreados = 0;
-    float distMinZombies = 100.f; // Distancia mínima permitida entre zombies al nacer para evitar superposiciones
-    int maxIntentos = 100;        // Intentos máximos para encontrar un punto de spawn válido antes de rendirse
+// Selecciona las 3 zonas de spawn más lejanas al jugador
+void ZombieManager::seleccionarZonaSpawnOptima(const sf::Vector2f& posJugador) {
+    if (zonasSpawn.empty()) return;
 
-    // Reserva memoria en el vector para optimizar el rendimiento al añadir elementos
-    zombies.reserve(cantidadDeseada + 10);
+    struct ZonaDistancia {
+        int indice;
+        float distSq;
+    };
 
-    // 1. Encontrar la zona de spawn que esté a mayor distancia del jugador
-    float maxDistSq = -1.f;
-    int indexMasLejano = 0;
-    sf::Vector2f posJugador = jugador.getPosicion();
+    std::vector<ZonaDistancia> listado;
+    listado.reserve(zonasSpawn.size());
 
     for (size_t i = 0; i < zonasSpawn.size(); ++i) {
         const auto &zona = zonasSpawn[i];
         sf::Vector2f centroZona(zona.left + zona.width / 2.f, zona.top + zona.height / 2.f);
         sf::Vector2f diff = centroZona - posJugador;
-        float distSq = diff.x * diff.x + diff.y * diff.y; // Distancia al cuadrado (más rápido de calcular que usar raíz cuadrada)
-        if (distSq > maxDistSq) {
-            maxDistSq = distSq;
-            indexMasLejano = i;
-        }
+        float distSq = diff.x * diff.x + diff.y * diff.y;
+        listado.push_back({static_cast<int>(i), distSq});
     }
-    indiceZonaActiva = indexMasLejano;
-    const sf::FloatRect &zonaActiva = zonasSpawn[indiceZonaActiva];
 
-    // 2. Intentar colocar cada zombie en un punto seguro de la zona seleccionada
-    while (zombiesCreados < cantidadDeseada) {
-        bool spawnValido = false;
-        sf::Vector2f spawn(0.f, 0.f);
+    // Ordenar de mayor a menor distancia (de mayor a menor distSq)
+    std::sort(listado.begin(), listado.end(), [](const ZonaDistancia& a, const ZonaDistancia& b) {
+        return a.distSq > b.distSq;
+    });
 
-        for (int intento = 0; intento < maxIntentos; ++intento) {
-            // Generar coordenadas aleatorias dentro de los límites de la zona activa
-            float rx = zonaActiva.left + static_cast<float>(std::rand() % static_cast<int>(zonaActiva.width));
-            float ry = zonaActiva.top + static_cast<float>(std::rand() % static_cast<int>(zonaActiva.height));
-            spawn = sf::Vector2f(rx, ry);
+    indicesZonasActivas.clear();
+    size_t limite = std::min(static_cast<size_t>(3), listado.size());
+    for (size_t i = 0; i < limite; ++i) {
+        indicesZonasActivas.push_back(listado[i].indice);
+    }
+}
 
-            // A. Verificar colisión del nuevo zombie con los obstáculos del mapa
-            sf::FloatRect hitboxZombie(spawn.x - 13.f, spawn.y - 16.8f, 26.f, 33.6f);
-            bool colisionaConObstaculo = false;
-            for (const auto &obstaculo : obstaculos) {
-                if (hitboxZombie.intersects(obstaculo.getHitbox())) {
-                    colisionaConObstaculo = true;
-                    break;
-                }
+// Intenta colocar un zombie en un punto seguro de una de las 3 zonas activas seleccionadas al azar
+void ZombieManager::intentarSpawnearUnZombie(const std::vector<ObjetoMapa>& obstaculos) {
+    if (indicesZonasActivas.empty() || zonasSpawn.empty()) return;
+
+    float distMinZombies = 100.f; // Distancia mínima permitida entre zombies
+    int maxIntentos = 100;        // Intentos máximos
+    
+    int indexZonaElegida = indicesZonasActivas[std::rand() % indicesZonasActivas.size()];
+    const sf::FloatRect &zonaElegida = zonasSpawn[indexZonaElegida];
+
+    bool spawnValido = false;
+    sf::Vector2f spawn(0.f, 0.f);
+
+    for (int intento = 0; intento < maxIntentos; ++intento) {
+        // Generar coordenadas aleatorias dentro de la zona elegida
+        float rx = zonaElegida.left + static_cast<float>(std::rand() % static_cast<int>(zonaElegida.width));
+        float ry = zonaElegida.top + static_cast<float>(std::rand() % static_cast<int>(zonaElegida.height));
+        spawn = sf::Vector2f(rx, ry);
+
+        // A. Verificar colisión del nuevo zombie con los obstáculos
+        sf::FloatRect hitboxZombie(spawn.x - 13.f, spawn.y - 16.8f, 26.f, 33.6f);
+        bool colisionaConObstaculo = false;
+        for (const auto &obstaculo : obstaculos) {
+            if (hitboxZombie.intersects(obstaculo.getHitbox())) {
+                colisionaConObstaculo = true;
+                break;
             }
-            if (colisionaConObstaculo) {
-                continue; // Si colisiona con una pared/obstáculo, reintenta en otra posición
-            }
-
-            // B. Verificar que el zombie no aparezca demasiado cerca de otro zombie ya creado
-            bool colisionaConZombie = false;
-            for (const auto &zombieExistente : zombies) {
-                sf::Vector2f diffZombie = spawn - zombieExistente.getPosicion();
-                float distZombieSq = diffZombie.x * diffZombie.x + diffZombie.y * diffZombie.y;
-                if (distZombieSq < distMinZombies * distMinZombies) {
-                    colisionaConZombie = true;
-                    break;
-                }
-            }
-            if (colisionaConZombie) {
-                continue; // Si está muy encimado a otro, reintenta
-            }
-
-            spawnValido = true;
-            break; // Posición válida encontrada, salir del bucle de intentos
+        }
+        if (colisionaConObstaculo) {
+            continue;
         }
 
-        // Si la posición fue válida, instanciar y configurar el objeto Zombie
-        if (spawnValido) {
-            zombies.emplace_back(1, 100, 10, 80.f);
-            Zombie &refZombie = zombies.back();
-            refZombie.cargarTextura("assets/zombie.png");
-            refZombie.centrarOrigen();
-            refZombie.escalarSprite(1.2f, 1.2f);
-            refZombie.setHitbox(26.f, 33.6f);
-            refZombie.setPosicionCentrado(spawn.x, spawn.y);
-
-            zombiesCreados++;
-        } else {
-            break; // Evita bucle infinito si el espacio está muy congestionado
+        // B. Verificar que no esté demasiado cerca de otro zombie
+        bool colisionaConZombie = false;
+        for (const auto &zombieExistente : zombies) {
+            sf::Vector2f diffZombie = spawn - zombieExistente.getPosicion();
+            float distZombieSq = diffZombie.x * diffZombie.x + diffZombie.y * diffZombie.y;
+            if (distZombieSq < distMinZombies * distMinZombies) {
+                colisionaConZombie = true;
+                break;
+            }
         }
+        if (colisionaConZombie) {
+            continue;
+        }
+
+        spawnValido = true;
+        break;
+    }
+
+    if (spawnValido) {
+        zombies.emplace_back(1, 100, 10, 80.f);
+        Zombie &refZombie = zombies.back();
+        refZombie.cargarTextura("assets/zombie.png");
+        refZombie.centrarOrigen();
+        refZombie.escalarSprite(1.2f, 1.2f);
+        refZombie.setHitbox(26.f, 33.6f);
+        refZombie.setPosicionCentrado(spawn.x, spawn.y);
+
+        zombiesRestantesPorCrear--;
     }
 }
 
@@ -113,6 +128,51 @@ std::vector<sf::FloatRect> ZombieManager::getHitboxesZombies() const {
 // Bucle de actualización principal: controla movimiento, lógica de ataque, colisiones de balas y limpieza de cadáveres
 void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles) {
     
+    // Si es el primer frame y no se han seleccionado zonas de spawn, seleccionarlas
+    if (indicesZonasActivas.empty() && !zonasSpawn.empty()) {
+        seleccionarZonaSpawnOptima(jugador.getPosicion());
+    }
+
+    // Máquina de estados del gestor de oleadas
+    if (enPeriodoDescanso) {
+        cronometroDescanso += deltaTime;
+        if (cronometroDescanso >= TIEMPO_DESCANSO) {
+            enPeriodoDescanso = false;
+            oleadaActual++;
+            int nuevosZombies = 5 + (oleadaActual - 1) * 3;
+            zombiesRestantesPorCrear = nuevosZombies;
+            zombies.reserve(nuevosZombies + 10);
+            
+            // Recalcular las 3 zonas más alejadas basándose en la posición del jugador
+            seleccionarZonaSpawnOptima(jugador.getPosicion());
+
+            std::cout << "TREGUA Fin de la tregua. Iniciando Oleada " << oleadaActual << "..." << std::endl;
+            std::cout << "OLEADA Inicio de la Oleada " << oleadaActual << " (Zombies a crear: " << zombiesRestantesPorCrear << ")" << std::endl;
+            
+            cronometroOleada = 0.f;
+            temporizadorSpawn = 0.f;
+        }
+    } else {
+        cronometroOleada += deltaTime;
+        
+        // Generar zombies de manera paulatina
+        if (zombiesRestantesPorCrear > 0) {
+            temporizadorSpawn += deltaTime;
+            if (temporizadorSpawn >= FRECUENCIA_SPAWN) {
+                intentarSpawnearUnZombie(obstaculos);
+                temporizadorSpawn = 0.f;
+            }
+        }
+
+        // Comprobación de fin de oleada (todos muertos o tiempo límite alcanzado)
+        if ((zombies.empty() && zombiesRestantesPorCrear == 0) || cronometroOleada >= TIEMPO_MAX_OLEADA) {
+            enPeriodoDescanso = true;
+            cronometroDescanso = 0.f;
+            cronometroOleada = 0.f;
+            std::cout << "TREGUA Oleada finalizada/tiempo limite alcanzado. Comenzando tregua de " << TIEMPO_DESCANSO << " segundos." << std::endl;
+        }
+    }
+
     // 1. Actualizar movimiento y logica de evasión/persecución para cada zombie
     for (auto &zombie : zombies) {
         zombie.actualizar(deltaTime, jugador.estaVivo() ? jugador.getHitbox() : sf::FloatRect(), obstaculos, zombies);
@@ -168,23 +228,5 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
 void ZombieManager::dibujarZombies(sf::RenderWindow& ventana) {
     for (auto &zombie : zombies) {
         zombie.dibujar(ventana);
-    }
-}
-
-// Dibuja en pantalla las cajas delimitadoras de las zonas de spawn (verde para la activa/más lejana, azul para las inactivas)
-void ZombieManager::dibujarZonasSpawn(sf::RenderWindow& ventana) {
-    for (size_t i = 0; i < zonasSpawn.size(); ++i) {
-        const auto &zona = zonasSpawn[i];
-        sf::RectangleShape rectSpawn(sf::Vector2f(zona.width, zona.height));
-        rectSpawn.setPosition(zona.left, zona.top);
-        if (static_cast<int>(i) == indiceZonaActiva) {
-            rectSpawn.setFillColor(sf::Color(0, 255, 0, 30)); // Relleno verde transparente
-            rectSpawn.setOutlineColor(sf::Color::Green);
-        } else {
-            rectSpawn.setFillColor(sf::Color(0, 0, 255, 15)); // Relleno azul transparente
-            rectSpawn.setOutlineColor(sf::Color(0, 0, 255, 100));
-        }
-        rectSpawn.setOutlineThickness(3.f);
-        ventana.draw(rectSpawn);
     }
 }

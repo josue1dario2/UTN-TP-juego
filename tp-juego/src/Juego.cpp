@@ -108,8 +108,6 @@ void Juego::iniciar() {
   texturaMapa.loadFromFile("assets/mapa.png");
   spriteMapa.setTexture(texturaMapa);
 
-  zombieManager.inicializarZombies(5, jugador, obstaculos);
-
   while (ventana.isOpen()) {
     // obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
     deltaTime = relojDelta.restart().asSeconds();
@@ -182,9 +180,6 @@ void Juego::renderizar() {
 
   // acá se dibujan las cosas
   ventana.draw(spriteMapa);
-
-  // Dibuja las zonas de spawn
-  zombieManager.dibujarZonasSpawn(ventana);
 
   // Dibuja los obstáculos con un bucle
   for (auto &obstaculo : obstaculos) {

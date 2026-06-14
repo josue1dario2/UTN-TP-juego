@@ -12,23 +12,32 @@ class ZombieManager {
 private:
     std::vector<Zombie> zombies;
     std::vector<sf::FloatRect> zonasSpawn;
-    int indiceZonaActiva;
+    std::vector<int> indicesZonasActivas;
+
+    // Control de tiempo y oleadas
+    int oleadaActual;
+    bool enPeriodoDescanso;
+    float cronometroDescanso;
+    float temporizadorSpawn;
+    int zombiesRestantesPorCrear;
+    float cronometroOleada;
+
+    const float TIEMPO_DESCANSO = 10.f;    // Los 10 segundos de la consigna
+    const float TIEMPO_MAX_OLEADA = 90.f;  // Tiempo límite para forzar la ronda
+    const float FRECUENCIA_SPAWN = 0.5f;   
+
+    void seleccionarZonaSpawnOptima(const sf::Vector2f& posJugador);
+    void intentarSpawnearUnZombie(const std::vector<ObjetoMapa>& obstaculos);
 
 public:
     ZombieManager();
 
-    // Spawning & Initializing
     void inicializarZonasSpawn(const std::vector<sf::FloatRect>& zonas);
-    void inicializarZombies(int cantidadDeseada, const Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos);
 
-    // Updates & Collision Management
     void actualizar(float deltaTime, Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles);
 
-    // Drawing
     void dibujarZombies(sf::RenderWindow& ventana);
-    void dibujarZonasSpawn(sf::RenderWindow& ventana);
 
-    // Getters for integration with Juego/Player colisions
     std::vector<sf::FloatRect> getHitboxesZombies() const;
     const std::vector<Zombie>& getZombies() const { return zombies; }
 };
