@@ -80,10 +80,14 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
         setAngulo(std::atan2(deltaY, deltaX) * -180.f / 3.14159f);
 
         // ----------------- Lógica de disparo
+        if(spawnRayCast){
+            spawnRayCast = false;
+        }
+
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && tiempoDesdeUltimoDisparo >= cadencia && municionEnCargador > 0 && !enRecarga) {
             // el switch es para poder manejar los disparos especiales
             switch(getIdArma()) { 
-
+                
                 case 0: { //cuchillo
                     proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 500.f, getDanio());
                     municionEnCargador = 2;
@@ -97,20 +101,24 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
                     break;
                 }
 
+                case 4: {
+                    //mosin
+                    disparoMosin();
+                    break;
+                }
+                
                 default:
                 {
                     proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 2000.f, getDanio());
                     break;
                 }
             }
-
-
             std::cout << "Disparando " << getNombre() << ". Munición en cargador antes de disparar: " << municionEnCargador << std::endl;
             municionEnCargador--;
             std::cout << "Munición en cargador después de disparar: " << municionEnCargador << std::endl;
             tiempoDesdeUltimoDisparo = 0.f;
         }
-
+        
         // ----------------- Lógica de recarga
         if (tiempoRecarga >= 1.f) {
             enRecarga = false;
@@ -173,4 +181,8 @@ void Arma::disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& p
 
         proyectiles.emplace_back(texturaProyectil, getPosicion(), objetivo, getAlcance(), 2000.f, getDanio());
     }
+}
+
+void Arma::disparoMosin() {
+    spawnRayCast = true;
 }

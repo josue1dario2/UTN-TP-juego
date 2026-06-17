@@ -38,5 +38,5 @@ public:
     void dibujarZombies(sf::RenderWindow& ventana);
 
     std::vector<sf::FloatRect> getHitboxesZombies() const;
-    const std::vector<Zombie>& getZombies() const { return zombies; }
+    std::vector<Zombie>& getZombies() { return zombies; }
 };
