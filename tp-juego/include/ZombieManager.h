@@ -38,7 +38,6 @@ public:
     void dibujarZombies(sf::RenderWindow& ventana);
 
     std::vector<sf::FloatRect> getHitboxesZombies() const;
-    const std::vector<Zombie>& getZombies() const { return zombies; }
 
     int getOleadaActual() const { return oleadaActual; }
     bool getEnPeriodoDescanso() const { return enPeriodoDescanso; }
@@ -46,4 +45,5 @@ public:
     float getTiempoTotalDescanso() const { return TIEMPO_DESCANSO; }
     int getZombiesActivos() const { return zombies.size(); }
     int getZombiesRestantesPorCrear() const { return zombiesRestantesPorCrear; }
+    std::vector<Zombie>& getZombies() { return zombies; }
 };
