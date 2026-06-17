@@ -151,41 +151,21 @@ void Personaje::actualizarZonaHabilidad(){
     switch (direccion){
         case 1: {
             //izquierda
-            /*
-            zonaHabilidad.setPosition(getPosicion().x - 50.f, getPosicion().y);
-            zonaHabilidad.setOrigin(25,50);
-            zonaHabilidad.setSize(sf::Vector2f(50.f, 100.f));
-            */
             zonaHabilidad = sf::FloatRect(getPosicion().x - 75.f, getPosicion().y - 50.f, 50, 100);
             break;
         }
         case 2: {
             //arriba
-            /*
-            zonaHabilidad.setPosition(getPosicion().x, getPosicion().y - 50.f);
-            zonaHabilidad.setOrigin(50,25);
-            zonaHabilidad.setSize(sf::Vector2f(100.f, 50.f));
-            */
             zonaHabilidad = sf::FloatRect(getPosicion().x - 50.f, getPosicion().y - 75.f, 100, 50);
             break;
         }
         case 3: {
             //derecha
-            /*
-            zonaHabilidad.setPosition(getPosicion().x + 50.f, getPosicion().y);
-            zonaHabilidad.setOrigin(25,50);
-            zonaHabilidad.setSize(sf::Vector2f(50.f, 100.f));
-            */
             zonaHabilidad = sf::FloatRect(getPosicion().x + 25.f, getPosicion().y - 50.f, 50, 100);
             break;
         }
         case 4: {
             //abajo
-            /*
-            zonaHabilidad.setPosition(getPosicion().x, getPosicion().y + 50.f);
-            zonaHabilidad.setOrigin(50,25);
-            zonaHabilidad.setSize(sf::Vector2f(100.f, 50.f));
-            */
             zonaHabilidad = sf::FloatRect(getPosicion().x - 50.f, getPosicion().y + 25.f, 100, 50);
             break;
         }

@@ -35,6 +35,10 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
   zombieManager.inicializarZonasSpawn(zonasSpawn);
 
   texturaProyectil.loadFromFile("assets/bala.png");
+
+  trazaMosin.setFillColor(sf::Color::White);
+  trazaMosin.setSize(sf::Vector2f(3000.f, 3.f));
+  trazaMosin.setOrigin(0.f, 1.5f);
 }
 
 void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
@@ -197,6 +201,10 @@ void Juego::renderizar() {
     proyectil.dibujar(ventana);
   }
 
+  if(mostrarTrazaMosin) {
+    ventana.draw(trazaMosin);
+  }
+  
   if (jugador.estaVivo()) {
     jugador.dibujar(ventana);
     jugador.getArma().dibujar(ventana);
@@ -212,6 +220,14 @@ void Juego::renderizar() {
 }
 
 void Juego::procesarRayCast(){
+
+  if(mostrarTrazaMosin) {
+    tiempoTrazaMosin -= deltaTime;
+
+    if(tiempoTrazaMosin <= 0.f) {
+      mostrarTrazaMosin = false;
+    }
+}
   if(jugador.getArma().spawnRayCast) {
     sf::Vector2f origen = jugador.getPosicion();
     sf::Vector2f direccion;
@@ -222,7 +238,14 @@ void Juego::procesarRayCast(){
     
     direccion.x /= longitud;
     direccion.y /= longitud;
-    
+
+    float angulo = std::atan2(direccion.y, direccion.x)* 180.f / 3.14159f;
+    trazaMosin.setPosition(origen.x,origen.y+10);
+    trazaMosin.setRotation(angulo);
+
+    mostrarTrazaMosin = true;
+    tiempoTrazaMosin = 0.05f;
+    float distanciaImpacto;
     float alcance = jugador.getArma().getAlcance();
     
     for (float distancia = 0.f; distancia < alcance; distancia += 5.f) {
@@ -232,6 +255,8 @@ void Juego::procesarRayCast(){
       punto.y = origen.y + direccion.y * distancia;
       for(auto& obstaculo : obstaculos) {
         if (obstaculo.getHitbox().contains(punto)) {
+          distanciaImpacto = distancia;
+          trazaMosin.setSize(sf::Vector2f(distanciaImpacto, 3.f));
           return;
         }
       }

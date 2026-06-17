@@ -40,6 +40,12 @@ private:
   void inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos);
 
   void procesarRayCast();
+  
+  sf::RectangleShape trazaMosin;
+
+  bool mostrarTrazaMosin = false;
+
+  float tiempoTrazaMosin = 0.f;
 
 public:
   Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown);

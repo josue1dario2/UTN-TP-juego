@@ -46,6 +46,6 @@ public:
   bool puedeAtacar() const { return tiempoDesdeUltimoAtaque >= cooldownAtaque; }
   void reiniciarTiempoAtaque() { tiempoDesdeUltimoAtaque = 0.f; }
 
-  void recibirEstado(float deltaTime, bool habilidadActiva,const Personaje &jugador);
+  void recibirEstado(float deltaTime, const Personaje &jugador);
 
 };

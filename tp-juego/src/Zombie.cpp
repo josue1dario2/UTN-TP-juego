@@ -277,11 +277,11 @@ void Zombie::actualizar(float deltaTime, const Personaje &jugador,
     }
   }
     
-  recibirEstado(deltaTime, true, jugador);
+  recibirEstado(deltaTime, jugador);
 }
 
-void Zombie::recibirEstado(float deltaTime, bool habilidadActiva, const Personaje &jugador){
-  if(jugador.habilidadActiva() && jugador.getZonaHabilidad().intersects(getHitbox())){
+void Zombie::recibirEstado(float deltaTime, const Personaje &jugador){
+  if(jugador.habilidadActiva() && jugador.getId() == 1 &&jugador.getZonaHabilidad().intersects(getHitbox())){
     empujado = true;
     stuneado = true;
     tiempoEmpuje = 3;

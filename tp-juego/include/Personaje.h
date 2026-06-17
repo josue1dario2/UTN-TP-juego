@@ -85,4 +85,6 @@ private:
     
     void recibirDanio(float cantidad) override;
 
+    int getId()const{ return idPersonaje;}
+
 };
