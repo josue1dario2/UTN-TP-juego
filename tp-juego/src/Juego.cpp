@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <algorithm>
 
 Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown) :
     jugador(idJug, idArma, nombre, vida, armadura, velocidad, cooldown) {
@@ -113,8 +114,6 @@ void Juego::iniciar() {
   spriteMapa.setTexture(texturaMapa);
   proyectiles.reserve(100);
 
-  zombieManager.inicializarZombies(5, jugador, obstaculos);
-
   while (ventana.isOpen()) {
     // obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
     deltaTime = relojDelta.restart().asSeconds();
@@ -188,9 +187,6 @@ void Juego::renderizar() {
 
   // acá se dibujan las cosas
   ventana.draw(spriteMapa);
-
-  // Dibuja las zonas de spawn
-  zombieManager.dibujarZonasSpawn(ventana);
 
   // Dibuja los obstáculos con un bucle
   for (auto &obstaculo : obstaculos) {
