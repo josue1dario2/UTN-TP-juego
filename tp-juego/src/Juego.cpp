@@ -223,11 +223,12 @@ void Juego::procesarRayCast(){
 
   if(mostrarTrazaMosin) {
     tiempoTrazaMosin -= deltaTime;
-
+    
     if(tiempoTrazaMosin <= 0.f) {
       mostrarTrazaMosin = false;
     }
-}
+  }
+  
   if(jugador.getArma().spawnRayCast) {
     sf::Vector2f origen = jugador.getPosicion();
     sf::Vector2f direccion;
