@@ -37,6 +37,8 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
 
   texturaProyectil.loadFromFile("assets/bala.png");
 
+  hud.inicializar();
+
   trazaMosin.setFillColor(sf::Color::White);
   trazaMosin.setSize(sf::Vector2f(3000.f, 3.f));
   trazaMosin.setOrigin(0.f, 1.5f);
@@ -179,6 +181,8 @@ void Juego::actualizar() {
 
   // Actualizar la mira personalizada y hacerla girar
   mira.actualizar(ventana, deltaTime);
+
+  hud.actualizar(jugador, zombieManager);
 }
 
 // Dibuja todos los elementos en pantalla
@@ -211,6 +215,8 @@ void Juego::renderizar() {
 
   // Dibujar el puntero personalizado (la mira giratoria) encima de todo
   mira.dibujar(ventana);
+
+  hud.dibujar(ventana);
 
   ventana.display();
 }
