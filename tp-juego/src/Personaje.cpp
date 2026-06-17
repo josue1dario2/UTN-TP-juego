@@ -56,6 +56,7 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     inventarioArmas[1].setDesbloqueo(true);
     inventarioArmas[2].setDesbloqueo(true);
     inventarioArmas[3].setDesbloqueo(true);
+    inventarioArmas[4].setDesbloqueo(true);
 
     zonaHabilidad = sf::FloatRect(0 , 0, 0, 0);
 }

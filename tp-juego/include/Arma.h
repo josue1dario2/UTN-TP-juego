@@ -23,10 +23,12 @@ private:
     int municionActual;
     int municionEnCargador;
     bool desbloqueada;
-
+    
     void disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil);
-
-public:
+    void disparoMosin();
+    
+    public:
+    bool spawnRayCast;
     Arma();
     Arma(int id, std::string nombre, float cadencia, float danio, float alcance, float costo, int municionMaxima, int tamanioCargador);
 

@@ -30,5 +30,5 @@ public:
 
     // Getters for integration with Juego/Player colisions
     std::vector<sf::FloatRect> getHitboxesZombies() const;
-    const std::vector<Zombie>& getZombies() const { return zombies; }
+    std::vector<Zombie>& getZombies() { return zombies; }
 };

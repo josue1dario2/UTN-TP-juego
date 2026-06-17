@@ -1,6 +1,7 @@
 #include "../include/Juego.h"
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 
 Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown) :
     jugador(idJug, idArma, nombre, vida, armadura, velocidad, cooldown) {
@@ -145,6 +146,7 @@ void Juego::actualizar() {
     jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles, texturaProyectil);
     vista.setSize(1280.f * jugador.getMultiplicadorZoom(), 720.f * jugador.getMultiplicadorZoom());
   }
+  procesarRayCast();
 
   for (auto &proyectil : proyectiles) {
     proyectil.actualizar(deltaTime, obstaculos);
@@ -207,4 +209,37 @@ void Juego::renderizar() {
   mira.dibujar(ventana);
 
   ventana.display();
+}
+
+void Juego::procesarRayCast(){
+  if(jugador.getArma().spawnRayCast) {
+    sf::Vector2f origen = jugador.getPosicion();
+    sf::Vector2f direccion;
+    direccion.x = mira.getPosicion().x - origen.x;
+    direccion.y = mira.getPosicion().y - origen.y;
+    
+    float longitud = std::sqrt(direccion.x*direccion.x + direccion.y * direccion.y);
+    
+    direccion.x /= longitud;
+    direccion.y /= longitud;
+    
+    float alcance = jugador.getArma().getAlcance();
+    
+    for (float distancia = 0.f; distancia < alcance; distancia += 5.f) {
+      sf::Vector2f punto;
+      
+      punto.x = origen.x + direccion.x * distancia;
+      punto.y = origen.y + direccion.y * distancia;
+      for(auto& obstaculo : obstaculos) {
+        if (obstaculo.getHitbox().contains(punto)) {
+          return;
+        }
+      }
+      for(auto& zombie : zombieManager.getZombies()) {
+        if(zombie.getHitbox().contains(punto)) {
+          zombie.recibirDanio(jugador.getArma().getDanio());
+        }
+      }
+    }
+  }
 }

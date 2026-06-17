@@ -39,6 +39,8 @@ private:
 
   void inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos);
 
+  void procesarRayCast();
+
 public:
   Juego(int idJug, int idArma, std::string nombre, float vida, float armadura, float velocidad, float cooldown);
   void iniciar();
