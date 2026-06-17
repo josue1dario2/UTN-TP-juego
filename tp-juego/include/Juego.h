@@ -3,6 +3,7 @@
 #include "Personaje.h"
 #include "Puntero.h"
 #include "ZombieManager.h"
+#include "Hud.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -26,6 +27,7 @@ private:
   std::vector<Proyectil> proyectiles; // Vector para almacenar múltiples proyectiles
   
   ZombieManager zombieManager;
+  Hud hud;
 
   sf::Texture texturaMapa;
   sf::Sprite spriteMapa;

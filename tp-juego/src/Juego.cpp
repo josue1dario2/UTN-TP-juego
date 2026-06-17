@@ -35,6 +35,7 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
   zombieManager.inicializarZonasSpawn(zonasSpawn);
 
   texturaProyectil.loadFromFile("assets/bala.png");
+  hud.inicializar();
 }
 
 void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
@@ -172,6 +173,8 @@ void Juego::actualizar() {
 
   // Actualizar la mira personalizada y hacerla girar
   mira.actualizar(ventana, deltaTime);
+
+  hud.actualizar(jugador, zombieManager);
 }
 
 // Dibuja todos los elementos en pantalla
@@ -200,6 +203,8 @@ void Juego::renderizar() {
 
   // Dibujar el puntero personalizado (la mira giratoria) encima de todo
   mira.dibujar(ventana);
+
+  hud.dibujar(ventana);
 
   ventana.display();
 }

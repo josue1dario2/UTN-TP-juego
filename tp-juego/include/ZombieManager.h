@@ -21,7 +21,7 @@ private:
     int zombiesRestantesPorCrear;
     float cronometroOleada;
 
-    const float TIEMPO_DESCANSO = 10.f;    // Los 10 segundos de la consigna
+    const float TIEMPO_DESCANSO = 15.f;    // Los 15 segundos de descanso
     const float TIEMPO_MAX_OLEADA = 90.f;  // Tiempo límite para forzar la ronda
     const float FRECUENCIA_SPAWN = 0.5f;   
 
@@ -39,4 +39,11 @@ public:
 
     std::vector<sf::FloatRect> getHitboxesZombies() const;
     const std::vector<Zombie>& getZombies() const { return zombies; }
+
+    int getOleadaActual() const { return oleadaActual; }
+    bool getEnPeriodoDescanso() const { return enPeriodoDescanso; }
+    float getCronometroDescanso() const { return cronometroDescanso; }
+    float getTiempoTotalDescanso() const { return TIEMPO_DESCANSO; }
+    int getZombiesActivos() const { return zombies.size(); }
+    int getZombiesRestantesPorCrear() const { return zombiesRestantesPorCrear; }
 };
