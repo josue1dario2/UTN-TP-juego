@@ -1,5 +1,5 @@
 #pragma once
-#include "Entidad.h"
+#include "Personaje.h"
 #include "ObjetoMapa.h"
 #include <vector>
 
@@ -9,6 +9,12 @@ private:
   int ataque;
   float tiempoDesdeUltimoAtaque;
   float cooldownAtaque;
+
+  bool empujado;
+  float tiempoEmpuje;
+  bool stuneado;
+  float tiempoStun;
+  float velocidadInicial;
 
 public:
   Zombie();
@@ -33,10 +39,13 @@ public:
   bool muerto() const;
 
   // Actualización con inteligencia de evasión, persecución y separación
-  void actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
+  void actualizar(float deltaTime, const Personaje &jugador,
                   const std::vector<ObjetoMapa> &obstaculos,
                   const std::vector<Zombie> &todosLosZombies);
 
   bool puedeAtacar() const { return tiempoDesdeUltimoAtaque >= cooldownAtaque; }
   void reiniciarTiempoAtaque() { tiempoDesdeUltimoAtaque = 0.f; }
+
+  void recibirEstado(float deltaTime, bool habilidadActiva,const Personaje &jugador);
+
 };

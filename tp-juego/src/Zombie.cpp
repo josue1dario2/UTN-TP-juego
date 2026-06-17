@@ -23,9 +23,16 @@ Zombie::Zombie(int tipo, int vida, int ataque, float velocidad) : Entidad() {
   vidaMax = static_cast<float>(vida);
   vidaActual = static_cast<float>(vida);
   this->velocidad = velocidad;
+  velocidadInicial = velocidad;
 
   tiempoDesdeUltimoAtaque = 0.f;
   cooldownAtaque = 1.0f; // 1 segundo
+
+  empujado = false;
+  tiempoEmpuje = 0;
+  stuneado = false;
+  tiempoStun = 0;
+  direccion = 1;
 }
 
 int Zombie::getTipo() const { return tipo; }
@@ -59,13 +66,13 @@ void Zombie::quitarVida(int cantidad) {
 
 bool Zombie::muerto() const { return !estaVivo(); }
 
-void Zombie::actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
+void Zombie::actualizar(float deltaTime, const Personaje &jugador,
                         const std::vector<ObjetoMapa> &obstaculos,
                         const std::vector<Zombie> &todosLosZombies) {
   if (muerto())
     return;
 
-  if (hitboxJugador.width == 0.f && hitboxJugador.height == 0.f) {
+  if (jugador.getHitbox().width == 0.f && jugador.getHitbox().height == 0.f) {
     return; // Si el jugador esta muerto o desaparecio, el zombie no realiza movimientos
   }
 
@@ -73,16 +80,16 @@ void Zombie::actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
 
   // 1. Resolver colisión física rectangular con el jugador para evitar
   // cualquier superposición
-  if (getHitbox().intersects(hitboxJugador)) {
+  if (getHitbox().intersects(jugador.getHitbox())) {
     sf::FloatRect zombieHitbox = getHitbox();
     float overlapLeft =
-        (zombieHitbox.left + zombieHitbox.width) - hitboxJugador.left;
+        (zombieHitbox.left + zombieHitbox.width) - jugador.getHitbox().left;
     float overlapRight =
-        (hitboxJugador.left + hitboxJugador.width) - zombieHitbox.left;
+        (jugador.getHitbox().left + jugador.getHitbox().width) - zombieHitbox.left;
     float overlapTop =
-        (zombieHitbox.top + zombieHitbox.height) - hitboxJugador.top;
+        (zombieHitbox.top + zombieHitbox.height) - jugador.getHitbox().top;
     float overlapBottom =
-        (hitboxJugador.top + hitboxJugador.height) - zombieHitbox.top;
+        (jugador.getHitbox().top + jugador.getHitbox().height) - zombieHitbox.top;
 
     float minOverlapX =
         (overlapLeft < overlapRight) ? overlapLeft : -overlapRight;
@@ -100,8 +107,8 @@ void Zombie::actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
   }
 
   // Obtener la posición del centro del jugador
-  sf::Vector2f posicionJugador(hitboxJugador.left + hitboxJugador.width / 2.f,
-                               hitboxJugador.top + hitboxJugador.height / 2.f);
+  sf::Vector2f posicionJugador(jugador.getHitbox().left + jugador.getHitbox().width / 2.f,
+                               jugador.getHitbox().top + jugador.getHitbox().height / 2.f);
 
   // 2. Calcular dirección hacia el jugador
   sf::Vector2f dirDeseada = posicionJugador - getPosicion();
@@ -214,24 +221,87 @@ void Zombie::actualizar(float deltaTime, const sf::FloatRect &hitboxJugador,
   // 4. Mover y resolver colisiones físicas (Deslizamiento por hitboxes)
   float deltaMov = velocidad * deltaTime;
   sf::Vector2f movimiento = direccionFinal * deltaMov;
-
-  // Movimiento horizontal con colisión
   sf::Vector2f posPrevia = getPosicion();
-  mover(movimiento.x, 0.f);
-  for (const auto &obstaculo : obstaculos) {
-    if (getHitbox().intersects(obstaculo.getHitbox())) {
-      setPosicionCentrado(posPrevia.x, getPosicion().y);
-      break;
+  if(!empujado){
+    
+    // Movimiento horizontal con colisión
+    mover(movimiento.x, 0.f);
+    for (const auto &obstaculo : obstaculos) {
+      if (getHitbox().intersects(obstaculo.getHitbox())) {
+        setPosicionCentrado(posPrevia.x, getPosicion().y);
+        break;
+      }
+    }
+    
+    // Movimiento vertical con colisión
+    posPrevia = getPosicion();
+    mover(0.f, movimiento.y);
+    for (const auto &obstaculo : obstaculos) {
+      if (getHitbox().intersects(obstaculo.getHitbox())) {
+        setPosicionCentrado(getPosicion().x, posPrevia.y);
+        break;
+      }
     }
   }
-
-  // Movimiento vertical con colisión
-  posPrevia = getPosicion();
-  mover(0.f, movimiento.y);
-  for (const auto &obstaculo : obstaculos) {
-    if (getHitbox().intersects(obstaculo.getHitbox())) {
-      setPosicionCentrado(getPosicion().x, posPrevia.y);
-      break;
+  else {
+    switch(direccion){
+      case 1: {
+        mover(-500.f * deltaTime, 0);
+        break;
+      }
+      case 2: {
+        mover(0, -500.f * deltaTime);
+        break;
+      }
+      case 3: {
+        mover(500.f * deltaTime, 0);
+        break;
+      }
+      case 4: {
+        mover(0, 500.f * deltaTime);
+        break;
+      }
     }
+
+    for (const auto &obstaculo : obstaculos) {
+      if (getHitbox().intersects(obstaculo.getHitbox())) {
+        setPosicionCentrado(posPrevia.x, getPosicion().y);
+        break;
+      }
+    }
+    for (const auto &obstaculo : obstaculos) {
+      if (getHitbox().intersects(obstaculo.getHitbox())) {
+        setPosicionCentrado(getPosicion().x, posPrevia.y);
+        break;
+      }
+    }
+  }
+    
+  recibirEstado(deltaTime, true, jugador);
+}
+
+void Zombie::recibirEstado(float deltaTime, bool habilidadActiva, const Personaje &jugador){
+  if(jugador.habilidadActiva() && jugador.getZonaHabilidad().intersects(getHitbox())){
+    empujado = true;
+    stuneado = true;
+    tiempoEmpuje = 3;
+    tiempoStun = 3;
+    velocidad = 0;
+    direccion = jugador.getDireccion();
+  }
+
+  if(tiempoEmpuje > 0){
+    tiempoEmpuje -= 10 * deltaTime;
+  }
+  if(tiempoEmpuje <= 0){
+    empujado = false;
+  }
+  if(empujado == false && tiempoStun > 0){
+    tiempoStun -= 10 * deltaTime;
+  }
+  if(tiempoStun <= 0){
+    stuneado = false;
+    velocidad = velocidadInicial;
   }
 }
+

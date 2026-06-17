@@ -115,7 +115,7 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
     
     // 1. Actualizar movimiento y logica de evasión/persecución para cada zombie
     for (auto &zombie : zombies) {
-        zombie.actualizar(deltaTime, jugador.estaVivo() ? jugador.getHitbox() : sf::FloatRect(), obstaculos, zombies);
+        zombie.actualizar(deltaTime, jugador, obstaculos, zombies);
     }
 
     // 2. Procesar colisiones de Proyectiles (Balas) contra los Zombies

@@ -32,10 +32,12 @@ bool Proyectil::debeDestruirse() const {
 
 void Proyectil::actualizar(float deltaTime,const std::vector<ObjetoMapa>& obstaculos) {
 
+    // movimiento
     float desplazamiento = velocidad * deltaTime;
     mover(direccion.x * desplazamiento, direccion.y * desplazamiento);
     distanciaRecorrida += desplazamiento;
 
+    // deteccion de obstaculos
     for(auto& obstaculo : obstaculos) {
         if (getHitbox().intersects(obstaculo.getHitbox())) {
             estadoActivo = false;

@@ -106,6 +106,7 @@ void Juego::iniciar() {
 
   texturaMapa.loadFromFile("assets/mapa.png");
   spriteMapa.setTexture(texturaMapa);
+  proyectiles.reserve(100);
 
   zombieManager.inicializarZombies(5, jugador, obstaculos);
 
@@ -140,7 +141,7 @@ void Juego::actualizar() {
 
   // Logica de movimiento del jugador (solo si esta vivo)
   if (jugador.estaVivo()) {
-    jugador.actualizar(deltaTime, obstaculos, hitboxesZombies);
+    jugador.actualizar(deltaTime, obstaculos, hitboxesZombies, mira.getPosicion());
     jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles, texturaProyectil);
     vista.setSize(1280.f * jugador.getMultiplicadorZoom(), 720.f * jugador.getMultiplicadorZoom());
   }
@@ -148,6 +149,8 @@ void Juego::actualizar() {
   for (auto &proyectil : proyectiles) {
     proyectil.actualizar(deltaTime, obstaculos);
   }
+
+  proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(), [](const Proyectil &p) { return p.debeDestruirse(); }), proyectiles.end());
 
   // Lógica de zombies y colisión de balas delegada en ZombieManager
   zombieManager.actualizar(deltaTime, jugador, obstaculos, proyectiles);
