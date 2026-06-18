@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Personaje.h"
 #include "ZombieManager.h"
+#include <cmath>
 
 class Hud {
 private:
