@@ -197,7 +197,7 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
 
     // 3. Procesar colisiones de Zombies contra el Jugador (Ataque y daño al jugador)
     for (auto &zombie : zombies) {
-        if (!zombie.muerto() && jugador.estaVivo()) {
+        if (!zombie.muerto() && jugador.estaVivo() && !jugador.esInvulnerable()) {
             // Expandimos la hitbox del jugador ligeramente para dar tolerancia al área de contacto
             sf::FloatRect expandedHitbox = jugador.getHitbox();
             expandedHitbox.left -= 2.f;

@@ -33,6 +33,8 @@ private:
     float multiplicadorZoom;
     
     sf::FloatRect zonaHabilidad;
+    bool dashActivado;
+    bool invulnerabilidad = false;
     
     // ----- FUNCIONES PRIVADAS -----
     void actualizarZonaHabilidad();
@@ -59,9 +61,11 @@ private:
 
     void habilidadRecon(float deltaTime);
 
-    void habilidadJoel(float deltaTime);
+    void habilidadJoel();
 
-    void habilidadGhost(float deltaTime);
+    void habilidadGhost();
+
+    void habilidadJhonWick();
     
     public:
     // ------ FUNCIONES PUBLICAS ------
@@ -88,5 +92,7 @@ private:
     void recibirDanio(float cantidad) override;
 
     int getId()const{ return idPersonaje;}
+
+    bool esInvulnerable() const {return invulnerabilidad;}
 
 };

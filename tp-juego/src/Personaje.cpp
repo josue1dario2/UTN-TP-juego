@@ -109,7 +109,7 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
     }
     if (!colisionoX) {
         for(const auto& rect : hitboxZombies) {
-            if (getHitbox().intersects(rect)) {
+            if (getHitbox().intersects(rect) && !esInvulnerable()) {
                 volverPosicionAnteriorX();
                 break;
             }
@@ -129,7 +129,7 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
     }
     if (!colisionoY) {
         for(const auto& rect : hitboxZombies) {
-            if (getHitbox().intersects(rect)) {
+            if (getHitbox().intersects(rect) && !esInvulnerable()) {
                 volverPosicionAnteriorY();
                 break;
             }
@@ -255,25 +255,43 @@ void Personaje::activarHabilidad(float deltaTime){
             break;
         }
         case 1: {
-            habilidadJoel(deltaTime);
+            habilidadJoel();
             break;
         }
         case 2: {
-            habilidadGhost(deltaTime);
+            habilidadGhost();
+            break;
+        }
+        case 3: {
+            habilidadJhonWick();
             break;
         }
     }
 }
 
-void Personaje::habilidadGhost(float deltaTime) {
+void Personaje::habilidadJhonWick() {
+    if (habilidadActivada) {
 
-    
+        if (velocidad == velocidadNormal) {
+            setVelocidad(getVelocidad()*2.5f);
+            invulnerabilidad = true;
+        }
+
+        if (tiempoHabilidad >= 0.35f) {
+            habilidadActivada = false;
+            setVelocidad(velocidadNormal);
+            invulnerabilidad = false;
+            tiempoHabilidad = 0;
+        }
+    }
+}
+
+void Personaje::habilidadGhost() {
     if(habilidadActivada) {
         if(velocidad == velocidadNormal){
             setVelocidad(getVelocidad()*2);
         }
-        
-        if (tiempoHabilidad >= 8) {
+        if (tiempoHabilidad >= 4) {
             habilidadActivada = false;
             setVelocidad(velocidadNormal);
             tiempoHabilidad = 0;
@@ -284,10 +302,9 @@ void Personaje::habilidadGhost(float deltaTime) {
             tiempoHabilidad = 0;
         }
     }
-
 }
 
-void Personaje::habilidadJoel(float deltaTime){
+void Personaje::habilidadJoel(){
     if (habilidadActivada){
         if(tiempoHabilidad >= 0.1f){
             std::cout << "habilidad desactivada" << std:: endl;
