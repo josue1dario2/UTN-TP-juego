@@ -256,6 +256,7 @@ void Juego::procesarRayCast(){
       
       punto.x = origen.x + direccion.x * distancia;
       punto.y = origen.y + direccion.y * distancia;
+      trazaMosin.setSize(sf::Vector2f(alcance, 3.f));
       for(auto& obstaculo : obstaculos) {
         if (obstaculo.getHitbox().contains(punto)) {
           distanciaImpacto = distancia;
