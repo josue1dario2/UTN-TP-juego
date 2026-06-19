@@ -22,6 +22,7 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     armaduraMax = armadura;
     armaduraActual = armadura;
     this->velocidad = velocidad;
+    velocidadNormal = velocidad;
     if (this->velocidad <= 0.f) this->velocidad = 200.f;
     this->cooldownHabilidad = cooldownHabilidad;
     habilidad = "-";
@@ -257,7 +258,33 @@ void Personaje::activarHabilidad(float deltaTime){
             habilidadJoel(deltaTime);
             break;
         }
+        case 2: {
+            habilidadGhost(deltaTime);
+            break;
+        }
     }
+}
+
+void Personaje::habilidadGhost(float deltaTime) {
+
+    
+    if(habilidadActivada) {
+        if(velocidad == velocidadNormal){
+            setVelocidad(getVelocidad()*2);
+        }
+        
+        if (tiempoHabilidad >= 8) {
+            habilidadActivada = false;
+            setVelocidad(velocidadNormal);
+            tiempoHabilidad = 0;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && tiempoHabilidad > 1){
+            habilidadActivada = false;
+            setVelocidad(velocidadNormal);
+            tiempoHabilidad = 0;
+        }
+    }
+
 }
 
 void Personaje::habilidadJoel(float deltaTime){

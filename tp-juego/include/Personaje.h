@@ -60,6 +60,8 @@ private:
     void habilidadRecon(float deltaTime);
 
     void habilidadJoel(float deltaTime);
+
+    void habilidadGhost(float deltaTime);
     
     public:
     // ------ FUNCIONES PUBLICAS ------

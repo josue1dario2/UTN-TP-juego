@@ -4,7 +4,7 @@
 
 int main()
 {
-    bool modoDev = false;
+    bool modoDev = true;
 
     if (modoDev == false) {
         archivoPersonaje archivo("personajes.dat");
