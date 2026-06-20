@@ -263,13 +263,21 @@ void Personaje::activarHabilidad(float deltaTime){
             break;
         }
         case 3: {
-            habilidadJhonWick();
+            habilidadJohnWick();
+            break;
+        }
+        case 4: {
+            habilidadSoldado();
             break;
         }
     }
 }
 
-void Personaje::habilidadJhonWick() {
+void Personaje::habilidadSoldado() {
+
+}
+
+void Personaje::habilidadJohnWick() {
     if (habilidadActivada) {
 
         if (velocidad == velocidadNormal) {

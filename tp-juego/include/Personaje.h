@@ -65,7 +65,9 @@ private:
 
     void habilidadGhost();
 
-    void habilidadJhonWick();
+    void habilidadJohnWick();
+
+    void habilidadSoldado();
     
     public:
     // ------ FUNCIONES PUBLICAS ------
