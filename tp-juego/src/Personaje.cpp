@@ -33,7 +33,7 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     multiplicadorZoom = 1.f;
 
     mostrarHitbox = false;
-    if (!cargarTextura("assets/" + nombre + ".png")) {
+    if (!cargarTextura("assets/personajes/" + nombre + ".png")) {
         cargarTextura("assets/jugador.png");
     }
     escalarSprite(0.8f,0.8f);

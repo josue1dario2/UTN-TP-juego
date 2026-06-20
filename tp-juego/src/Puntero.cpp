@@ -2,7 +2,7 @@
 
 Puntero::Puntero() : ObjetoGrafico() {
     // 1. Cargar la imagen del asset desde el archivo
-    cargarTextura("assets/mira.png");
+    cargarTextura("assets/varios/mira.png");
     centrarOrigen(); // Centrar el origen para la rotación
 
     // Ocultar la hitbox de depuración para que no dibuje un recuadro rojo alrededor de la mira

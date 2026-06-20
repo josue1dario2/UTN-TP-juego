@@ -35,7 +35,7 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
   };
   zombieManager.inicializarZonasSpawn(zonasSpawn);
 
-  texturaProyectil.loadFromFile("assets/bala.png");
+  texturaProyectil.loadFromFile("assets/armas/bala.png");
 
   hud.inicializar();
 
@@ -48,7 +48,7 @@ void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
   obstaculos.reserve(40);
   // casucha
   obstaculos.emplace_back();
-  obstaculos.back().cargarTextura("assets/casa.png");
+  obstaculos.back().cargarTextura("assets/varios/casa.png");
   obstaculos.back().centrarOrigen();
   obstaculos.back().escalarSprite(3.f, 3.f);
   obstaculos.back().setHitbox(64.f * 3.f, 54.f * 3.f);
@@ -112,7 +112,7 @@ void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
 void Juego::iniciar() {
   std::srand(static_cast<unsigned>(std::time(nullptr)));
 
-  texturaMapa.loadFromFile("assets/mapa.png");
+  texturaMapa.loadFromFile("assets/varios/mapa.png");
   spriteMapa.setTexture(texturaMapa);
   proyectiles.reserve(100);
 

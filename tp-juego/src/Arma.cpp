@@ -17,7 +17,7 @@ Arma::Arma(int id, std::string nombre, float cadencia, float danio, float alcanc
     this->municionMaxima = municionMaxima;
     this->tamanioCargador = tamanioCargador;
 
-    std::string rutaTextura = "assets/" + nombre + ".png";
+    std::string rutaTextura = "assets/armas/" + nombre + ".png";
     this->nombre = nombre;
     cargarTextura(rutaTextura);
 
