@@ -126,7 +126,7 @@ std::vector<sf::FloatRect> ZombieManager::getHitboxesZombies() const {
 }
 
 // Bucle de actualización principal: controla movimiento, lógica de ataque, colisiones de balas y limpieza de cadáveres
-void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles) {
+void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles, std::vector<Mina>& trampas) {
     
     // Si es el primer frame y no se han seleccionado zonas de spawn, seleccionarlas
     if (indicesZonasActivas.empty() && !zonasSpawn.empty()) {
@@ -222,6 +222,22 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
 
     // 4. Limpieza: Elimina del vector a todos los zombies marcados como muertos para liberar memoria
     zombies.erase(std::remove_if(zombies.begin(), zombies.end(), [](const Zombie &z) { return z.muerto(); }), zombies.end());
+
+
+    bool exploto = false;
+
+    for (auto &trampa : trampas) {
+        for (auto &zombie : zombies) {
+            if (trampa.getHitbox().intersects(zombie.getHitbox()) && trampa.getExplosion() == true) {
+                zombie.quitarVida(trampa.getDanio());
+                exploto = true;
+            }
+        }
+        if (exploto) {
+            trampa.explotar();
+        }
+
+    }
 }
 
 // Dibuja en pantalla todos los zombies gestionados

@@ -47,12 +47,14 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
 void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
   obstaculos.reserve(40);
   // casucha
+  /*
   obstaculos.emplace_back();
   obstaculos.back().cargarTextura("assets/varios/casa.png");
   obstaculos.back().centrarOrigen();
   obstaculos.back().escalarSprite(3.f, 3.f);
   obstaculos.back().setHitbox(64.f * 3.f, 54.f * 3.f);
   obstaculos.back().setPosicionCentrado(1920.f, 1080.f);
+  */
 
   obstaculos.emplace_back();
   obstaculos.back().setHitbox(1058.f, 258.f);
@@ -116,6 +118,7 @@ void Juego::iniciar() {
   spriteMapa.setTexture(texturaMapa);
   proyectiles.reserve(100);
 
+  trampas.emplace_back(sf::Vector2f(1920,1080));
   while (ventana.isOpen()) {
     // obtiene cuánto tiempo pasó desde el frame anterior y reinicia el reloj
     deltaTime = relojDelta.restart().asSeconds();
@@ -145,12 +148,14 @@ void Juego::actualizar() {
   // Obtener hitboxes de zombies vivos para colision del jugador
   std::vector<sf::FloatRect> hitboxesZombies = zombieManager.getHitboxesZombies();
 
-  // Logica de movimiento del jugador (solo si esta vivo)
+  // -------- Logica de movimiento del jugador (solo si esta vivo) --------
   if (jugador.estaVivo()) {
-    jugador.actualizar(deltaTime, obstaculos, hitboxesZombies, mira.getPosicion());
+    jugador.actualizar(deltaTime, obstaculos, hitboxesZombies, mira.getPosicion(), trampas);
     jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles, texturaProyectil);
     vista.setSize(1280.f * jugador.getMultiplicadorZoom(), 720.f * jugador.getMultiplicadorZoom());
   }
+
+  // -------- Proyectiles y armas --------
   procesarRayCast();
 
   for (auto &proyectil : proyectiles) {
@@ -159,12 +164,20 @@ void Juego::actualizar() {
 
   proyectiles.erase(std::remove_if(proyectiles.begin(), proyectiles.end(), [](const Proyectil &p) { return p.debeDestruirse(); }), proyectiles.end());
 
-  // Lógica de zombies y colisión de balas delegada en ZombieManager
-  zombieManager.actualizar(deltaTime, jugador, obstaculos, proyectiles);
+  // -------- trampas --------
+  for (auto &trampa : trampas) {
+    trampa.actualizar(deltaTime, zombieManager.getHitboxesZombies());
+  }
+
+  trampas.erase(std::remove_if(trampas.begin(), trampas.end(), [](const Mina &m) { return m.debeDestruirse(); }), trampas.end());
+
+  // -------- Lógica de zombies y colisión de balas delegada en ZombieManager --------
+  zombieManager.actualizar(deltaTime, jugador, obstaculos, proyectiles, trampas);
 
   auxVistaX = jugador.getPosicion().x;
   auxVistaY = jugador.getPosicion().y;
 
+  // -------- CAMARA --------
   // Limitar el centro de la camara para que nunca muestre el exterior (el vacio negro)
   if (auxVistaX < vista.getSize().x / 2.f)
     auxVistaX = vista.getSize().x / 2.f;
@@ -191,6 +204,10 @@ void Juego::renderizar() {
 
   // acá se dibujan las cosas
   ventana.draw(spriteMapa);
+
+  for (auto &trampa : trampas) {
+    trampa.dibujar(ventana);
+  }
 
   // Dibuja los obstáculos con un bucle
   for (auto &obstaculo : obstaculos) {

@@ -72,7 +72,7 @@ void Personaje::volverPosicionAnteriorY() {
   setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
-void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect> &hitboxZombies, const sf::Vector2f &posicionMouse) {
+void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect> &hitboxZombies, const sf::Vector2f &posicionMouse, std::vector<Mina> &trampas) {
     // logica adicional para el personaje, como animaciones o habilidades
     
     movimientoX = 0.f;
@@ -143,7 +143,7 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
     actualizarZonaHabilidad();
     
     tiempoHabilidad += deltaTime;
-    activarHabilidad(deltaTime);
+    activarHabilidad(deltaTime, trampas);
     
 }
 
@@ -235,7 +235,7 @@ void Personaje::recibirDanio(float cantidad) {
 }
 
 // --------------------- HABILIDADES -------------------
-void Personaje::activarHabilidad(float deltaTime){
+void Personaje::activarHabilidad(float deltaTime, std::vector<Mina> &trampas){
     
     if (tiempoHabilidad >= cooldownHabilidad && habilidadActivada == false){
         habilidadDisponible = true;
@@ -267,14 +267,18 @@ void Personaje::activarHabilidad(float deltaTime){
             break;
         }
         case 4: {
-            habilidadSoldado();
+            habilidadSoldado(trampas);
             break;
         }
     }
 }
 
-void Personaje::habilidadSoldado() {
-
+void Personaje::habilidadSoldado(std::vector<Mina> &trampas) {
+    if (habilidadActivada){
+        trampas.emplace_back(getPosicion());
+        habilidadActivada = false;
+        tiempoHabilidad = 0;
+    }
 }
 
 void Personaje::habilidadJohnWick() {

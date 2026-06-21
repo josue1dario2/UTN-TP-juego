@@ -4,6 +4,7 @@
 #include "Puntero.h"
 #include "ZombieManager.h"
 #include "Hud.h"
+#include "Mina.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -25,6 +26,7 @@ private:
 
   std::vector<ObjetoMapa> obstaculos; // Vector para almacenar múltiples elementos del mapa/paredes/obstaculos
   std::vector<Proyectil> proyectiles; // Vector para almacenar múltiples proyectiles
+  std::vector<Mina> trampas;
   
   ZombieManager zombieManager;
   Hud hud;
