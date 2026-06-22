@@ -7,7 +7,18 @@ Hud::Hud() {
     juegoTerminado = false;
 }
 
-bool Hud::inicializar() {
+bool Hud::inicializar(int idJug) {
+
+    texturaIcon.loadFromFile("assets/personajes/icon_" + std::to_string(idJug) + ".png");
+    spriteIcon.setTexture(texturaIcon);
+    //spriteIcon.setPosition(sf::Vector2f(200,1800));
+    spriteIcon.setScale(0.1f, 0.1f);
+
+    texturaDinero.loadFromFile("assets/varios/dinero.png");
+    spriteDinero.setTexture(texturaDinero);
+    spriteDinero.setScale(0.5f,0.5f);
+    
+
     if (!fuente.loadFromFile("assets/font.ttf")) {
         std::cerr << "Error: No se pudo cargar assets/font.ttf" << std::endl;
         return false;
@@ -136,17 +147,20 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
     } else {
         // --- POSICIONAR ELEMENTOS ---
 
+        spriteIcon.setPosition(30.f, height-140);
+        spriteDinero.setPosition(50,height-200);
+
         // Panel Jugador (Abajo a la Izquierda)
-        panelJugador.setSize(sf::Vector2f(230.f, 95.f));
-        panelJugador.setPosition(20.f, height - 115.f);
+        panelJugador.setSize(sf::Vector2f(350.f, 120.f));
+        panelJugador.setPosition(20.f, height - 140.f);
 
-        textoVida.setPosition(35.f, height - 105.f);
-        fondoBarraVida.setPosition(35.f, height - 85.f);
-        barraVida.setPosition(35.f, height - 85.f);
+        textoVida.setPosition(160.f, height - 105.f);
+        fondoBarraVida.setPosition(160.f, height - 85.f);
+        barraVida.setPosition(160.f, height - 85.f);
 
-        textoArmadura.setPosition(35.f, height - 65.f);
-        fondoBarraArmadura.setPosition(35.f, height - 45.f);
-        barraArmadura.setPosition(35.f, height - 45.f);
+        textoArmadura.setPosition(160.f, height - 65.f);
+        fondoBarraArmadura.setPosition(160.f, height - 45.f);
+        barraArmadura.setPosition(160.f, height - 45.f);
 
         // Panel Arma y Munición (Abajo a la Derecha)
         panelArma.setSize(sf::Vector2f(220.f, 85.f));
@@ -164,23 +178,28 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         textoEstadoOleada.setPosition(width / 2.f - (textoEstadoOleada.getLocalBounds().width / 2.f), 70.f);
 
         // --- DIBUJAR ---
+
+        //modificaciones demi
+        
         ventana.draw(panelJugador);
         ventana.draw(panelArma);
         ventana.draw(panelOleada);
-
+        
         ventana.draw(fondoBarraVida);
         ventana.draw(barraVida);
         ventana.draw(fondoBarraArmadura);
         ventana.draw(barraArmadura);
-
+        
         ventana.draw(textoVida);
         ventana.draw(textoArmadura);
         ventana.draw(textoArma);
         ventana.draw(textoMunicion);
         ventana.draw(textoOleada);
         ventana.draw(textoEstadoOleada);
+        ventana.draw(spriteIcon);
+        ventana.draw(spriteDinero);
     }
-
+    
     // Restaurar vista original
     ventana.setView(vistaActual);
 }

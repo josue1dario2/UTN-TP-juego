@@ -36,6 +36,8 @@ private:
     sf::FloatRect zonaHabilidad;
     bool dashActivado;
     bool invulnerabilidad = false;
+
+    int dinero;
     
     // ----- FUNCIONES PRIVADAS -----
     void actualizarZonaHabilidad();
@@ -98,4 +100,5 @@ private:
 
     bool esInvulnerable() const {return invulnerabilidad;}
 
+    int getDinero() const {return dinero;}
 };

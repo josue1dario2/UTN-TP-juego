@@ -16,7 +16,7 @@ private:
     bool estadoActivo;
 
 public:
-    Proyectil(sf::Texture& textura, sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel, float danio);
+    Proyectil(sf::Texture& textura, sf::Vector2f posInicial, sf::Vector2f dir, float alc, float vel, float danio, int id);
 
     virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos);
 

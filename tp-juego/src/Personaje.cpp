@@ -31,6 +31,7 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     tiempoHabilidad = 0;
     habilidadDisponible = true;
     multiplicadorZoom = 1.f;
+    dinero = 0;
 
     mostrarHitbox = false;
     if (!cargarTextura("assets/personajes/" + nombre + ".png")) {

@@ -16,6 +16,7 @@ private:
     sf::Text textoOleada;
     sf::Text textoEstadoOleada; // Muestra "PRÓXIMA OLEADA EN X" o "ZOMBIES RESTANTES"
     sf::Text textoJuegoTerminado; // Muestra "JUEGO TERMINADO" cuando la vida es 0
+    sf::Text textoDineroJugador;
 
     // Barras gráficas para Vida
     sf::RectangleShape fondoBarraVida;
@@ -30,6 +31,12 @@ private:
     sf::RectangleShape panelOleada;
     sf::RectangleShape panelArma;
 
+    sf::Texture texturaIcon;
+    sf::Sprite spriteIcon;
+
+    sf::Texture texturaDinero;
+    sf::Sprite spriteDinero;
+
     // Función auxiliar para configurar estilos de texto comunes
     void configurarTexto(sf::Text& texto, unsigned int tamanio, sf::Color color);
     
@@ -37,7 +44,7 @@ private:
 
 public:
     Hud();
-    bool inicializar();
+    bool inicializar(int idJug);
     void actualizar(const Personaje& jugador, const ZombieManager& zombieManager);
     void dibujar(sf::RenderWindow& ventana);
 };

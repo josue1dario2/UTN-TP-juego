@@ -37,7 +37,7 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
 
   texturaProyectil.loadFromFile("assets/armas/bala.png");
 
-  hud.inicializar();
+  hud.inicializar(idJug);
 
   trazaMosin.setFillColor(sf::Color::White);
   trazaMosin.setSize(sf::Vector2f(3000.f, 3.f));
@@ -46,15 +46,6 @@ Juego::Juego(int idJug, int idArma, std::string nombre, float vida, float armadu
 
 void Juego::inicializarObstaculos(std::vector<ObjetoMapa> &obstaculos) {
   obstaculos.reserve(40);
-  // casucha
-  /*
-  obstaculos.emplace_back();
-  obstaculos.back().cargarTextura("assets/varios/casa.png");
-  obstaculos.back().centrarOrigen();
-  obstaculos.back().escalarSprite(3.f, 3.f);
-  obstaculos.back().setHitbox(64.f * 3.f, 54.f * 3.f);
-  obstaculos.back().setPosicionCentrado(1920.f, 1080.f);
-  */
 
   obstaculos.emplace_back();
   obstaculos.back().setHitbox(1058.f, 258.f);
