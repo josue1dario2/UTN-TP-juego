@@ -55,10 +55,12 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
     archivo.entregarArma(inventarioArmas, idArmaEspecial);
 
     inventarioArmas[0].setDesbloqueo(true);
+    /*
     inventarioArmas[1].setDesbloqueo(true);
     inventarioArmas[2].setDesbloqueo(true);
     inventarioArmas[3].setDesbloqueo(true);
     inventarioArmas[4].setDesbloqueo(true);
+    */
 
     zonaHabilidad = sf::FloatRect(0 , 0, 0, 0);
 }
@@ -145,7 +147,8 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
     
     tiempoHabilidad += deltaTime;
     activarHabilidad(deltaTime, trampas);
-    
+
+    desbloqueoArmas();
 }
 
 void Personaje::actualizarZonaHabilidad(){
@@ -386,4 +389,33 @@ bool Personaje::habilidadActiva() const{
 
 int Personaje::getDireccion() const{
     return direccion;
+}
+
+void Personaje::sumarDinero(int dinero){
+    this->dinero += dinero;
+}
+
+// -------- desbloqueo de armas --------
+
+void Personaje::desbloqueoArmas() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) && !inventarioArmas[1].estaDisponible() && inventarioArmas[1].getCosto() <= dinero) {
+        inventarioArmas[1].setDesbloqueo(true);
+        dinero -= inventarioArmas[1].getCosto();
+        armaEquipada = 1;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) && !inventarioArmas[2].estaDisponible() && inventarioArmas[2].getCosto() <= dinero) {
+        inventarioArmas[2].setDesbloqueo(true);
+        dinero -= inventarioArmas[2].getCosto();
+        armaEquipada = 2;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) && !inventarioArmas[3].estaDisponible() && inventarioArmas[3].getCosto() <= dinero) {
+        inventarioArmas[3].setDesbloqueo(true);
+        dinero -= inventarioArmas[3].getCosto();
+        armaEquipada = 3;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && !inventarioArmas[4].estaDisponible() && inventarioArmas[4].getCosto() <= dinero) {
+        inventarioArmas[4].setDesbloqueo(true);
+        dinero -= inventarioArmas[4].getCosto();
+        armaEquipada = 4;
+    }
 }

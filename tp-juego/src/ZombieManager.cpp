@@ -220,6 +220,12 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
         }
     }
 
+    for (auto &zombie : zombies) {
+        if (zombie.muerto() && jugador.estaVivo()) {
+            jugador.sumarDinero(100);
+        }
+    }
+
     // 4. Limpieza: Elimina del vector a todos los zombies marcados como muertos para liberar memoria
     zombies.erase(std::remove_if(zombies.begin(), zombies.end(), [](const Zombie &z) { return z.muerto(); }), zombies.end());
 

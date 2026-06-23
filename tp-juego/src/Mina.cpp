@@ -46,7 +46,6 @@ void Mina::actualizar(float deltaTime, const std::vector<sf::FloatRect> &listaZo
         }
         
         if (activa && temporizador > 1) {
-            std::cout << "explosion" << std::endl;
             setHitbox(250,250);
             setPosicionCentrado(getPosicion().x, getPosicion().y);
             exploto = true;

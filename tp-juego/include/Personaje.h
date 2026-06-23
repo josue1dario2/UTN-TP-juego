@@ -71,6 +71,8 @@ private:
     void habilidadJohnWick();
 
     void habilidadSoldado(std::vector<Mina> &trampas);
+
+    void desbloqueoArmas();
     
     public:
     // ------ FUNCIONES PUBLICAS ------
@@ -101,4 +103,6 @@ private:
     bool esInvulnerable() const {return invulnerabilidad;}
 
     int getDinero() const {return dinero;}
+
+    void sumarDinero(int dinero);
 };

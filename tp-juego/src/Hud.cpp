@@ -33,6 +33,7 @@ bool Hud::inicializar(int idJug) {
     configurarTexto(textoEstadoOleada, 14, sf::Color(200, 200, 200));
     configurarTexto(textoJuegoTerminado, 48, sf::Color::Red);
     textoJuegoTerminado.setString("JUEGO TERMINADO");
+    configurarTexto(textoDineroJugador, 16, sf::Color::White);
 
     // Configurar Barras
     float anchoBarra = 180.f;
@@ -79,6 +80,10 @@ void Hud::configurarTexto(sf::Text& texto, unsigned int tamanio, sf::Color color
 }
 
 void Hud::actualizar(const Personaje& jugador, const ZombieManager& zombieManager) {
+    
+    // recursos
+    textoDineroJugador.setString("$" + std::to_string(jugador.getDinero()));
+    
     // 1. Vida del Jugador
     float vidaAct = jugador.getVidaActual();
     juegoTerminado = (vidaAct <= 0.f);
@@ -148,7 +153,7 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         // --- POSICIONAR ELEMENTOS ---
 
         spriteIcon.setPosition(30.f, height-140);
-        spriteDinero.setPosition(50,height-200);
+        spriteDinero.setPosition(160,height-135);
 
         // Panel Jugador (Abajo a la Izquierda)
         panelJugador.setSize(sf::Vector2f(350.f, 120.f));
@@ -161,6 +166,8 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         textoArmadura.setPosition(160.f, height - 65.f);
         fondoBarraArmadura.setPosition(160.f, height - 45.f);
         barraArmadura.setPosition(160.f, height - 45.f);
+
+        textoDineroJugador.setPosition(220, height-130);
 
         // Panel Arma y Munición (Abajo a la Derecha)
         panelArma.setSize(sf::Vector2f(220.f, 85.f));
@@ -196,6 +203,7 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         ventana.draw(textoMunicion);
         ventana.draw(textoOleada);
         ventana.draw(textoEstadoOleada);
+        ventana.draw(textoDineroJugador);
         ventana.draw(spriteIcon);
         ventana.draw(spriteDinero);
     }
