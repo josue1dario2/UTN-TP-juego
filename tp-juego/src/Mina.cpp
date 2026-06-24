@@ -7,7 +7,6 @@ Mina::Mina(sf::Vector2f posicion){
     centrarOrigen();
     setHitbox(120,120);
 
-    mostrarHitbox = true;
     danio = 200;
     activa = false;
     temporizador = 0;
