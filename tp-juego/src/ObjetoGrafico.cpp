@@ -89,6 +89,24 @@ void ObjetoGrafico::centrarOrigen()
 
 void ObjetoGrafico::setearTamanioSprite(int ancho, int alto) {
     sprite.setTextureRect(sf::IntRect(0, 0, ancho, alto));
+    altoSprite = alto;
+    anchoSprite = ancho;
+}
+
+void ObjetoGrafico::siguienteSprite(){
+    frameActual ++;
+
+    if (frameActual >= cantidadFrames){
+        frameActual = 0;
+    }
+
+    sprite.setTextureRect(sf::IntRect(frameActual*anchoSprite, animacionActual * altoSprite, anchoSprite, altoSprite));
+}
+
+void ObjetoGrafico::anteriorSprite(){
+    frameActual = (frameActual - 1 + cantidadFrames) % cantidadFrames;
+
+    sprite.setTextureRect(sf::IntRect(frameActual*anchoSprite, animacionActual * altoSprite, anchoSprite, altoSprite));
 }
 
 void ObjetoGrafico::escalarSprite(float factorX, float factorY){

@@ -6,6 +6,7 @@
 #include "ObjetoMapa.h"
 #include "Proyectil.h"
 #include "archivoArma.h"
+#include "Mina.h"
 
 
 class Personaje : public Entidad {
@@ -33,6 +34,10 @@ private:
     float multiplicadorZoom;
     
     sf::FloatRect zonaHabilidad;
+    bool dashActivado;
+    bool invulnerabilidad = false;
+
+    int dinero;
     
     // ----- FUNCIONES PRIVADAS -----
     void actualizarZonaHabilidad();
@@ -55,11 +60,19 @@ private:
 
     void elegirArma();
     
-    void activarHabilidad(float deltaTime);
+    void activarHabilidad(float deltaTime, std::vector<Mina> &trampas);
 
     void habilidadRecon(float deltaTime);
 
-    void habilidadJoel(float deltaTime);
+    void habilidadJoel();
+
+    void habilidadGhost();
+
+    void habilidadJohnWick();
+
+    void habilidadSoldado(std::vector<Mina> &trampas);
+
+    void desbloqueoArmas();
     
     public:
     // ------ FUNCIONES PUBLICAS ------
@@ -67,7 +80,7 @@ private:
     
     Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad, float cooldownHabilidad);
     
-    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect>& hitboxZombies, const sf::Vector2f &posicionMouse);
+    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect>& hitboxZombies, const sf::Vector2f &posicionMouse, std::vector<Mina> &trampas);
     
     Arma& getArma();
     
@@ -87,4 +100,9 @@ private:
 
     int getId()const{ return idPersonaje;}
 
+    bool esInvulnerable() const {return invulnerabilidad;}
+
+    int getDinero() const {return dinero;}
+
+    void sumarDinero(int dinero);
 };

@@ -7,7 +7,18 @@ Hud::Hud() {
     juegoTerminado = false;
 }
 
-bool Hud::inicializar() {
+bool Hud::inicializar(int idJug) {
+
+    texturaIcon.loadFromFile("assets/personajes/icon_" + std::to_string(idJug) + ".png");
+    spriteIcon.setTexture(texturaIcon);
+    //spriteIcon.setPosition(sf::Vector2f(200,1800));
+    spriteIcon.setScale(0.1f, 0.1f);
+
+    texturaDinero.loadFromFile("assets/varios/dinero.png");
+    spriteDinero.setTexture(texturaDinero);
+    spriteDinero.setScale(0.5f,0.5f);
+    
+
     if (!fuente.loadFromFile("assets/font.ttf")) {
         std::cerr << "Error: No se pudo cargar assets/font.ttf" << std::endl;
         return false;
@@ -22,6 +33,7 @@ bool Hud::inicializar() {
     configurarTexto(textoEstadoOleada, 14, sf::Color(200, 200, 200));
     configurarTexto(textoJuegoTerminado, 48, sf::Color::Red);
     textoJuegoTerminado.setString("JUEGO TERMINADO");
+    configurarTexto(textoDineroJugador, 16, sf::Color::White);
 
     // Configurar Barras
     float anchoBarra = 180.f;
@@ -68,6 +80,10 @@ void Hud::configurarTexto(sf::Text& texto, unsigned int tamanio, sf::Color color
 }
 
 void Hud::actualizar(const Personaje& jugador, const ZombieManager& zombieManager) {
+    
+    // recursos
+    textoDineroJugador.setString("$" + std::to_string(jugador.getDinero()));
+    
     // 1. Vida del Jugador
     float vidaAct = jugador.getVidaActual();
     juegoTerminado = (vidaAct <= 0.f);
@@ -136,17 +152,22 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
     } else {
         // --- POSICIONAR ELEMENTOS ---
 
+        spriteIcon.setPosition(30.f, height-140);
+        spriteDinero.setPosition(160,height-135);
+
         // Panel Jugador (Abajo a la Izquierda)
-        panelJugador.setSize(sf::Vector2f(230.f, 95.f));
-        panelJugador.setPosition(20.f, height - 115.f);
+        panelJugador.setSize(sf::Vector2f(350.f, 120.f));
+        panelJugador.setPosition(20.f, height - 140.f);
 
-        textoVida.setPosition(35.f, height - 105.f);
-        fondoBarraVida.setPosition(35.f, height - 85.f);
-        barraVida.setPosition(35.f, height - 85.f);
+        textoVida.setPosition(160.f, height - 105.f);
+        fondoBarraVida.setPosition(160.f, height - 85.f);
+        barraVida.setPosition(160.f, height - 85.f);
 
-        textoArmadura.setPosition(35.f, height - 65.f);
-        fondoBarraArmadura.setPosition(35.f, height - 45.f);
-        barraArmadura.setPosition(35.f, height - 45.f);
+        textoArmadura.setPosition(160.f, height - 65.f);
+        fondoBarraArmadura.setPosition(160.f, height - 45.f);
+        barraArmadura.setPosition(160.f, height - 45.f);
+
+        textoDineroJugador.setPosition(220, height-130);
 
         // Panel Arma y Munición (Abajo a la Derecha)
         panelArma.setSize(sf::Vector2f(220.f, 85.f));
@@ -164,23 +185,29 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         textoEstadoOleada.setPosition(width / 2.f - (textoEstadoOleada.getLocalBounds().width / 2.f), 70.f);
 
         // --- DIBUJAR ---
+
+        //modificaciones demi
+        
         ventana.draw(panelJugador);
         ventana.draw(panelArma);
         ventana.draw(panelOleada);
-
+        
         ventana.draw(fondoBarraVida);
         ventana.draw(barraVida);
         ventana.draw(fondoBarraArmadura);
         ventana.draw(barraArmadura);
-
+        
         ventana.draw(textoVida);
         ventana.draw(textoArmadura);
         ventana.draw(textoArma);
         ventana.draw(textoMunicion);
         ventana.draw(textoOleada);
         ventana.draw(textoEstadoOleada);
+        ventana.draw(textoDineroJugador);
+        ventana.draw(spriteIcon);
+        ventana.draw(spriteDinero);
     }
-
+    
     // Restaurar vista original
     ventana.setView(vistaActual);
 }

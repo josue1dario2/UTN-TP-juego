@@ -8,6 +8,7 @@ protected:
     float vidaMax;
     float vidaActual;
     float velocidad;
+    float velocidadNormal;
     int direccion; // 1.izq 2.arriba 3.der 4.abajo
 
 public:

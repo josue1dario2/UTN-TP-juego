@@ -33,7 +33,7 @@ public:
 
     void inicializarZonasSpawn(const std::vector<sf::FloatRect>& zonas);
 
-    void actualizar(float deltaTime, Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles);
+    void actualizar(float deltaTime, Personaje& jugador, const std::vector<ObjetoMapa>& obstaculos, std::vector<Proyectil>& proyectiles, std::vector<Mina>& trampas);
 
     void dibujarZombies(sf::RenderWindow& ventana);
 

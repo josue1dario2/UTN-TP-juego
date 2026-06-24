@@ -17,7 +17,7 @@ Arma::Arma(int id, std::string nombre, float cadencia, float danio, float alcanc
     this->municionMaxima = municionMaxima;
     this->tamanioCargador = tamanioCargador;
 
-    std::string rutaTextura = "assets/" + nombre + ".png";
+    std::string rutaTextura = "assets/armas/" + nombre + ".png";
     this->nombre = nombre;
     cargarTextura(rutaTextura);
 
@@ -27,21 +27,14 @@ Arma::Arma(int id, std::string nombre, float cadencia, float danio, float alcanc
     tiempoDesdeUltimoDisparo = 0.f;
     tiempoRecarga = 0.f;
 
-    switch(id) {
-
-        case 0: { //cuchillo
-            municionActual = 0;
-            municionEnCargador = 2;
-            desbloqueada = true;
-            break;
-        }
-
-        default: {
-            municionActual = municionMaxima/2; // Empieza con la mitad de la munición total
-            municionEnCargador = 0;
-            desbloqueada = false;
-            break;
-        }
+    if(id == 0 || id == 5 || id == 7){
+        municionActual = 0;
+        municionEnCargador = 2;
+        desbloqueada = true;
+    } else {
+        municionActual = municionMaxima/2; // Empieza con la mitad de la munición total
+        municionEnCargador = tamanioCargador;
+        desbloqueada = false;
     }
 
 }
@@ -89,7 +82,7 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
             switch(getIdArma()) { 
                 
                 case 0: { //cuchillo
-                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 500.f, getDanio());
+                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 2000.f, getDanio(),idArma);
                     municionEnCargador = 2;
                     break;
 
@@ -106,10 +99,28 @@ void Arma::actualizar(float deltaTime,const sf::Vector2f &posicionMouse, const s
                     disparoMosin();
                     break;
                 }
+                case 5: {
+                    //arco
+                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 2000.f, getDanio(),idArma);
+                    municionEnCargador = 2;
+                    break;
+                }
+                case 6: {
+                    // akimbo revolver
+                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 2000.f, getDanio(),idArma);
+                    proyectiles.emplace_back(texturaProyectil, sf::Vector2f(getPosicion().x, getPosicion().y-10), posicionMouse, getAlcance(), 2000.f, getDanio(),idArma);
+                    break;
+                }
+                case 7: {
+                    // katana
+                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 2000.f, getDanio(),idArma);
+                    municionEnCargador = 2;
+                    break;
+                }
                 
-                default:
+                default: //pistola, rifle, fal
                 {
-                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 2000.f, getDanio());
+                    proyectiles.emplace_back(texturaProyectil, getPosicion(), posicionMouse, getAlcance(), 2000.f, getDanio(),idArma);
                     break;
                 }
             }
@@ -179,7 +190,7 @@ void Arma::disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& p
 
         objetivo.y = getPosicion().y - std::sin(anguloFinal) * 1000.f;
 
-        proyectiles.emplace_back(texturaProyectil, getPosicion(), objetivo, getAlcance(), 2000.f, getDanio());
+        proyectiles.emplace_back(texturaProyectil, getPosicion(), objetivo, getAlcance(), 2000.f, getDanio(),idArma);
     }
 }
 

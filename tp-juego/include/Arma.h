@@ -40,7 +40,7 @@ private:
     std::string getNombre() const;
     float getDanio() const;
     float getAlcance() const;
-    float getCosto() const;
+    float getCosto() const {return costo;};
 
     void setDesbloqueo(bool estado);
     void llenarMunicion();

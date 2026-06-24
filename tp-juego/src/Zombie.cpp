@@ -80,7 +80,7 @@ void Zombie::actualizar(float deltaTime, const Personaje &jugador,
 
   // 1. Resolver colisión física rectangular con el jugador para evitar
   // cualquier superposición
-  if (getHitbox().intersects(jugador.getHitbox())) {
+  if (getHitbox().intersects(jugador.getHitbox()) && !jugador.esInvulnerable()) {
     sf::FloatRect zombieHitbox = getHitbox();
     float overlapLeft =
         (zombieHitbox.left + zombieHitbox.width) - jugador.getHitbox().left;
@@ -284,8 +284,8 @@ void Zombie::recibirEstado(float deltaTime, const Personaje &jugador){
   if(jugador.habilidadActiva() && jugador.getId() == 1 &&jugador.getZonaHabilidad().intersects(getHitbox())){
     empujado = true;
     stuneado = true;
-    tiempoEmpuje = 3;
-    tiempoStun = 3;
+    tiempoEmpuje = 2.5f;
+    tiempoStun = 5;
     velocidad = 0;
     direccion = jugador.getDireccion();
   }
