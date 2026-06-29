@@ -1,5 +1,6 @@
 #include "../include/ZombieManager.h"
 #include "../include/Personaje.h"
+#include "../include/Constantes.h"
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
@@ -9,7 +10,7 @@ ZombieManager::ZombieManager() {
     enPeriodoDescanso = false;
     cronometroDescanso = 0.f;
     temporizadorSpawn = 0.f;
-    zombiesRestantesPorCrear = 5;
+    zombiesRestantesPorCrear = Config::Gameplay::ZombiesIniciales;
     cronometroOleada = 0.f;
     std::cout << "OLEADA Inicio de la Oleada " << oleadaActual << " (Zombies a crear: " << zombiesRestantesPorCrear << ")" << std::endl;
 }
@@ -136,10 +137,10 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
     // Máquina de estados del gestor de oleadas
     if (enPeriodoDescanso) {
         cronometroDescanso += deltaTime;
-        if (cronometroDescanso >= TIEMPO_DESCANSO) {
+        if (cronometroDescanso >= Config::Gameplay::TiempoDescanso) {
             enPeriodoDescanso = false;
             oleadaActual++;
-            int nuevosZombies = 5 + (oleadaActual - 1) * 3;
+            int nuevosZombies = Config::Gameplay::ZombiesIniciales + (oleadaActual - 1) * Config::Gameplay::ZombiesPorOleadaDificultad;
             zombiesRestantesPorCrear = nuevosZombies;
             zombies.reserve(nuevosZombies + 10);
             
@@ -158,18 +159,18 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
         // Generar zombies de manera paulatina
         if (zombiesRestantesPorCrear > 0) {
             temporizadorSpawn += deltaTime;
-            if (temporizadorSpawn >= FRECUENCIA_SPAWN) {
+            if (temporizadorSpawn >= Config::Gameplay::FrecuenciaSpawn) {
                 intentarSpawnearUnZombie(obstaculos);
                 temporizadorSpawn = 0.f;
             }
         }
 
         // Comprobación de fin de oleada (todos muertos o tiempo límite alcanzado)
-        if ((zombies.empty() && zombiesRestantesPorCrear == 0) || cronometroOleada >= TIEMPO_MAX_OLEADA) {
+        if ((zombies.empty() && zombiesRestantesPorCrear == 0) || cronometroOleada >= Config::Gameplay::TiempoMaxOleada) {
             enPeriodoDescanso = true;
             cronometroDescanso = 0.f;
             cronometroOleada = 0.f;
-            std::cout << "TREGUA Oleada finalizada/tiempo limite alcanzado. Comenzando tregua de " << TIEMPO_DESCANSO << " segundos." << std::endl;
+            std::cout << "TREGUA Oleada finalizada/tiempo limite alcanzado. Comenzando tregua de " << Config::Gameplay::TiempoDescanso << " segundos." << std::endl;
         }
     }
 
@@ -221,6 +222,11 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
     }
 
     // 4. Limpieza: Elimina del vector a todos los zombies marcados como muertos para liberar memoria
+    for (const auto &z : zombies) {
+        if (z.muerto()) {
+            zombiesEliminados++;
+        }
+    }
     zombies.erase(std::remove_if(zombies.begin(), zombies.end(), [](const Zombie &z) { return z.muerto(); }), zombies.end());
 }
 
@@ -230,3 +236,15 @@ void ZombieManager::dibujarZombies(sf::RenderWindow& ventana) {
         zombie.dibujar(ventana);
     }
 }
+
+void ZombieManager::cargarOleada(int oleada) {
+    oleadaActual = oleada;
+    enPeriodoDescanso = false;
+    cronometroDescanso = 0.f;
+    temporizadorSpawn = 0.f;
+    zombiesRestantesPorCrear = Config::Gameplay::ZombiesIniciales + (oleadaActual - 1) * Config::Gameplay::ZombiesPorOleadaDificultad;
+    cronometroOleada = 0.f;
+    zombies.clear();
+    indicesZonasActivas.clear();
+}
+

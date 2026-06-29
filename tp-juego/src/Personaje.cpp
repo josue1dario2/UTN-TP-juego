@@ -36,7 +36,16 @@ Personaje::Personaje(int id, int idArmaEspecial, std::string nombre, float vida,
         cargarTextura("assets/jugador.png");
     }
     escalarSprite(0.8f,0.8f);
-    //setearTamanioSprite(39, 48);
+    
+    // Si la textura cargada es la original de 6 frames, recortamos 39x48.
+    // De lo contrario (ej. Recon/Joel que son una sola imagen), usamos el tamaño completo de la textura.
+    sf::Vector2u sizeTextura = textura.getSize();
+    if (sizeTextura.x == 234 && sizeTextura.y == 48) {
+        setearTamanioSprite(39, 48);
+    } else {
+        setearTamanioSprite(sizeTextura.x, sizeTextura.y);
+    }
+    
     centrarOrigen();
 
     setHitbox(13.f * 2.f, 16.f * 2.1f);
@@ -71,7 +80,7 @@ void Personaje::volverPosicionAnteriorY() {
   setPosicionCentrado(getPosicion().x, posicionAnterior.y);
 }
 
-void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect> &hitboxZombies, const sf::Vector2f &posicionMouse) {
+void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect> &hitboxZombies, const sf::Vector2f &posicionMouse, const sf::Vector2f &limMapa) {
     // logica adicional para el personaje, como animaciones o habilidades
     
     movimientoX = 0.f;
@@ -110,8 +119,14 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
         for(const auto& rect : hitboxZombies) {
             if (getHitbox().intersects(rect)) {
                 volverPosicionAnteriorX();
+                colisionoX = true;
                 break;
             }
+        }
+    }
+    if (!colisionoX) {
+        if (getHitbox().left < 0.f || getHitbox().left + getHitbox().width > limMapa.x) {
+            volverPosicionAnteriorX();
         }
     }
     
@@ -130,8 +145,14 @@ void Personaje::actualizar(float deltaTime, const std::vector<ObjetoMapa>& obsta
         for(const auto& rect : hitboxZombies) {
             if (getHitbox().intersects(rect)) {
                 volverPosicionAnteriorY();
+                colisionoY = true;
                 break;
             }
+        }
+    }
+    if (!colisionoY) {
+        if (getHitbox().top < 0.f || getHitbox().top + getHitbox().height > limMapa.y) {
+            volverPosicionAnteriorY();
         }
     }
     
