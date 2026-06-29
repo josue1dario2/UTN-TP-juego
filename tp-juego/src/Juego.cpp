@@ -524,8 +524,8 @@ void Juego::renderizar() {
 
       sf::Text txtGameOver;
       txtGameOver.setFont(fuenteMenu);
-      txtGameOver.setString("GAME OVER\n\nPresione ESPACIO o ENTER para volver al menu");
-      txtGameOver.setCharacterSize(30);
+      txtGameOver.setString("GAME OVER\n\nPresione ESPACIO o ENTER\npara volver al menu");
+      txtGameOver.setCharacterSize(26);
       txtGameOver.setFillColor(sf::Color::Red);
       sf::FloatRect bounds = txtGameOver.getLocalBounds();
       txtGameOver.setOrigin(bounds.left + bounds.width/2.f, bounds.top + bounds.height/2.f);
