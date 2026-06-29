@@ -45,6 +45,7 @@ private:
     void setDesbloqueo(bool estado);
     void llenarMunicion();
     void recargar(int cantidad);
+    void comprarMunicion(int cantidad);
 
     int getMunicionActual() const { return municionActual; }
     int getMunicionEnCargador() const { return municionEnCargador; }

@@ -170,6 +170,13 @@ void Arma::llenarMunicion() {
     municionActual = municionMaxima;
 }
 
+void Arma::comprarMunicion(int cantidad) {
+    municionActual += cantidad;
+    if (municionActual > municionMaxima) {
+        municionActual = municionMaxima;
+    }
+}
+
 // ------------------ Lógica de disparos especiales
 void Arma::disparoEscopeta(float deltaX, float deltaY, std::vector<Proyectil>& proyectiles, sf::Texture& texturaProyectil) {
     const int cantidadPerdigones = 8;

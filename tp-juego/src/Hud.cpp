@@ -18,6 +18,12 @@ bool Hud::inicializar(int idJug) {
     spriteDinero.setTexture(texturaDinero);
     spriteDinero.setScale(0.5f,0.5f);
     
+    if (!texturaBalaPistola.loadFromFile("assets/varios/bala_pistola.png") ||
+        !texturaBalaRifle.loadFromFile("assets/varios/bala_rifle.png") ||
+        !texturaCartuchoEscopeta.loadFromFile("assets/varios/cartucho_escopeta.png")) {
+        std::cerr << "Error: No se pudieron cargar las texturas de las balas/cartuchos." << std::endl;
+        return false;
+    }
 
     if (!fuente.loadFromFile("assets/minecraft.ttf")) {
         std::cerr << "Error: No se pudo cargar assets/minecraft.ttf" << std::endl;
@@ -167,11 +173,17 @@ void Hud::actualizar(const Personaje& jugador, const ZombieManager& zombieManage
     sf::FloatRect bounds = spriteArmaUI.getLocalBounds();
     spriteArmaUI.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
-    if (arma.getEnRecarga()) {
+    idArmaActiva = idArma;
+    balasEnCargadorActivo = arma.getMunicionEnCargador();
+    armaEnRecarga = arma.getEnRecarga();
+
+    if (idArma == 0 || idArma == 5 || idArma == 7) {
+        textoMunicion.setString(""); // Cuchillo, Arco y Katana no muestran nada
+    } else if (arma.getEnRecarga()) {
         textoMunicion.setString("RECARGANDO...");
         textoMunicion.setFillColor(sf::Color(255, 150, 0)); // Color naranja para recarga
     } else {
-        textoMunicion.setString(std::to_string(arma.getMunicionEnCargador()) + " / " + std::to_string(arma.getMunicionActual()));
+        textoMunicion.setString(" / " + std::to_string(arma.getMunicionActual()));
         textoMunicion.setFillColor(sf::Color::White);
     }
 
@@ -208,6 +220,9 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         textoJuegoTerminado.setPosition(width / 2.f - (textoJuegoTerminado.getLocalBounds().width / 2.f), height / 2.f - (textoJuegoTerminado.getLocalBounds().height / 2.f));
         ventana.draw(textoJuegoTerminado);
     } else {
+        int idArma = idArmaActiva;
+        int balasCargador = balasEnCargadorActivo;
+
         // --- POSICIONAR ELEMENTOS ---
 
         spriteIcon.setPosition(30.f, height - 170.f);
@@ -236,8 +251,15 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         panelArma.setPosition(width - 240.f, height - 105.f);
 
         float posCentroPanelArma = width - 130.f;
-        spriteArmaUI.setPosition(posCentroPanelArma, height - 90.f);
-        textoMunicion.setPosition(posCentroPanelArma - (textoMunicion.getLocalBounds().width / 2.f), height - 55.f);
+        spriteArmaUI.setPosition(posCentroPanelArma, height - 102.f);
+
+        // Posicionar el texto de reserva (o recarga) al lado del sprite del arma de forma fija
+        if (armaEnRecarga) {
+            textoMunicion.setPosition(posCentroPanelArma - (textoMunicion.getLocalBounds().width / 2.f), height - 55.f);
+        } else {
+            float xTexto = posCentroPanelArma + (spriteArmaUI.getGlobalBounds().width / 2.f) + 5.f;
+            textoMunicion.setPosition(xTexto, height - 115.f);
+        }
 
         // Panel Oleada (Arriba en el Centro - Desplazado 20px más abajo)
         panelOleada.setSize(sf::Vector2f(320.f, 75.f));
@@ -262,12 +284,58 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         ventana.draw(textoArmadura);
         ventana.draw(textoHabilidad);
         ventana.draw(spriteArmaUI);
+        
+        // Dibujar texto de reserva (siempre se dibuja aquí en su posición correspondiente)
         ventana.draw(textoMunicion);
+
         ventana.draw(textoOleada);
         ventana.draw(textoEstadoOleada);
         ventana.draw(textoDineroJugador);
         ventana.draw(spriteIcon);
         ventana.draw(spriteDinero);
+
+        // --- DIBUJAR BALAS VISUALES ---
+        if (idArma != 0 && idArma != 5 && idArma != 7 && !armaEnRecarga) {
+            float scale = 0.44f;
+            float espaciadoX = -15.f; // Ajustado para que estén más juntas
+
+            if (idArma == 1) { // Pistola
+                spriteBalaUI.setTexture(texturaBalaPistola);
+                scale = 0.50f;
+                espaciadoX = -21.f; // Ajustado
+            } else if (idArma == 2) { // Escopeta
+                spriteBalaUI.setTexture(texturaCartuchoEscopeta);
+                scale = 0.50f;
+                espaciadoX = -41.f; // Ajustado
+            } else { // Rifles / Fusiles de asalto
+                spriteBalaUI.setTexture(texturaBalaRifle);
+                scale = 0.44f;
+                espaciadoX = -15.f; // Ajustado
+            }
+            spriteBalaUI.setScale(scale, scale);
+
+            float anchoBala = spriteBalaUI.getGlobalBounds().width;
+            float altoBala = spriteBalaUI.getGlobalBounds().height;
+            float espaciadoY = 2.f; // Espacio entre filas verticalmente
+            
+            // Dibujamos en filas de hasta 15 balas para evitar desbordar el panel
+            int maxBalasPorFila = 15;
+            
+            float xInicio = width - 205.f; // Desplazado a la derecha para no salirse del límite visible
+            float yInicio = height - 46.f; // Posición base de la fila de abajo (subida para evitar cortes)
+
+            for (int i = 0; i < balasCargador; i++) {
+                int fila = i / maxBalasPorFila;
+                int columna = i % maxBalasPorFila;
+
+                // Aplicamos el espaciado horizontal
+                float posX = xInicio + columna * (anchoBala + espaciadoX);
+                float posY = yInicio - fila * (altoBala + espaciadoY);
+
+                spriteBalaUI.setPosition(posX, posY);
+                ventana.draw(spriteBalaUI);
+            }
+        }
     }
     
     // Restaurar vista original

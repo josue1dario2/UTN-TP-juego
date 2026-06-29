@@ -411,6 +411,22 @@ void Juego::actualizar() {
 
       if (jugador.estaVivo()) {
         jugador.actualizar(deltaTime, obstaculos, hitboxesZombies, mira.getPosicion(), trampas, sf::Vector2f(texturaMapa.getSize().x, texturaMapa.getSize().y));
+        
+        // Lógica de compra automática de recarga si no le queda reserva al presionar 'R'
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && !jugador.getArma().getEnRecarga()) {
+            Arma& armaActiva = jugador.getArma();
+            int idArma = armaActiva.getIdArma();
+            // Evitamos armas infinitas: Cuchillo (0), Arco (5), Katana (7)
+            if (idArma != 0 && idArma != 5 && idArma != 7) {
+                if (armaActiva.getMunicionActual() == 0 && armaActiva.getMunicionEnCargador() < armaActiva.getTamanioCargador()) {
+                    if (jugador.getDinero() >= 350) {
+                        jugador.sumarDinero(-350);
+                        armaActiva.comprarMunicion(armaActiva.getTamanioCargador());
+                    }
+                }
+            }
+        }
+
         jugador.getArma().actualizar(deltaTime, mira.getPosicion(), jugador.getPosicion(), proyectiles, texturaProyectil);
         vista.setSize(1280.f * jugador.getMultiplicadorZoom(), 720.f * jugador.getMultiplicadorZoom());
       } else {

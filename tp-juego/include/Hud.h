@@ -42,6 +42,15 @@ private:
     sf::Texture texturaDinero;
     sf::Sprite spriteDinero;
 
+    sf::Texture texturaBalaPistola;
+    sf::Texture texturaBalaRifle;
+    sf::Texture texturaCartuchoEscopeta;
+    sf::Sprite spriteBalaUI;
+
+    int idArmaActiva;
+    int balasEnCargadorActivo;
+    bool armaEnRecarga;
+
     // Función auxiliar para configurar estilos de texto comunes
     void configurarTexto(sf::Text& texto, unsigned int tamanio, sf::Color color);
     
