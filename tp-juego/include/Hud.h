@@ -26,6 +26,11 @@ private:
     sf::RectangleShape fondoBarraArmadura;
     sf::RectangleShape barraArmadura;
 
+    // Barras gráficas para Habilidad
+    sf::Text textoHabilidad;
+    sf::RectangleShape fondoBarraHabilidad;
+    sf::RectangleShape barraHabilidad;
+
     // Contenedores/fondos estéticos para agrupar la información (estilo panel)
     sf::RectangleShape panelJugador;
     sf::RectangleShape panelOleada;
@@ -40,6 +45,7 @@ private:
     // Función auxiliar para configurar estilos de texto comunes
     void configurarTexto(sf::Text& texto, unsigned int tamanio, sf::Color color);
     
+    sf::Sprite spriteArmaUI;
     bool juegoTerminado;
 
 public:

@@ -80,21 +80,26 @@ private:
     
     Personaje(int id, int idArmaEspecial, std::string nombre, float vida, float armadura, float velocidad, float cooldownHabilidad);
     
-    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect>& hitboxZombies, const sf::Vector2f &posicionMouse, std::vector<Mina> &trampas);
+    virtual void actualizar(float deltaTime, const std::vector<ObjetoMapa>& obstaculos, const std::vector<sf::FloatRect>& hitboxZombies, const sf::Vector2f &posicionMouse, std::vector<Mina> &trampas, const sf::Vector2f &limMapa);
     
     Arma& getArma();
     
     float getMultiplicadorZoom();
     
     float getArmaduraActual() const { return armaduraActual; }
+    void setArmaduraActual(float a) { armaduraActual = a; }
     
     float getArmaduraMax() const { return armaduraMax; }
+    void setArmaEquipada(int index) { if(index >= 0 && index < 5) armaEquipada = index; }
     
     sf::FloatRect getZonaHabilidad() const;
 
     int getDireccion() const;
 
     bool habilidadActiva() const;
+    float getTiempoHabilidad() const { return tiempoHabilidad; }
+    float getCooldownHabilidad() const { return cooldownHabilidad; }
+    bool getHabilidadDisponible() const { return habilidadDisponible; }
     
     void recibirDanio(float cantidad) override;
 

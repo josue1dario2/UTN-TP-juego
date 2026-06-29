@@ -53,6 +53,7 @@ protected:
     sf::Vector2f getPosicion() const;
     float getAngulo() const;
     void setAngulo(float nuevoAngulo);
+    const sf::Sprite& getSprite() const { return sprite; }
 
     //------------HITBOX------------
     void setHitbox(float ancho, float alto);

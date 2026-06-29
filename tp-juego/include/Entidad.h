@@ -19,6 +19,7 @@ public:
     bool estaVivo() const;
 
     float getVidaActual() const { return vidaActual; }
+    void setVidaActual(float v) { vidaActual = v; }
     float getVidaMax() const { return vidaMax; }
     float getVelocidad() const { return velocidad; }
 };

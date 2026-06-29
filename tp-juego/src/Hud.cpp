@@ -19,8 +19,8 @@ bool Hud::inicializar(int idJug) {
     spriteDinero.setScale(0.5f,0.5f);
     
 
-    if (!fuente.loadFromFile("assets/font.ttf")) {
-        std::cerr << "Error: No se pudo cargar assets/font.ttf" << std::endl;
+    if (!fuente.loadFromFile("assets/minecraft.ttf")) {
+        std::cerr << "Error: No se pudo cargar assets/minecraft.ttf" << std::endl;
         return false;
     }
 
@@ -54,6 +54,16 @@ bool Hud::inicializar(int idJug) {
 
     barraArmadura.setSize(sf::Vector2f(anchoBarra, altoBarra));
     barraArmadura.setFillColor(sf::Color(50, 120, 240)); // Azul brillante para escudo
+
+    configurarTexto(textoHabilidad, 16, sf::Color::White);
+
+    fondoBarraHabilidad.setSize(sf::Vector2f(anchoBarra, altoBarra));
+    fondoBarraHabilidad.setFillColor(sf::Color(40, 30, 0, 150));
+    fondoBarraHabilidad.setOutlineColor(sf::Color::White);
+    fondoBarraHabilidad.setOutlineThickness(1.f);
+
+    barraHabilidad.setSize(sf::Vector2f(anchoBarra, altoBarra));
+    barraHabilidad.setFillColor(sf::Color(240, 200, 30)); // Color dorado para habilidad
 
     // Paneles de fondo estéticos (con transparencias)
     panelJugador.setFillColor(sf::Color(0, 0, 0, 180));
@@ -106,9 +116,57 @@ void Hud::actualizar(const Personaje& jugador, const ZombieManager& zombieManage
     }
     textoArmadura.setString("ESCUDO: " + std::to_string((int)armAct) + " / " + std::to_string((int)armMax));
 
+    // 2b. Habilidad del Jugador
+    float tiempoHabilidad = jugador.getTiempoHabilidad();
+    float cooldownHabilidad = jugador.getCooldownHabilidad();
+    bool disp = jugador.getHabilidadDisponible();
+    bool activa = jugador.habilidadActiva();
+
+    float pctHab = 0.f;
+    if (disp) {
+        pctHab = 1.f;
+        textoHabilidad.setString("HABILIDAD: LISTA [E]");
+        textoHabilidad.setFillColor(sf::Color(255, 215, 0)); // Dorado
+        barraHabilidad.setFillColor(sf::Color(255, 215, 0));
+    } else if (activa) {
+        pctHab = 1.f;
+        textoHabilidad.setString("HABILIDAD: ACTIVA");
+        textoHabilidad.setFillColor(sf::Color(50, 220, 50)); // Verde
+        barraHabilidad.setFillColor(sf::Color(50, 220, 50));
+    } else {
+        pctHab = tiempoHabilidad / cooldownHabilidad;
+        if (pctHab > 1.f) pctHab = 1.f;
+        if (pctHab < 0.f) pctHab = 0.f;
+        
+        float tiempoRestante = cooldownHabilidad - tiempoHabilidad;
+        if (tiempoRestante < 0.f) tiempoRestante = 0.f;
+        
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(1) << tiempoRestante;
+        textoHabilidad.setString("HABILIDAD: " + ss.str() + "s");
+        textoHabilidad.setFillColor(sf::Color(200, 200, 200)); // Gris
+        barraHabilidad.setFillColor(sf::Color(240, 150, 30)); // Naranja de recarga
+    }
+    barraHabilidad.setSize(sf::Vector2f(180.f * pctHab, 14.f));
+
     // 3. Arma y Munición
     Arma& arma = const_cast<Personaje&>(jugador).getArma();
-    textoArma.setString(arma.getNombre());
+    spriteArmaUI = arma.getSprite();
+    spriteArmaUI.setRotation(0.f);
+    
+    // Ajustar escala según el arma para equilibrar el tamaño visual en la UI
+    int idArma = arma.getIdArma();
+    if (idArma == 0) {       // Cuchillo
+        spriteArmaUI.setScale(5.0f, 5.0f);
+    } else if (idArma == 1) { // Pistola
+        spriteArmaUI.setScale(4.5f, 4.5f);
+    } else {                  // Escopeta, Rifle, Mosin
+        spriteArmaUI.setScale(2.5f, 2.5f);
+    }
+    
+    sf::FloatRect bounds = spriteArmaUI.getLocalBounds();
+    spriteArmaUI.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+
     if (arma.getEnRecarga()) {
         textoMunicion.setString("RECARGANDO...");
         textoMunicion.setFillColor(sf::Color(255, 150, 0)); // Color naranja para recarga
@@ -152,30 +210,34 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
     } else {
         // --- POSICIONAR ELEMENTOS ---
 
-        spriteIcon.setPosition(30.f, height-140);
-        spriteDinero.setPosition(160,height-135);
+        spriteIcon.setPosition(30.f, height - 170.f);
 
         // Panel Jugador (Abajo a la Izquierda)
-        panelJugador.setSize(sf::Vector2f(350.f, 120.f));
-        panelJugador.setPosition(20.f, height - 140.f);
+        panelJugador.setSize(sf::Vector2f(350.f, 150.f));
+        panelJugador.setPosition(20.f, height - 180.f);
 
-        textoVida.setPosition(160.f, height - 105.f);
-        fondoBarraVida.setPosition(160.f, height - 85.f);
-        barraVida.setPosition(160.f, height - 85.f);
+        textoVida.setPosition(160.f, height - 165.f);
+        fondoBarraVida.setPosition(160.f, height - 145.f);
+        barraVida.setPosition(160.f, height - 145.f);
 
-        textoArmadura.setPosition(160.f, height - 65.f);
-        fondoBarraArmadura.setPosition(160.f, height - 45.f);
-        barraArmadura.setPosition(160.f, height - 45.f);
+        textoArmadura.setPosition(160.f, height - 125.f);
+        fondoBarraArmadura.setPosition(160.f, height - 105.f);
+        barraArmadura.setPosition(160.f, height - 105.f);
 
-        textoDineroJugador.setPosition(220, height-130);
+        textoHabilidad.setPosition(160.f, height - 85.f);
+        fondoBarraHabilidad.setPosition(160.f, height - 65.f);
+        barraHabilidad.setPosition(160.f, height - 65.f);
+
+        spriteDinero.setPosition(160.f, height - 45.f);
+        textoDineroJugador.setPosition(215.f, height - 47.f);
 
         // Panel Arma y Munición (Abajo a la Derecha)
         panelArma.setSize(sf::Vector2f(220.f, 85.f));
         panelArma.setPosition(width - 240.f, height - 105.f);
 
         float posCentroPanelArma = width - 130.f;
-        textoArma.setPosition(posCentroPanelArma - (textoArma.getLocalBounds().width / 2.f), height - 95.f);
-        textoMunicion.setPosition(posCentroPanelArma - (textoMunicion.getLocalBounds().width / 2.f), height - 70.f);
+        spriteArmaUI.setPosition(posCentroPanelArma, height - 90.f);
+        textoMunicion.setPosition(posCentroPanelArma - (textoMunicion.getLocalBounds().width / 2.f), height - 55.f);
 
         // Panel Oleada (Arriba en el Centro - Desplazado 20px más abajo)
         panelOleada.setSize(sf::Vector2f(320.f, 75.f));
@@ -185,21 +247,21 @@ void Hud::dibujar(sf::RenderWindow& ventana) {
         textoEstadoOleada.setPosition(width / 2.f - (textoEstadoOleada.getLocalBounds().width / 2.f), 70.f);
 
         // --- DIBUJAR ---
+        // ventana.draw(panelJugador); // Mantener paneles invisibles como se solicitó
+        // ventana.draw(panelArma);
+        // ventana.draw(panelOleada);
 
-        //modificaciones demi
-        
-        ventana.draw(panelJugador);
-        ventana.draw(panelArma);
-        ventana.draw(panelOleada);
-        
         ventana.draw(fondoBarraVida);
         ventana.draw(barraVida);
         ventana.draw(fondoBarraArmadura);
         ventana.draw(barraArmadura);
-        
+        ventana.draw(fondoBarraHabilidad);
+        ventana.draw(barraHabilidad);
+
         ventana.draw(textoVida);
         ventana.draw(textoArmadura);
-        ventana.draw(textoArma);
+        ventana.draw(textoHabilidad);
+        ventana.draw(spriteArmaUI);
         ventana.draw(textoMunicion);
         ventana.draw(textoOleada);
         ventana.draw(textoEstadoOleada);

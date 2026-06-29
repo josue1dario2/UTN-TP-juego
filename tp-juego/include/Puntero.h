@@ -6,5 +6,5 @@ public:
     Puntero();
 
     // Actualiza la posición y rota la mira según el tiempo transcurrido
-    void actualizar(sf::RenderWindow& ventana, float deltaTime);
+    void actualizar(sf::RenderWindow& ventana, const sf::View& vista, float deltaTime);
 };
