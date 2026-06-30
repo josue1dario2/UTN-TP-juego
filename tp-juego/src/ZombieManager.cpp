@@ -1,6 +1,7 @@
 #include "../include/ZombieManager.h"
 #include "../include/Personaje.h"
 #include "../include/Constantes.h"
+#include "../include/SoundManager.h"
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
@@ -185,6 +186,12 @@ void ZombieManager::actualizar(float deltaTime, Personaje& jugador, const std::v
             if (!zombie.muerto() && proyectil.getHitbox().intersects(zombie.getHitbox())) {
                 zombie.quitarVida(proyectil.getDanio());
                 proyectil.desactivar(); // Marcar el proyectil para ser destruido
+                
+                // Si es un cuchillo (0) o katana (7), reproducir sonido de impacto
+                if (proyectil.getIdArmaOrigen() == 0 || proyectil.getIdArmaOrigen() == 7) {
+                    SoundManager::play("cuchillo_impacto");
+                }
+
                 std::cout << "IMPACTO Zombie recibio " << proyectil.getDanio() 
                           << " de danio. Vida restante: " << zombie.getVida() << std::endl;
                 

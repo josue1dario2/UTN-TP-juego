@@ -12,11 +12,11 @@ bool Hud::inicializar(int idJug) {
     texturaIcon.loadFromFile("assets/personajes/icon_" + std::to_string(idJug) + ".png");
     spriteIcon.setTexture(texturaIcon);
     //spriteIcon.setPosition(sf::Vector2f(200,1800));
-    spriteIcon.setScale(0.1f, 0.1f);
+    spriteIcon.setScale({0.1f, 0.1f});
 
     texturaDinero.loadFromFile("assets/varios/dinero.png");
     spriteDinero.setTexture(texturaDinero);
-    spriteDinero.setScale(0.5f,0.5f);
+    spriteDinero.setScale({0.5f, 0.5f});
     
     if (!texturaBalaPistola.loadFromFile("assets/varios/bala_pistola.png") ||
         !texturaBalaRifle.loadFromFile("assets/varios/bala_rifle.png") ||
@@ -163,11 +163,11 @@ void Hud::actualizar(const Personaje& jugador, const ZombieManager& zombieManage
     // Ajustar escala según el arma para equilibrar el tamaño visual en la UI
     int idArma = arma.getIdArma();
     if (idArma == 0) {       // Cuchillo
-        spriteArmaUI.setScale(5.0f, 5.0f);
+        spriteArmaUI.setScale({5.0f, 5.0f});
     } else if (idArma == 1) { // Pistola
-        spriteArmaUI.setScale(4.5f, 4.5f);
+        spriteArmaUI.setScale({4.5f, 4.5f});
     } else {                  // Escopeta, Rifle, Mosin
-        spriteArmaUI.setScale(2.5f, 2.5f);
+        spriteArmaUI.setScale({2.5f, 2.5f});
     }
     
     sf::FloatRect bounds = spriteArmaUI.getLocalBounds();

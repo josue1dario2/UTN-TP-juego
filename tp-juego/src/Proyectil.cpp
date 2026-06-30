@@ -6,6 +6,7 @@ Proyectil::Proyectil(sf::Texture& texturaProyectil,sf::Vector2f posInicial, sf::
     velocidad = vel;
     alcanceMax = alc;
     this->danio = danio;
+    this->idArmaOrigen = id;
     distanciaRecorrida = 0.f;
     direccion.x = dir.x - posInicial.x;
     direccion.y = dir.y - posInicial.y;

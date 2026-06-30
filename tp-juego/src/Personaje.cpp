@@ -1,4 +1,5 @@
 #include "../include/Personaje.h"
+#include "../include/SoundManager.h"
 #include <cmath>
 
 Personaje::Personaje(){
@@ -301,6 +302,7 @@ void Personaje::activarHabilidad(float deltaTime, std::vector<Mina> &trampas){
 void Personaje::habilidadSoldado(std::vector<Mina> &trampas) {
     if (habilidadActivada){
         trampas.emplace_back(getPosicion());
+        SoundManager::play("colocar_bomba");
         habilidadActivada = false;
         tiempoHabilidad = 0;
     }

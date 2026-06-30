@@ -1,4 +1,5 @@
 #include "../include/Mina.h"
+#include "../include/SoundManager.h"
 
 Mina::Mina(sf::Vector2f posicion){
     cargarTextura("assets/varios/mina.png");
@@ -41,13 +42,15 @@ void Mina::actualizar(float deltaTime, const std::vector<sf::FloatRect> &listaZo
                 velocidadAnimacion = 0.1f;
                 temporizador = 0;
                 activa = true;
+                SoundManager::play("bomba_previo");
             }
         }
         
-        if (activa && temporizador > 1) {
+        if (activa && temporizador > 1 && !exploto) {
             setHitbox(250,250);
             setPosicionCentrado(getPosicion().x, getPosicion().y);
             exploto = true;
+            SoundManager::play("bomba_explosion");
         }
     }
 }

@@ -1,4 +1,5 @@
 #include "../include/Juego.h"
+#include "../include/SoundManager.h"
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
@@ -8,6 +9,9 @@
 #include <cstring>
 
 Juego::Juego() {
+  // Inicialización de sonidos
+  SoundManager::cargarSonidos();
+
   deltaTime = 0.f;
   indiceMenuSeleccionado = 0;
 
@@ -316,6 +320,7 @@ void Juego::procesarEventos() {
                 if (indiceMenuSeleccionado > 2) indiceMenuSeleccionado = 0;
             }
             else if (evento.key.code == sf::Keyboard::Enter || evento.key.code == sf::Keyboard::Space) {
+                SoundManager::play("click_boton");
                 if (indiceMenuSeleccionado == 0) {
                     estadoActual = EstadoJuego::SeleccionPersonaje;
                 }
@@ -329,12 +334,15 @@ void Juego::procesarEventos() {
         }
         else if (evento.type == sf::Event::MouseButtonPressed) {
             if (btnMenuJugar.fueClickeado(posMouse, evento.mouseButton.button)) {
+                SoundManager::play("click_boton");
                 estadoActual = EstadoJuego::SeleccionPersonaje;
             }
             else if (btnMenuStats.fueClickeado(posMouse, evento.mouseButton.button)) {
+                SoundManager::play("click_boton");
                 estadoActual = EstadoJuego::Estadisticas;
             }
             else if (btnMenuSalir.fueClickeado(posMouse, evento.mouseButton.button)) {
+                SoundManager::play("click_boton");
                 ventana.close();
             }
         }
@@ -342,6 +350,7 @@ void Juego::procesarEventos() {
     else if (estadoActual == EstadoJuego::Estadisticas) {
         if (evento.type == sf::Event::MouseButtonPressed) {
             if (btnVolverStats.fueClickeado(posMouse, evento.mouseButton.button)) {
+                SoundManager::play("click_boton");
                 estadoActual = EstadoJuego::MenuPrincipal;
             }
         }
@@ -350,6 +359,7 @@ void Juego::procesarEventos() {
         if (evento.type == sf::Event::MouseButtonPressed) {
             for (auto& bp : botonesPersonajes) {
                 if (bp.boton.fueClickeado(posMouse, evento.mouseButton.button)) {
+                    SoundManager::play("click_boton");
                     personajeSeleccionado = bp.registro;
                     float velocidad = personajeSeleccionado.velocidad;
                     float cooldown = personajeSeleccionado.cooldownHabilidad;
@@ -365,6 +375,7 @@ void Juego::procesarEventos() {
                 }
             }
             if (btnVolverSeleccion.fueClickeado(posMouse, evento.mouseButton.button)) {
+                SoundManager::play("click_boton");
                 estadoActual = EstadoJuego::MenuPrincipal;
             }
         }
