@@ -447,6 +447,7 @@ void Juego::actualizar() {
         statsHistoricas.sumarZombiesEliminados(zombieManager.getZombiesEliminados());
         guardarStats();
 
+        SoundManager::play("muerte");
         estadoActual = EstadoJuego::GameOver;
         ventana.setMouseCursorVisible(false);
       }
@@ -567,9 +568,14 @@ void Juego::renderizar() {
 }
 
 void Juego::actualizarMenu(sf::Vector2f posMouse) {
+    int ultimoIndice = indiceMenuSeleccionado;
     if (btnMenuJugar.getGlobalBounds().contains(posMouse)) indiceMenuSeleccionado = 0;
     else if (btnMenuStats.getGlobalBounds().contains(posMouse)) indiceMenuSeleccionado = 1;
     else if (btnMenuSalir.getGlobalBounds().contains(posMouse)) indiceMenuSeleccionado = 2;
+
+    if (ultimoIndice != indiceMenuSeleccionado) {
+        SoundManager::play("seleccion");
+    }
 
     btnMenuJugar.actualizar(posMouse, indiceMenuSeleccionado == 0);
     btnMenuStats.actualizar(posMouse, indiceMenuSeleccionado == 1);
@@ -592,7 +598,13 @@ void Juego::renderizarMenu() {
 }
 
 void Juego::actualizarEstadisticas(sf::Vector2f posMouse) {
+    static bool hoverVolver = false;
     btnVolverStats.actualizar(posMouse);
+    bool currentHover = btnVolverStats.getGlobalBounds().contains(posMouse);
+    if (currentHover != hoverVolver && currentHover) {
+        SoundManager::play("seleccion");
+    }
+    hoverVolver = currentHover;
 }
 
 void Juego::renderizarEstadisticas() {
@@ -617,10 +629,24 @@ void Juego::renderizarEstadisticas() {
 }
 
 void Juego::actualizarSeleccionPersonaje(sf::Vector2f posMouse) {
-    for (auto& bp : botonesPersonajes) {
-        bp.boton.actualizar(posMouse);
+    static int hoverIndex = -1;
+    int currentHover = -1;
+
+    for (int i = 0; i < (int)botonesPersonajes.size(); i++) {
+        botonesPersonajes[i].boton.actualizar(posMouse);
+        if (botonesPersonajes[i].boton.getGlobalBounds().contains(posMouse)) {
+            currentHover = i;
+        }
     }
     btnVolverSeleccion.actualizar(posMouse);
+    if (btnVolverSeleccion.getGlobalBounds().contains(posMouse)) {
+        currentHover = (int)botonesPersonajes.size();
+    }
+
+    if (currentHover != hoverIndex && currentHover != -1) {
+        SoundManager::play("seleccion");
+    }
+    hoverIndex = currentHover;
 }
 
 void Juego::renderizarSeleccionPersonaje() {
