@@ -82,7 +82,9 @@ Juego::Juego() {
   if (tieneFondoMenu) {
       spriteFondoMenu.setTexture(texturaFondoMenu);
       sf::Vector2u size = texturaFondoMenu.getSize();
-      spriteFondoMenu.setScale(1280.f / size.x, 720.f / size.y);
+      spriteFondoMenu.setScale(ventana.getSize().x / size.x, ventana.getSize().y / size.y);
+      spriteFondoMenu.setOrigin(size.x/2.f, size.y/2.f);
+      spriteFondoMenu.setPosition(ventana.getSize().x/2.f, ventana.getSize().y/2.f);
   }
 
   inicializarMenus();
@@ -176,20 +178,20 @@ void Juego::inicializarMenus() {
   tituloJuego.setPosition(640.f, 120.f);
   
   // Botones menú principal reestructurado
-  btnMenuJugar = Boton(515.f, 350.f, 250.f, 50.f, fuenteMenu, "JUGAR", 
+  btnMenuJugar = Boton(ventana.getSize().x/2.f-125.f, 350.f, 250.f, 50.f, fuenteMenu, "JUGAR", 
                        sf::Color(25, 25, 25, 220), sf::Color(100, 20, 20), sf::Color(150, 30, 30));
   
-  btnMenuStats = Boton(515.f, 430.f, 250.f, 50.f, fuenteMenu, "ESTADISTICAS", 
+  btnMenuStats = Boton(ventana.getSize().x/2.f-125.f, 430.f, 250.f, 50.f, fuenteMenu, "ESTADISTICAS", 
                        sf::Color(25, 25, 25, 220), sf::Color(100, 20, 20), sf::Color(150, 30, 30));
                           
-  btnMenuSalir = Boton(515.f, 510.f, 250.f, 50.f, fuenteMenu, "SALIR", 
+  btnMenuSalir = Boton(ventana.getSize().x/2.f-125.f, 510.f, 250.f, 50.f, fuenteMenu, "SALIR", 
                        sf::Color(25, 25, 25, 220), sf::Color(100, 20, 20), sf::Color(150, 30, 30));
 
   // Volver de Selección y de Estadísticas
-  btnVolverSeleccion = Boton(515.f, 600.f, 250.f, 50.f, fuenteMenu, "VOLVER", 
+  btnVolverSeleccion = Boton(ventana.getSize().x/2.f-125.f, 600.f, 250.f, 50.f, fuenteMenu, "VOLVER", 
                              sf::Color(25, 25, 25, 220), sf::Color(80, 80, 80), sf::Color(120, 120, 120));
 
-  btnVolverStats = Boton(515.f, 580.f, 250.f, 50.f, fuenteMenu, "VOLVER", 
+  btnVolverStats = Boton(ventana.getSize().x/2.f-125.f, 580.f, 250.f, 50.f, fuenteMenu, "VOLVER",
                          sf::Color(25, 25, 25, 220), sf::Color(80, 80, 80), sf::Color(120, 120, 120));
 
   // Textos para Estadísticas
